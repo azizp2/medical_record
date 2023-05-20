@@ -69,6 +69,8 @@
                                     <label>Pilih Pasien</label>
                                     <div>
                                         <select class="form-control">
+                                            <option disabled selected>...</option>
+
                                             <option>erwer</option>
                                             <option>erwer</option>
                                             <option>erwer</option>
@@ -82,28 +84,72 @@
                         <div class="row" x-show="!showPilihPasien">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Default Functionality</label>
+                                    <label>Nama Depan</label>
                                     <div>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker">
-                                            <div class="input-group-append bg-custom b-0"><span class="input-group-text"><i class="mdi mdi-calendar"></i></span></div>
-                                        </div><!-- input-group -->
+                                        <input type="text" class="form-control">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Default Functionality</label>
+                                    <label>Nama Belakang</label>
                                     <div>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker">
-                                            <div class="input-group-append bg-custom b-0"><span class="input-group-text"><i class="mdi mdi-calendar"></i></span></div>
-                                        </div><!-- input-group -->
+                                        <input type="text" class="form-control">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" x-show="!showPilihPasien">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Jenis Kelamin</label>
+                                    <div>
+                                        <select class="form-control">
+                                            <option disabled selected>...</option>
+
+                                            <option>Pria</option>
+                                            <option>Wanita</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Golongan Darah</label>
+                                    <div>
+                                        <select class="form-control">
+                                            <option disabled selected>...</option>
+                                            <option>A</option>
+                                            <option>B</option>
+                                            <option>AB</option>
+                                            <option>O</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" x-show="!showPilihPasien">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Alamat</label>
+                                    <div>
+                                        <textarea name="" id="" class="form-control" cols="10" rows="3" placeholder="alamat lengkap pasien"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Catatan</label>
+                                    <div>
+                                        <textarea name="" id="" class="form-control" cols="10" rows="3" placeholder="isi keterangan pasien mengenai riwayat medis atau alergi dll"></textarea>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
+                        <hr>
+                        <button class="btn btn-primary col-md-1">Save</button>
                     </div>
                     <div class="tab-pane p-3" id="profile" role="tabpanel">
                         <p class="mb-0">
