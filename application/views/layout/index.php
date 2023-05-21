@@ -28,7 +28,7 @@
             <!-- LOGO -->
             <div class="topbar-left">
                 <a href="<?= base_url() ?>" class="logo">
-                <img src="<?= base_url('assets/images/logo-bakti.png') ?>" style="width: 60px;"/>
+                <img src="<?= base_url('assets/images/logo-bakti.png') ?>" style="width: 60px; padding-top: 5px;"/>
                     <!-- <span class="logo-light">
                         <i class="mdi mdi-camera-control"></i> Stexo
                     </span>
