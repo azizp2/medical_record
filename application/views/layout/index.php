@@ -27,13 +27,14 @@
 
             <!-- LOGO -->
             <div class="topbar-left">
-                <a href="index.html" class="logo">
-                    <span class="logo-light">
+                <a href="<?= base_url() ?>" class="logo">
+                <img src="<?= base_url('assets/images/logo-bakti.png') ?>" style="width: 60px;"/>
+                    <!-- <span class="logo-light">
                         <i class="mdi mdi-camera-control"></i> Stexo
                     </span>
                     <span class="logo-sm">
                         <i class="mdi mdi-camera-control"></i>
-                    </span>
+                    </span> -->
                 </a>
             </div>
 

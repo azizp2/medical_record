@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class C_Medical_Record extends BaseController
+class C_Mst_User extends BaseController
 {
 
 	/**
@@ -28,9 +28,7 @@ class C_Medical_Record extends BaseController
 	{
 		// Load the constructer from MY_Controller
 		parent::__construct();
-		$this->load->model("Medical_Record", "MedicalRecord");
 		$this->load->model("Obat", "Obat");
-
 	}
 
 	/**
@@ -43,8 +41,8 @@ class C_Medical_Record extends BaseController
 	public function index()
 	{
 
-		$data['titlePage'] = "Medical Record";
-		$data['listObat'] = $this->Obat->getAll();
+		$data['titlePage'] = "List Obat";
+		$data['listUsers'] = $this->db->get_where('ch_gen_tbl_user', ['notactive' => 0])->result();
 
 		$this->layout('index', $data);
 	}
@@ -82,12 +80,6 @@ class C_Medical_Record extends BaseController
 		} catch (\Throwable $th) {
 			echo $this->httpResponseCode(400, $th->getMessage());
 		}
-	}
-
-	function getChart()
-	{
-		$row = $this->db->join('tb_obat a','a.id = b.id_obat')->get('tb_temp_cart b')->result();
-		echo json_encode($row);
 	}
 	
 

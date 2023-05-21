@@ -85,4 +85,15 @@ class C_Auth extends CI_Controller
 
 		redirect(base_url("C_Auth"));
 	}
+
+	// function users()
+	// {
+	// 	$data['titlePage'] = "List Users";
+
+	// 	// $data['listUsers'] = $this->db->get_where('ch_gen_tbl_user', ['notactive' => 0])->result();
+	// 	// $data['listUsers'] = $this->db->get_where('ch_gen_tbl_user', ['notactive' => 0])->result();
+
+
+	// 	$this->layout('index', $data);
+	// }
 }
