@@ -121,4 +121,38 @@ class Medical_Record extends CI_Model
 
         return false;
     }
+
+    function getAllKunjungan()
+    {
+        $this->db->select("a.*, keluhan");
+        $this->db->from('tb_pasien a');
+        $this->db->join('tb_anamnesa b', 'a.nik = b.id_pasien');
+        $this->db->where('a.create_date', date("Y-m-d"));
+        $this->db->group_by("a.nik");
+        $sql = $this->db->get();
+        return $sql->result();
+    }
+
+    function getKunjunganById($id)
+    {
+        $this->db->select('a.*, a.catatan as catatan_pasien, keluhan, tinggi_badan, berat_badan, tekanan_darah, pernapasan, detak_jantung, suhu_tubuh,
+        subjektif, objektif, assesment, planning');
+        $this->db->join('tb_anamnesa b', 'a.nik = b.id_pasien', 'left');
+        $this->db->join('tb_diagnosa c', 'a.nik = c.nik', 'left');
+        // $this->db->join('tb_resep d', 'a.nik = d.nik', 'left');
+        $this->db->where("a.id", $id);
+        $this->db->group_by('a.id');
+        $sql = $this->db->get("tb_pasien a")->row();
+
+        $det_obat = $this->db->select("a.*, qty")
+                        ->join('tb_obat a', 'a.id = b.id_obat')
+                        ->where(['nik' => $sql->nik])
+                        ->get('tb_resep b')->result();
+
+        $data = [
+            'hdr' => $sql,
+            'det_obat' => $det_obat,
+        ];
+        return $data;
+    }
 }

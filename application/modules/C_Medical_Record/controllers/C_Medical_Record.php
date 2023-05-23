@@ -40,11 +40,21 @@ class C_Medical_Record extends BaseController
 	 *
 	 * @return [type] [description]
 	 */
-	public function index()
+	public function index($id = null)
 	{
+
+		if($id != null)
+		{
+			$data['row'] = $this->MedicalRecord->getKunjunganById($id);
+			$data['edit'] = true;
+}
 
 		$data['titlePage'] = "Medical Record";
 		$data['listObat'] = $this->Obat->getAll();
+		$data['listKunjungan'] = $this->MedicalRecord->getAllKunjungan();
+
+		// echo json_encode($data);
+		// die;
 
 		$this->layout('index', $data);
 	}

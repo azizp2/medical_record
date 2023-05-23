@@ -83,12 +83,13 @@
                                     </div>
                                 </div>
                             </div>
+                            <?php $d = $row['hdr']; ?>
                             <div class="row" x-show="!showPilihPasien">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>NIK</label>
                                         <div>
-                                            <input type="number" name="nik" class="form-control">
+                                            <input  name="nik" class="form-control" value="<?php echo $d->nik ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +99,7 @@
                                     <div class="form-group">
                                         <label>Nama Depan</label>
                                         <div>
-                                            <input type="text" name="nama_depan" class="form-control">
+                                            <input type="text" name="nama_depan" class="form-control" value="<?php echo $d->nama_depan ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -106,7 +107,7 @@
                                     <div class="form-group">
                                         <label>Nama Belakang</label>
                                         <div>
-                                            <input type="text" name="nama_belakang" class="form-control">
+                                            <input type="text" name="nama_belakang" class="form-control" value="<?php echo $d->nama_belakang ?>">
 
                                         </div>
                                     </div>
@@ -120,8 +121,8 @@
                                             <select class="form-control" name="gender">
                                                 <option disabled selected>...</option>
 
-                                                <option>Pria</option>
-                                                <option>Wanita</option>
+                                                <option <?= $d->gender == 'Pria' ? "selected" : "" ?>>Pria</option>
+                                                <option <?= $d->gender == 'Wanita' ? "selected" : "" ?>>Wanita</option>
                                             </select>
                                         </div>
                                     </div>
@@ -132,10 +133,10 @@
                                         <div>
                                             <select class="form-control" name="golongan_darah">
                                                 <option disabled selected>...</option>
-                                                <option>A</option>
-                                                <option>B</option>
-                                                <option>AB</option>
-                                                <option>O</option>
+                                                <option <?= $d->gender == 'A' ? "selected" : "" ?>>A</option>
+                                                <option <?= $d->gender == 'B' ? "selected" : "" ?>>B</option>
+                                                <option <?= $d->gender == 'AB' ? "selected" : "" ?>>AB</option>
+                                                <option <?= $d->gender == 'O' ? "selected" : "" ?>>O</option>
                                             </select>
                                         </div>
                                     </div>
@@ -146,7 +147,7 @@
                                     <div class="form-group">
                                         <label>Alamat</label>
                                         <div>
-                                            <textarea name="alamat" id="" class="form-control" cols="10" rows="3" placeholder="alamat lengkap pasien"></textarea>
+                                            <textarea name="alamat" id="" class="form-control" cols="10" rows="3" placeholder="alamat lengkap pasien"><?= $d->alamat ?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -154,7 +155,7 @@
                                     <div class="form-group">
                                         <label>Catatan</label>
                                         <div>
-                                            <textarea name="catatan" id="" class="form-control" cols="10" rows="3" placeholder="isi keterangan pasien mengenai riwayat medis atau alergi dll"></textarea>
+                                            <textarea name="catatan" id="" class="form-control" cols="10" rows="3" placeholder="isi keterangan pasien mengenai riwayat medis atau alergi dll"><?= $d->catatan_pasien ?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -162,6 +163,8 @@
                             </div>
                             <hr>
                             <!-- <button type="button" class="btn btn-primary col-md-1 col-sm-2 col-lg-2 btn-pasien">Save</button> -->
+                            <a type="button" class="btn btn-warning btn-sm col-md-2 col-lg-2 col-sm-3" style="padding: 7px;" href="<?= base_url('C_Medical_Record') ?>">Create New</a>
+
                             <a class="btn btn-primary  col-md-1 col-sm-2 col-lg-2" data-toggle="tab" href="#profile" role="tab">Next</a>
                             <button type="button" class="btn btn-success col-md-1 col-sm-2 col-lg-2 btn-find">Find</button>
                         </div>
@@ -174,7 +177,7 @@
                                     <div class="form-group">
                                         <label>Keluhan Pasien</label>
                                         <div>
-                                            <textarea name="keluhan" id="" class="form-control" cols="10" rows="3" placeholder="isi keluhan pasien"></textarea>
+                                            <textarea name="keluhan" id="" class="form-control" cols="10" rows="3" placeholder="isi keluhan pasien"><?= $d->keluhan ?></textarea>
 
                                         </div>
                                     </div>
@@ -187,7 +190,7 @@
                                     <div class="form-group">
                                         <label>Tinggi Badan (cm)</label>
                                         <div>
-                                            <input name="tinggi_badan" type="text" class="form-control">
+                                            <input name="tinggi_badan" type="text" class="form-control" value="<?= $d->tinggi_badan ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -195,7 +198,7 @@
                                     <div class="form-group">
                                         <label>Berat Badan (kg)</label>
                                         <div>
-                                            <input type="text" name="berat_badan" class="form-control">
+                                            <input type="text" name="berat_badan" class="form-control" value="<?= $d->berat_badan ?>">
 
                                         </div>
                                     </div>
@@ -206,7 +209,7 @@
                                     <div class="form-group">
                                         <label>Tekanan Darah (cm)</label>
                                         <div>
-                                            <input type="text" name="tekanan_darah" class="form-control">
+                                            <input type="text" name="tekanan_darah" class="form-control" value="<?= $d->tekanan_darah ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -214,7 +217,7 @@
                                     <div class="form-group">
                                         <label>Pernapasan</label>
                                         <div>
-                                            <input type="text" name="pernapasan" class="form-control">
+                                            <input type="text" name="pernapasan" class="form-control" value="<?= $d->pernapasan ?>">
 
                                         </div>
                                     </div>
@@ -225,7 +228,7 @@
                                     <div class="form-group">
                                         <label>Detak Jantung</label>
                                         <div>
-                                            <input type="text" name="detak_jantung" class="form-control">
+                                            <input type="text" name="detak_jantung" class="form-control" value="<?= $d->detak_jantung ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -233,15 +236,17 @@
                                     <div class="form-group">
                                         <label>Suhu Tubuh</label>
                                         <div>
-                                            <input type="text" name="suhu_tubuh" class="form-control">
+                                            <input type="text" name="suhu_tubuh" class="form-control" value="<?= $d->suhu_tubuh ?>">
 
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <hr>
-                            <a class="btn btn-primary col-md-2 col-lg-3 col-sm-3" data-toggle="tab" href="#messages" role="tab">Next</a>
-                            <button type="button" class="btn btn-success col-md-2 col-lg-3 col-sm-3 btn-find">Find</button>
+                            <a type="button" class="btn btn-warning btn-sm col-md-2 col-lg-2 col-sm-3" style="padding: 7px;" href="<?= base_url('C_Medical_Record') ?>">Create New</a>
+
+                            <a class="btn btn-primary col-md-2 col-lg-2 col-sm-3" data-toggle="tab" href="#messages" role="tab">Next</a>
+                            <button type="button" class="btn btn-success col-md-2 col-lg-2 col-sm-3 btn-find">Find</button>
 
                             
 
@@ -256,7 +261,7 @@
                                     <div class="form-group">
                                         <label>Subjektif</label>
                                         <div>
-                                            <textarea name="subjektif" id="" class="form-control" cols="10" rows="3" placeholder="alamat lengkap pasien"></textarea>
+                                            <textarea name="subjektif" id="" class="form-control" cols="10" rows="3" placeholder="alamat lengkap pasien"><?= $d->subjektif ?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -264,7 +269,7 @@
                                     <div class="form-group">
                                         <label>Objektif</label>
                                         <div>
-                                            <textarea name="objektif" id="" class="form-control" cols="10" rows="3" placeholder="isi keterangan pasien mengenai riwayat medis atau alergi dll"></textarea>
+                                            <textarea name="objektif" id="" class="form-control" cols="10" rows="3" placeholder="isi keterangan pasien mengenai riwayat medis atau alergi dll"><?= $d->objektif ?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -275,7 +280,7 @@
                                     <div class="form-group">
                                         <label>Assesment</label>
                                         <div>
-                                            <textarea name="assesment" id="" class="form-control" cols="10" rows="3" placeholder="alamat lengkap pasien"></textarea>
+                                            <textarea name="assesment" id="" class="form-control" cols="10" rows="3" placeholder="alamat lengkap pasien"><?= $d->assesment ?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -283,7 +288,7 @@
                                     <div class="form-group">
                                         <label>Planning</label>
                                         <div>
-                                            <textarea name="planning" id="" class="form-control" cols="10" rows="3" placeholder="isi keterangan pasien mengenai riwayat medis atau alergi dll"></textarea>
+                                            <textarea name="planning" id="" class="form-control" cols="10" rows="3" placeholder="isi keterangan pasien mengenai riwayat medis atau alergi dll"><?= $d->planning ?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -291,8 +296,9 @@
                             </div>
                             <hr>
                             <!-- <button type="button" class="btn btn-primary col-md-1 btn-pasien">Save</button> -->
-                            <a class="btn btn-primary col-md-2 col-lg-3 col-sm-3" data-toggle="tab" href="#settings" role="tab">Next</a>
-                            <button type="button" class="btn btn-success col-md-2 col-lg-3 col-sm-3 btn-find">Find</button>
+                            <a type="button" class="btn btn-warning btn-sm col-md-2 col-lg-2 col-sm-3" style="padding: 7px;" href="<?= base_url('C_Medical_Record') ?>">Create New</a>
+                            <a class="btn btn-primary col-md-2 col-lg-2 col-sm-3" data-toggle="tab" href="#settings" role="tab">Next</a>
+                            <button type="button" class="btn btn-success col-md-2 col-lg-2 col-sm-3 btn-find">Find</button>
 
 
                         </div>
@@ -340,13 +346,39 @@
                                             <th>Qty</th>
                                             <th>Subtotal</th>
                                         </thead>
+                                        <?php 
+                                            if (isset($edit)) {
+                                                foreach ($row['det_obat'] as $obt) {
+                                                    echo "<tr>";
+                                                    echo "<td>" . $obt->nama_obat . "</td>";
+                                                    echo "<td>" . $obt->qty . "</td>";
+                                                    echo "<td>" . ($obt->harga * $obt->qty) . "</td>";
+                                                    echo "</tr>";
+                                                }
+                                            }
+                                            ?>
+
+                                        <?php if(!isset($edit)) { ?>
                                         <tbody id="loadCart">
+                                           
 
                                         </tbody>
+                                        <?php } ?>
                                     </table>
-                                    <div class="alert alert-danger">
-                                            Tota Tagihan : <b class="grandTotal">Rp. 12.000,00</b>
-                                    </div>
+                                        <div class="alert alert-danger">
+                                            <?php
+                                            $total = 0;
+                                            if (isset($edit)) {
+                                                foreach ($row['det_obat'] as $obt) {
+                                                    $total += ($obt->harga * $obt->qty);
+                                                } ?>
+                                                Tota Tagihan : <b>Rp. <?= number_format($total) ?></b>
+                                            <?php }else{ ?>
+                                                Tota Tagihan : <b class="grandTotal">Rp. <?= number_format($total) ?></b>
+                                                
+                                            <?php } ?>
+                                        </div>
+
                                     </div>
                                 </div><hr>
                                 <div class="col-md-6">
@@ -370,8 +402,9 @@
                                 </div>
                                 </div>
                                 <hr>
-                                <button type="button" class="btn btn-primary btn-pasien col-md-2 col-lg-3 col-sm-3">Save & Complete</button>
-                                 <button type="button" class="btn btn-success col-md-2 col-lg-3 col-sm-3 btn-find pl-4">Find</button>
+                                <a type="button" class="btn btn-warning btn-sm col-md-2 col-lg-2 col-sm-3" style="padding: 7px;" href="<?= base_url('C_Medical_Record') ?>">Create New</a>
+                                <button type="button" class="btn btn-primary btn-pasien col-md-2 col-lg-2 col-sm-3" <?= isset($edit) ? "disabled" : "" ?>>Save & Complete</button>
+                                 <button type="button" class="btn btn-success col-md-2 col-lg-2 col-sm-3 btn-find pl-4">Find</button>
 
                         </div>
                     <!-- End Resept Obat -->
@@ -400,7 +433,54 @@
     </div> -->
 </div>
 
+
+<div class="modal fade" id="modal-find" tabindex="-1" role="dialog" aria-labelledby="modal-findTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">List Of Kunjungan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <table class="datatable table table-striped table-bordered dt-responsive nowrap table-search" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                <thead>
+                    <th>No RKM</th>
+                    <th>NIK</th>
+                    <th>Fullname</th>
+                    <th>Keluhan</th>
+                    <th>Status Pulang</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                <?php foreach($listKunjungan as $val)
+                {
+                    $status_pulang = $val->status_pulang == 1 ? 'Rawat Jalan' : 'Rawat Inap';
+                    echo "<tr>";
+                    echo "<td>$val->id</td>";
+                    echo "<td>$val->nik</td>";
+                    echo "<td>$val->nama_depan $val->nama_belakang</td>";
+                    echo "<td>$val->keluhan</td>";
+                    echo "<td>$status_pulang</td>";
+                    echo "<td>
+                            <a href='".base_url('C_Medical_Record/index/')."$val->id' class='btn btn-primary'>show</a>
+                        </td>";
+                    echo "</tr>";
+                } ?>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+
+$('.btn-find').click(function() {
+    $("#modal-find").modal('show')
+});
+
 
 $('.btn.btn-primary').click(function() {
     // Menghapus class "active" dari semua tab
