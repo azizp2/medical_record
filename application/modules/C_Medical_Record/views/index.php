@@ -112,6 +112,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Umur</label>
+                                        <div>
+                                            <input type="text" name="umur" class="form-control" value="<?php echo $d->umur ?>">
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row" x-show="!showPilihPasien">
                                 <div class="col-md-6">
@@ -167,6 +176,8 @@
 
                             <a class="btn btn-primary  col-md-1 col-sm-2 col-lg-2" data-toggle="tab" href="#profile" role="tab">Next</a>
                             <button type="button" class="btn btn-success col-md-1 col-sm-2 col-lg-2 btn-find">Find</button>
+                            <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2" <?= isset($edit) ? "" : "hidden" ?> target="_blank" href="<?= base_url("C_Medical_Record/cetak/$id") ?>" >Cetak</a>
+
                         </div>
                     <!-- Info Pasien -->
 
@@ -247,6 +258,9 @@
 
                             <a class="btn btn-primary col-md-2 col-lg-2 col-sm-3" data-toggle="tab" href="#messages" role="tab">Next</a>
                             <button type="button" class="btn btn-success col-md-2 col-lg-2 col-sm-3 btn-find">Find</button>
+                            <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2" <?= isset($edit) ? "" : "hidden" ?> target="_blank" href="<?= base_url("C_Medical_Record/cetak/$id") ?>" >Cetak</a>
+
+
 
                             
 
@@ -299,6 +313,9 @@
                             <a type="button" class="btn btn-warning btn-sm col-md-2 col-lg-2 col-sm-3" style="padding: 7px;" href="<?= base_url('C_Medical_Record') ?>">Create New</a>
                             <a class="btn btn-primary col-md-2 col-lg-2 col-sm-3" data-toggle="tab" href="#settings" role="tab">Next</a>
                             <button type="button" class="btn btn-success col-md-2 col-lg-2 col-sm-3 btn-find">Find</button>
+                            <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2" <?= isset($edit) ? "" : "hidden" ?> target="_blank" href="<?= base_url("C_Medical_Record/cetak/$id") ?>" >Cetak</a>
+
+
 
 
                         </div>
@@ -392,7 +409,7 @@
                                 
                             </div>
                             <div class="row">
-                            <div class="col-md-6">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Diperikasa Oleh</label>
                                         <div>
@@ -400,11 +417,125 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div><hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Status Pulang</label>
+                                        <div>
+                                            <select class="form-control" name="status_pulang">
+                                                <option disabled selected>...</option>
+                                                <option value="1">Rawat Jalan</option>
+                                                <option value="2">Rawat Inap</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Kamar</label>
+                                        <div>
+                                            <input name="kamar" type="text" class="form-control" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Tanggal Pulang</label>
+                                        <div>
+                                            <input name="tgl_selesai" type="date" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" x-show="!showPilihPasien">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Pilih Layanan</label>
+                                        <div>
+                                            <select class="form-control" id="id_layanan">
+                                                <option disabled selected>...</option>
+                                                <?php foreach($listLayanan as $val): ?>
+                                                    <option value="<?= $val->id ?>"><?= $val->nama_layanan ?></option>
+                                                <?php endforeach ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Qty</label>
+                                        <div>
+                                        <input type="text" id="qty_layanan" class="form-control">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Action</label>
+                                        <div>
+                                        <button type="button" class="btn btn-primary" onclick="addLayanan()"> Add</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <th>Nama Layanan</th>
+                                            <th>Qty</th>
+                                            <th>Subtotal</th>
+                                        </thead>
+                                        <?php 
+                                            if (isset($edit)) {
+                                                foreach ($row['det_obat'] as $obt) {
+                                                    echo "<tr>";
+                                                    echo "<td>" . $obt->nama_obat . "</td>";
+                                                    echo "<td>" . $obt->qty . "</td>";
+                                                    echo "<td>" . ($obt->harga * $obt->qty) . "</td>";
+                                                    echo "</tr>";
+                                                }
+                                            }
+                                            ?>
+
+                                        <?php if(!isset($edit)) { ?>
+                                        <tbody id="loadLayanan">
+                                           
+
+                                        </tbody>
+                                        <?php } ?>
+                                    </table>
+                                        <div class="alert alert-danger">
+                                            <?php
+                                            $total = 0;
+                                            if (isset($edit)) {
+                                                // foreach ($row['det_obat'] as $obt) {
+                                                //     $total += ($obt->harga * $obt->qty);
+                                                // } 
+                                                ?>
+                                                Total Tagihan : <b>Rp. <?= number_format($total) ?></b>
+                                            <?php }else{ ?>
+                                                Total Tagihan : <b class="grandTotalLayanan">Rp. <?= number_format($total, '2', ',') ?></b>
+                                                
+                                            <?php } ?>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                </div>
+                            
                                 <hr>
                                 <a type="button" class="btn btn-warning btn-sm col-md-2 col-lg-2 col-sm-3" style="padding: 7px;" href="<?= base_url('C_Medical_Record') ?>">Create New</a>
                                 <button type="button" class="btn btn-primary btn-pasien col-md-2 col-lg-2 col-sm-3" <?= isset($edit) ? "disabled" : "" ?>>Save & Complete</button>
-                                 <button type="button" class="btn btn-success col-md-2 col-lg-2 col-sm-3 btn-find pl-4">Find</button>
+                                <button type="button" class="btn btn-success col-md-2 col-lg-2 col-sm-3 btn-find pl-4">Find</button>
+                                <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2" <?= isset($edit) ? "" : "hidden" ?> target="_blank" href="<?= base_url("C_Medical_Record/cetak/$id") ?>" >Cetak</a>
+
 
                         </div>
                     <!-- End Resept Obat -->
@@ -492,6 +623,7 @@ $('.btn.btn-primary').click(function() {
   });
 
     getCart()
+    getLayanan()
     
     $(document).on("click", ".btn-pasien", function() {
         Swal.fire({
@@ -516,23 +648,27 @@ $('.btn.btn-primary').click(function() {
                         },
                         success: function(response) {
                             console.log(response);
-                            // setTimeout(() => {
-                            //     if (response.code == 200) {
-                            //         sw_alert("Success", String(response.message), "success");
-                            //         // setTimeout(() => {
-                            //         //     location.reload()
-                            //         // }, 3000);
-                            //     } else {
-                            //         sw_alert("Error", String(response.message), "error");
-                            //         $('.btn-save').html('Save');
-                            //     }
+                            setTimeout(() => {
+                                if (response.code == 200) {
+                                    sw_alert("Success", String(response.message), "success");
+                                    setTimeout(() => {
+                                        location.reload()
+                                    }, 3000);
+                                } else {
+                                    sw_alert("Error", String(response.message), "error");
+                                    $('.btn-save').html('Save');
+                                }
                                 
-                            // $('.btn-pasien').html('save');
-                            // $('.btn-pasien').attr('disabled', false);
-                            // }, 3000);
+                            $('.btn-pasien').html('save');
+                            $('.btn-pasien').attr('disabled', false);
+                            }, 3000);
 
 
-                        }
+                        },
+                        error:  function (jqXHR, textError) { 
+                            console.log(jqXHR);
+                            console.log(textError);
+                         }
                     });
                 });
             },
@@ -540,34 +676,65 @@ $('.btn.btn-primary').click(function() {
     });
 
     function getCart() {
-    $.ajax({
-        type: "post",
-        url: "<?= base_url("C_Medical_Record/getChart") ?>",
-        dataType: "json",
-        success: function(response) {
-            console.log(response);
-            
-            // Hapus semua baris tr dari tabel sebelumnya
-            $('#loadCart').empty();
-            
-            var grandTotal = 0;
-            $.each(response, function(index, obat) {
-                var row = "<tr>" +
-                    "<td>" + obat.nama_obat + "</td>" +
-                    "<td>" + obat.qty + "</td>" +
-                    "<td>" + obat.qty * obat.harga + "</td>" +
-                    "<td><button type='button' class='btn btn-danger' onclick='deleteCart(" + obat.id + ")'>Delete</button></td>" +
-                    "</tr>";
+        $.ajax({
+            type: "post",
+            url: "<?= base_url("C_Medical_Record/getChart") ?>",
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+                
+                // Hapus semua baris tr dari tabel sebelumnya
+                $('#loadCart').empty();
+                
+                var grandTotal = 0;
+                $.each(response, function(index, obat) {
+                    var row = "<tr>" +
+                        "<td>" + obat.nama_obat + "</td>" +
+                        "<td>" + obat.qty + "</td>" +
+                        "<td>" + obat.qty * obat.harga + "</td>" +
+                        "<td><button type='button' class='btn btn-danger' onclick='deleteCart(" + obat.id + ")'>Delete</button></td>" +
+                        "</tr>";
 
-                $('#loadCart').append(row);
-                grandTotal += obat.qty * obat.harga;
-            });
+                    $('#loadCart').append(row);
+                    grandTotal += obat.qty * obat.harga;
+                });
 
-            // Tampilkan grand total di dalam tabel
-            $('.grandTotal').text(grandTotal);
-        }
-    });
-}
+                // Tampilkan grand total di dalam tabel
+                $('.grandTotal').text(grandTotal);
+            }
+        });
+    }
+
+
+    function getLayanan() {
+        $.ajax({
+            type: "post",
+            url: "<?= base_url("C_Medical_Record/getLayanan") ?>",
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+                
+                // Hapus semua baris tr dari tabel sebelumnya
+                $('#loadLayanan').empty();
+                
+                var grandTotal = 0;
+                $.each(response, function(index, lyn) {
+                    var row = "<tr>" +
+                        "<td>" + lyn.nama_layanan + "</td>" +
+                        "<td>" + lyn.qty + "</td>" +
+                        "<td>" + lyn.qty * lyn.harga + "</td>" +
+                        "<td><button type='button' class='btn btn-danger' onclick='deleteLayanan(" + lyn.id_layanan + ")'>Delete</button></td>" +
+                        "</tr>";
+
+                    $('#loadLayanan').append(row);
+                    grandTotal += lyn.qty * lyn.harga;
+                });
+
+                // Tampilkan grand total di dalam tabel
+                $('.grandTotalLayanan').text(grandTotal);
+            }
+        });
+    }
 
 
     function deleteCart(id)
@@ -597,6 +764,33 @@ $('.btn.btn-primary').click(function() {
         });
     }
 
+
+    function deleteLayanan(id)
+    {
+        $.ajax({
+            type: "get",
+            url: "<?= base_url("C_Medical_Record/deleteLayanan") ?>",
+            data: { id : id},
+            dataType: "json",
+            success: function(response) {
+                if(response.code == 200)
+                {
+                    getLayanan()
+                }else {
+                    sw_alert("Error", String(response.message), "error");
+                }
+                // var grandTotal = 0;
+                // $.each(dataObat, function(index, obat) {
+                //     grandTotal += obat.subtotal;
+                // });
+
+                // Tampilkan grand total di dalam tabel
+
+
+            }
+        });
+    }
+    
     function addCart() {  
         var id_obat = $("#id_obat").find(':selected').val()
         var qty = $("#qty").val()
@@ -622,7 +816,33 @@ $('.btn.btn-primary').click(function() {
         });
 
     }
-    
+
+    function addLayanan() {  
+        var id_layanan = $("#id_layanan").find(':selected').val()
+        var qty = $("#qty_layanan").val()
+        $.ajax({
+            type: "post",
+            url: "<?= base_url("C_Medical_Record/addLayanan") ?>",
+            data: { 
+                id_layanan : id_layanan,
+                qty_layanan : qty,
+            },
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+           
+                if(response.code == 200)
+                {
+                    getLayanan()
+                }else {
+                    sw_alert("Error", String(response.message), "error");
+                }
+               
+            }
+        });
+
+    }
+
 </script>
 
 <?php $this->load->view("_partials/script") ?>
