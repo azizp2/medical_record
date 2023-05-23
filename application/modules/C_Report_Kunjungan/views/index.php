@@ -32,6 +32,7 @@
                             <th>Keluhan</th>
                             <th>Diagnosa</th>
                             <th>Diperiksa Oleh</th>
+                            <th>Action</th>
                         </thead>
                         <tbody>
                         <?php foreach($list as $val)
@@ -48,6 +49,9 @@
                             
                             echo "<td>S : $val->subjektif O : $val->objektif A : $val->assesment P : $val->planning</td>";
                             echo "<td>$val->diperiksa_oleh</td>";
+                            echo "<td>
+                                <a href=".base_url('C_Medical_Record/cetak/').$val->norm." class='btn btn-danger'>Cetak</a>
+                            </td>";
                             echo "</tr>";
                         } ?>
                         </tbody>

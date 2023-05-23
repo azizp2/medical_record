@@ -21,7 +21,7 @@
                             </li>
                         <?php } else { ?>
                             <li>
-                                <a href="<?= $submenu['subMenuLink'] ?>" class="waves-effect">
+                                <a href="<?= base_url($submenu['subMenuLink']) ?>" class="waves-effect">
                                     <!-- <i class="icon-accelerator"></i><span class="badge badge-success badge-pill float-right">9+</span> <span> Dashboard </span> -->
                                     <i class="icon-accelerator"></i></span> <span> <?= $submenu['subMenuTitle'] ?></span>
                                 </a>
