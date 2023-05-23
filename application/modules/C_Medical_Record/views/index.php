@@ -161,7 +161,8 @@
 
                             </div>
                             <hr>
-                            <button type="button" class="btn btn-primary col-md-1 col-sm-2 col-lg-2 btn-pasien">Save</button>
+                            <!-- <button type="button" class="btn btn-primary col-md-1 col-sm-2 col-lg-2 btn-pasien">Save</button> -->
+                            <a class="btn btn-primary  col-md-1 col-sm-2 col-lg-2" data-toggle="tab" href="#profile" role="tab">Next</a>
                             <button type="button" class="btn btn-success col-md-1 col-sm-2 col-lg-2 btn-find">Find</button>
                         </div>
                     <!-- Info Pasien -->
@@ -239,7 +240,10 @@
                                 </div>
                             </div>
                             <hr>
-                            <button type="button" class="btn btn-primary col-md-1 col-sm-2 col-lg-2 btn-pasien">Save</button>
+                            <a class="btn btn-primary col-md-2 col-lg-3 col-sm-3" data-toggle="tab" href="#messages" role="tab">Next</a>
+                            <button type="button" class="btn btn-success col-md-2 col-lg-3 col-sm-3 btn-find">Find</button>
+
+                            
 
                         </div>
                     <!-- End Anamensa -->
@@ -286,7 +290,11 @@
 
                             </div>
                             <hr>
-                            <button type="button" class="btn btn-primary col-md-1 btn-pasien">Save</button>
+                            <!-- <button type="button" class="btn btn-primary col-md-1 btn-pasien">Save</button> -->
+                            <a class="btn btn-primary col-md-2 col-lg-3 col-sm-3" data-toggle="tab" href="#settings" role="tab">Next</a>
+                            <button type="button" class="btn btn-success col-md-2 col-lg-3 col-sm-3 btn-find">Find</button>
+
+
                         </div>
                     <!-- End Diagnosa -->
 
@@ -297,10 +305,10 @@
                                     <div class="form-group">
                                         <label>Reset Obat</label>
                                         <div>
-                                            <select class="form-control">
+                                            <select class="form-control" id="id_obat">
                                                 <option disabled selected>...</option>
                                                 <?php foreach($listObat as $val): ?>
-                                                    <option><?= $val->nama_obat ?></option>
+                                                    <option value="<?= $val->id ?>"><?= $val->nama_obat ?></option>
                                                 <?php endforeach ?>
                                             </select>
                                         </div>
@@ -310,7 +318,7 @@
                                     <div class="form-group">
                                         <label>Qty</label>
                                         <div>
-                                        <input type="text" class="form-control">
+                                        <input type="text" id="qty" class="form-control">
 
                                         </div>
                                     </div>
@@ -319,7 +327,7 @@
                                     <div class="form-group">
                                         <label>Action</label>
                                         <div>
-                                        <button class="btn btn-primary"> Add</button>
+                                        <button type="button" class="btn btn-primary" onclick="addCart()"> Add</button>
 
                                         </div>
                                     </div>
@@ -345,7 +353,7 @@
                                     <div class="form-group">
                                         <label>Catatan</label>
                                         <div>
-                                            <textarea name="" id="" class="form-control" cols="10" rows="3" placeholder="isi keterangan pasien mengenai riwayat medis atau alergi dll"></textarea>
+                                            <textarea name="catatan" id="" class="form-control" cols="10" rows="3" placeholder="isi keterangan pasien mengenai riwayat medis atau alergi dll"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -356,13 +364,15 @@
                                     <div class="form-group">
                                         <label>Diperikasa Oleh</label>
                                         <div>
-                                            <input type="text" class="form-control" placeholder="isi nama dokter yang menangani pasien">
+                                            <input name="diperiksa_oleh" type="text" class="form-control" placeholder="isi nama dokter yang menangani pasien">
                                         </div>
                                     </div>
                                 </div>
                                 </div>
                                 <hr>
-                                <button class="btn btn-primary col-md-2 col-lg-3 col-sm-3">Save & Complete</button>
+                                <button type="button" class="btn btn-primary btn-pasien col-md-2 col-lg-3 col-sm-3">Save & Complete</button>
+                                 <button type="button" class="btn btn-success col-md-2 col-lg-3 col-sm-3 btn-find pl-4">Find</button>
+
                         </div>
                     <!-- End Resept Obat -->
                 </div>
@@ -392,6 +402,15 @@
 
 <script>
 
+$('.btn.btn-primary').click(function() {
+    // Menghapus class "active" dari semua tab
+    $('.nav-tabs .nav-item .nav-link').removeClass('active');
+
+    // Menambahkan class "active" pada tab dengan href yang sesuai
+    var targetHref = $(this).attr('href');
+    $('.nav-tabs .nav-item .nav-link[href="' + targetHref + '"]').addClass('active');
+  });
+
     getCart()
     
     $(document).on("click", ".btn-pasien", function() {
@@ -417,20 +436,20 @@
                         },
                         success: function(response) {
                             console.log(response);
-                            setTimeout(() => {
-                                if (response.code == 200) {
-                                    sw_alert("Success", String(response.message), "success");
-                                    // setTimeout(() => {
-                                    //     location.reload()
-                                    // }, 3000);
-                                } else {
-                                    sw_alert("Error", String(response.message), "error");
-                                    $('.btn-save').html('Save');
-                                }
+                            // setTimeout(() => {
+                            //     if (response.code == 200) {
+                            //         sw_alert("Success", String(response.message), "success");
+                            //         // setTimeout(() => {
+                            //         //     location.reload()
+                            //         // }, 3000);
+                            //     } else {
+                            //         sw_alert("Error", String(response.message), "error");
+                            //         $('.btn-save').html('Save');
+                            //     }
                                 
-                            $('.btn-pasien').html('save');
-                            $('.btn-pasien').attr('disabled', false);
-                            }, 3000);
+                            // $('.btn-pasien').html('save');
+                            // $('.btn-pasien').attr('disabled', false);
+                            // }, 3000);
 
 
                         }
@@ -440,37 +459,88 @@
         });
     });
 
-    function getCart(){
+    function getCart() {
+    $.ajax({
+        type: "post",
+        url: "<?= base_url("C_Medical_Record/getChart") ?>",
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+            
+            // Hapus semua baris tr dari tabel sebelumnya
+            $('#loadCart').empty();
+            
+            var grandTotal = 0;
+            $.each(response, function(index, obat) {
+                var row = "<tr>" +
+                    "<td>" + obat.nama_obat + "</td>" +
+                    "<td>" + obat.qty + "</td>" +
+                    "<td>" + obat.qty * obat.harga + "</td>" +
+                    "<td><button type='button' class='btn btn-danger' onclick='deleteCart(" + obat.id + ")'>Delete</button></td>" +
+                    "</tr>";
+
+                $('#loadCart').append(row);
+                grandTotal += obat.qty * obat.harga;
+            });
+
+            // Tampilkan grand total di dalam tabel
+            $('.grandTotal').text(grandTotal);
+        }
+    });
+}
+
+
+    function deleteCart(id)
+    {
         $.ajax({
-            type: "post",
-            url: "<?= base_url("C_Medical_Record/getChart") ?>",
+            type: "get",
+            url: "<?= base_url("C_Medical_Record/deleteCart") ?>",
+            data: { id : id},
             dataType: "json",
             success: function(response) {
-                console.log(response);
-                var grandTotal = 0;
-                $.each(response, function(index, obat) {
-                    var row = "<tr>" +
-                        "<td>" + obat.nama_obat + "</td>" +
-                        "<td>" + obat.qty + "</td>" +
-                        "<td>" + obat.qty * obat.harga + "</td>" +
-                        "</tr>";
-
-                    $('#loadCart').append(row);
-                    grandTotal += obat.qty * obat.harga
-                });
-
+                getCart()
+                if(response.code == 200)
+                {
+                    getCart()
+                }else {
+                    sw_alert("Error", String(response.message), "error");
+                }
                 // var grandTotal = 0;
                 // $.each(dataObat, function(index, obat) {
                 //     grandTotal += obat.subtotal;
                 // });
 
                 // Tampilkan grand total di dalam tabel
-                $('.grandTotal').text(grandTotal);
 
 
             }
         });
-        
+    }
+
+    function addCart() {  
+        var id_obat = $("#id_obat").find(':selected').val()
+        var qty = $("#qty").val()
+        $.ajax({
+            type: "post",
+            url: "<?= base_url("C_Medical_Record/addCart") ?>",
+            data: { 
+                id_obat : id_obat,
+                qty : qty,
+            },
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+           
+                if(response.code == 200)
+                {
+                    getCart()
+                }else {
+                    sw_alert("Error", String(response.message), "error");
+                }
+               
+            }
+        });
+
     }
     
 </script>

@@ -89,7 +89,37 @@ class C_Medical_Record extends BaseController
 		$row = $this->db->join('tb_obat a','a.id = b.id_obat')->get('tb_temp_cart b')->result();
 		echo json_encode($row);
 	}
+
+	function deleteCart()
+	{
+		$id = $this->input->get('id');
+
+		$exec = $this->MedicalRecord->deleteCart($id);
+
+		if($exec){
+			echo $this->httpResponseCode(200, "Delete Cart Success");
+			return;
+		}
+		echo $this->httpResponseCode(400, "Wrong Queries");
+		return;
+	}
 	
+
+	function addCart()
+	{
+		$param = $this->input->post();
+
+		$param = array_merge($param, ['created_by' => $this->userId]);
+
+		$exec = $this->MedicalRecord->addCart($param);
+
+		if($exec){
+			echo $this->httpResponseCode(200, "Delete Cart Success");
+			return;
+		}
+		echo $this->httpResponseCode(400, "Wrong Queries");
+		return;
+	}
 
 	function getAllAjax()
 	{

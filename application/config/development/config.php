@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost:8070/medical_record/';
+$config['base_url'] = 'http://localhost/medical_record/';
 
 /*
 |--------------------------------------------------------------------------

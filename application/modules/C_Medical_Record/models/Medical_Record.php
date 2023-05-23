@@ -8,55 +8,7 @@ class Medical_Record extends CI_Model
     private $tblContAccept = "ship_tbl_trn_cont_acceptance_dtl";
 
 
-    // Outward
-    function getAllOutwardByParam($param)
-    {
-        if (isset($param['shipment_date'])) {
-            $this->db->where("shipmentdate", $param['shipment_date']);
-        }
-
-        if (isset($param['eta'])) {
-            $this->db->where("eta", $param['eta']);
-        }
-        $this->db->where("tipe", 1);
-
-        $hdr = $this->db->get($this->tblContHdr)->row();
-
-        // zhl_pur_tbl_mst_supplier
-        // zhl_mar_tblmst_customer
-
-        $this->db->select("a.*, stuffing_name, name_supp, customer_name");
-        $this->db->join("zhl_shp_tblmst_stuffing_local b", "b.stuffing_abbr = a.stuffing");
-        $this->db->join("zhl_ship_tbl_mst_supp_whs_for_cont c", "c.id_supp = a.supplier", "left");
-        $this->db->join("zhl_mar_tblmst_customer d", "d.customer_code = a.customer", "left");
-        $this->db->where(["contid" => $hdr->contid]);
-        $det = $this->db->get($this->tblContLocalDet . " a")->result();
-
-
-        $data = [
-            "contHdr" => $hdr,
-            "contLocalDetail" => $det,
-        ];
-
-        return $data;
-    }
-
-    // End Outward
-
-    function getContainerReceived($isReceived, $contid)
-    {
-        $this->db->select("a.*");
-        $this->db->where("contid", $contid);
-        if ($isReceived == true) {
-            $this->db->where("id in(select det_id from ship_tbl_trn_cont_acceptance_dtl)", false, false);
-        } else {
-            $this->db->where("id not in(select det_id from ship_tbl_trn_cont_acceptance_dtl)", false, false);
-        }
-
-        return $this->db->get($this->tblContLocalDet . " a")->result();
-    }
-
-
+ 
     // Save Data
     function store($param)
     {
@@ -118,6 +70,27 @@ class Medical_Record extends CI_Model
         }
         // end anamnesa
 
+        if (!empty($param['diperiksa_oleh'])) {
+            $rows = $this->db->get('tb_temp_cart')->result();
+        
+            $dataresep = array();
+            foreach ($rows as $item) {
+                $dataresep[] = array(
+                    'nik' => $param['nik'],
+                    'id_obat' => $item->id_obat,
+                    'qty' => $item->qty,
+                    'catatan' => $param['catatan'],
+                    'diperiksa_oleh' => $param['diperiksa_oleh']
+                );
+            }
+        
+            if (!empty($dataresep)) {
+                $this->db->insert_batch("tb_resep", $dataresep);
+                $this->db->delete('tb_temp_cart');
+            }
+        }
+        
+
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -127,5 +100,25 @@ class Medical_Record extends CI_Model
             return true;
         }
     }
+    
     // End Save Data
+
+    function deleteCart($id)
+    {
+        $this->db->where('id_obat', $id);
+        $sql = $this->db->delete('tb_temp_cart');
+        if($sql) return true;
+
+        return false;
+
+    }
+
+    function addCart($param)
+    {
+        $sql = $this->db->insert('tb_temp_cart', $param);
+
+        if($sql) return true;
+
+        return false;
+    }
 }
