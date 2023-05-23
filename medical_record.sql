@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3308
--- Generation Time: May 21, 2023 at 08:33 PM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.3.2
+-- Host: 127.0.0.1
+-- Generation Time: May 23, 2023 at 07:41 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -33,14 +32,14 @@ CREATE TABLE `ch_gen_tbl_mst_factory` (
   `factory_name` varchar(150) NOT NULL,
   `factory_abbr` varchar(50) DEFAULT NULL,
   `factory_location` varchar(100) DEFAULT NULL,
-  `factory_address` text,
+  `factory_address` text DEFAULT NULL,
   `factory_phone` varchar(100) DEFAULT NULL,
   `factory_fax` varchar(100) DEFAULT NULL,
   `created_by` varchar(50) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `updated_by` varchar(50) DEFAULT NULL,
   `updated_date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `ch_gen_tbl_mst_factory`
@@ -77,11 +76,11 @@ CREATE TABLE `ch_gen_tbl_user` (
   `otp` varchar(20) DEFAULT NULL,
   `count_otp_req` int(11) DEFAULT NULL,
   `created_by` varchar(50) DEFAULT NULL,
-  `created_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'now()',
+  `created_date` datetime DEFAULT current_timestamp() COMMENT 'now()',
   `updated_by` varchar(50) DEFAULT NULL,
   `updated_date` datetime DEFAULT NULL,
   `factory_id` tinyint(4) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `ch_gen_tbl_user`
@@ -99,7 +98,7 @@ INSERT INTO `ch_gen_tbl_user` (`userid`, `userpassword`, `groupid`, `position_id
 CREATE TABLE `ch_gen_tbl_utl_factory_access` (
   `user_group_id` bigint(20) DEFAULT NULL,
   `factory_id` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `ch_gen_tbl_utl_factory_access`
@@ -117,7 +116,7 @@ INSERT INTO `ch_gen_tbl_utl_factory_access` (`user_group_id`, `factory_id`) VALU
 CREATE TABLE `ch_gen_tbl_utl_menu_access` (
   `user_group_id` bigint(20) NOT NULL,
   `menu_id` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `ch_gen_tbl_utl_menu_access`
@@ -127,6 +126,7 @@ INSERT INTO `ch_gen_tbl_utl_menu_access` (`user_group_id`, `menu_id`) VALUES
 (1, 1000),
 (1, 1100),
 (1, 1200),
+(1, 1300),
 (1, 2000),
 (1, 2100),
 (1, 4000),
@@ -149,7 +149,7 @@ CREATE TABLE `ch_gen_tbl_utl_menu_dtl` (
   `created_date` datetime DEFAULT NULL,
   `updated_by` varchar(50) DEFAULT NULL,
   `updated_date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `ch_gen_tbl_utl_menu_dtl`
@@ -158,6 +158,7 @@ CREATE TABLE `ch_gen_tbl_utl_menu_dtl` (
 INSERT INTO `ch_gen_tbl_utl_menu_dtl` (`menudtl_id`, `menudtl_title`, `menudtl_link`, `menudtl_icon`, `column_group`, `menuhdr_id`, `created_by`, `created_date`, `updated_by`, `updated_date`) VALUES
 (1100, 'Master Obat', 'C_Mst_Obat', 'fa-align-left', NULL, 1000, 'aziz', '2023-05-21 10:50:38', NULL, NULL),
 (1200, 'Master Users', 'C_Mst_User', 'fa-database', NULL, 1000, 'aziz', '2023-05-21 10:51:37', NULL, NULL),
+(1300, 'Layanan', 'C_Mst_Layanan', 'fa-align-left', NULL, 1000, 'aziz', '2023-05-23 19:12:36', NULL, NULL),
 (2100, 'Kunjungan', 'C_Medical_Record', 'fa-align-left', NULL, 2000, 'aziz', '2023-05-21 10:53:27', NULL, NULL),
 (4100, 'Report Kunjungan', 'C_Report_Kunjungan', 'fa-align-left', NULL, 4000, 'aziz', '2023-05-21 11:46:05', NULL, NULL);
 
@@ -177,7 +178,7 @@ CREATE TABLE `ch_gen_tbl_utl_menu_dtlsub` (
   `created_date` datetime DEFAULT NULL,
   `updated_by` varchar(50) DEFAULT NULL,
   `updated_date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -194,7 +195,7 @@ CREATE TABLE `ch_gen_tbl_utl_menu_hdr` (
   `created_date` datetime DEFAULT NULL,
   `updated_by` varchar(50) DEFAULT NULL,
   `updated_date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `ch_gen_tbl_utl_menu_hdr`
@@ -215,12 +216,12 @@ CREATE TABLE `ch_gen_tbl_utl_user_group` (
   `user_group_id` bigint(20) NOT NULL,
   `user_group_name` varchar(100) NOT NULL,
   `user_group_remark` varchar(255) DEFAULT NULL,
-  `not_active` smallint(6) DEFAULT '0',
+  `not_active` smallint(6) DEFAULT 0,
   `created_by` varchar(50) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `updated_by` varchar(50) DEFAULT NULL,
   `updated_date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `ch_gen_tbl_utl_user_group`
@@ -241,12 +242,12 @@ CREATE TABLE `ch_logs` (
   `class_name` varchar(200) DEFAULT NULL,
   `method_name` varchar(100) DEFAULT NULL,
   `message` varchar(100) DEFAULT NULL,
-  `new_value` text,
-  `old_value` text,
-  `exception` text,
+  `new_value` text DEFAULT NULL,
+  `old_value` text DEFAULT NULL,
+  `exception` text DEFAULT NULL,
   `created_by` varchar(50) DEFAULT NULL,
   `log_date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -259,14 +260,14 @@ CREATE TABLE `gen_tbl_mst_factory` (
   `factory_name` varchar(150) NOT NULL,
   `factory_abbr` varchar(50) DEFAULT NULL,
   `factory_location` varchar(100) DEFAULT NULL,
-  `factory_address` text,
+  `factory_address` text DEFAULT NULL,
   `factory_phone` varchar(100) DEFAULT NULL,
   `factory_fax` varchar(100) DEFAULT NULL,
   `created_by` varchar(50) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `updated_by` varchar(50) DEFAULT NULL,
   `updated_date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -282,7 +283,7 @@ CREATE TABLE `gen_tbl_mst_position` (
   `created_date` datetime DEFAULT NULL,
   `updated_by` varchar(50) DEFAULT NULL,
   `updated_date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `gen_tbl_mst_position`
@@ -308,7 +309,7 @@ CREATE TABLE `setting_web` (
   `jadwal_daftar_ulang` date DEFAULT NULL,
   `nama_ketua_panitia` varchar(100) DEFAULT NULL,
   `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -325,21 +326,28 @@ CREATE TABLE `tb_anamnesa` (
   `pernapasan` float DEFAULT NULL,
   `detak_jantung` float DEFAULT NULL,
   `suhu_tubuh` float DEFAULT NULL,
-  `id_pasien` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_pasien` varchar(100) DEFAULT NULL,
+  `create_date` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tb_anamnesa`
 --
 
-INSERT INTO `tb_anamnesa` (`id`, `keluhan`, `tinggi_badan`, `berat_badan`, `tekanan_darah`, `pernapasan`, `detak_jantung`, `suhu_tubuh`, `id_pasien`) VALUES
-(1, '', 0, 0, 0, 0, 0, 0, '213213213'),
-(2, '', 0, 0, 0, 0, 0, 0, '1404082109960003'),
-(3, 'sakit perut', 160, 80, 120, 1210, 121, 12, '1404082109960003'),
-(4, 'sakit gigi', 120, 120, 120, 120, 0, 0, '1404082109960003'),
-(5, 'sakit perut, pilek, mual', 20, 20, 21, 22, 23, 24, '1404082109960003'),
-(6, 'test', 12, 12, 12, 21, 12, 0, '1404082109960003'),
-(7, 'test sakit', 180, 80, 120, 20, 2, 22, '1404082109960003');
+INSERT INTO `tb_anamnesa` (`id`, `keluhan`, `tinggi_badan`, `berat_badan`, `tekanan_darah`, `pernapasan`, `detak_jantung`, `suhu_tubuh`, `id_pasien`, `create_date`) VALUES
+(1, '', 0, 0, 0, 0, 0, 0, '213213213', '2023-05-23'),
+(2, '', 0, 0, 0, 0, 0, 0, '1404082109960003', '2023-05-23'),
+(3, 'sakit perut', 160, 80, 120, 1210, 121, 12, '1404082109960003', '2023-05-23'),
+(4, 'sakit gigi', 120, 120, 120, 120, 0, 0, '1404082109960003', '2023-05-23'),
+(5, 'sakit perut, pilek, mual', 20, 20, 21, 22, 23, 24, '1404082109960003', '2023-05-23'),
+(6, 'test', 12, 12, 12, 21, 12, 0, '1404082109960003', '2023-05-23'),
+(7, 'test sakit', 180, 80, 120, 20, 2, 22, '1404082109960003', '2023-05-23'),
+(8, 'test', 232, 12, 21, 21, 212, 12, '1404082109960004', '2023-05-23'),
+(9, 'test keluhan', 1, 12, 13, 14, 16, 21, '1404082109960005', '2023-05-23'),
+(12, 'asdasf', 121, 1212, 12, 12, 1212, 21, '2212', '2023-05-23'),
+(14, 'dsafasf', 1, 2, 2, 2, 2, 2, '123456789', '2023-05-23'),
+(15, 'sakit kepala sebelah', 21, 2, 2, 2, 2, 2, '1404082109960003', '2023-05-23'),
+(16, 'Sakit Kepala Mual', 170, 76, 120, 90, 89, 32, '14040821009960003', '2023-05-23');
 
 -- --------------------------------------------------------
 
@@ -355,14 +363,43 @@ CREATE TABLE `tb_diagnosa` (
   `assesment` varchar(100) DEFAULT NULL,
   `planning` varchar(100) DEFAULT NULL,
   `nik` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tb_diagnosa`
 --
 
 INSERT INTO `tb_diagnosa` (`id`, `id_pasien`, `subjektif`, `objektif`, `assesment`, `planning`, `nik`) VALUES
-(1, NULL, 'test subjektif', 'test objektif', 'test assesment', 'test planning', '1404082109960003');
+(1, NULL, 'test subjektif', 'test objektif', 'test assesment', 'test planning', '1404082109960003'),
+(2, NULL, 'tes sub', 'tes objek', 'test asess', 'tes plan', '1404082109960004'),
+(3, NULL, 'rwrr', 'wrwr', 'wrw', 'wrwr', '1404082109960005'),
+(6, NULL, 'dsa', 'as', 'as', 'dasd', '2212'),
+(8, NULL, 'ada', 'sfafa', 'sfdas', 'fsadf', '123456789'),
+(9, NULL, 'sadfaf', 'fdsaf', 'sadfas', 'fdasdf', '1404082109960003'),
+(10, NULL, 'pokpk', 'kok', 'okok', 'oko', '14040821009960003');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_layanan`
+--
+
+CREATE TABLE `tb_layanan` (
+  `id` int(11) NOT NULL,
+  `nama_layanan` varchar(100) NOT NULL,
+  `harga` int(11) NOT NULL,
+  `satuan` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_layanan`
+--
+
+INSERT INTO `tb_layanan` (`id`, `nama_layanan`, `harga`, `satuan`) VALUES
+(1, 'Pembuatan Kartu Berobat', 13000, 'kali'),
+(2, 'Biaya Kamar', 10000, 'malam'),
+(3, 'Pemasangan Infus', 50000, 'kali'),
+(4, 'Injeksi', 80000, 'kali');
 
 -- --------------------------------------------------------
 
@@ -376,15 +413,17 @@ CREATE TABLE `tb_obat` (
   `nama_obat` varchar(100) DEFAULT NULL,
   `jenis_obat` varchar(100) DEFAULT NULL,
   `harga` double DEFAULT NULL,
-  `stok` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `stok` int(11) DEFAULT NULL,
+  `satuan` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tb_obat`
 --
 
-INSERT INTO `tb_obat` (`id`, `kode_obat`, `nama_obat`, `jenis_obat`, `harga`, `stok`) VALUES
-(1, '0012', 'Paracetamol @600ml', 'Paracetamol', 12000, 1000);
+INSERT INTO `tb_obat` (`id`, `kode_obat`, `nama_obat`, `jenis_obat`, `harga`, `stok`, `satuan`) VALUES
+(1, '0012', 'Paracetamol @600ml', 'Paracetamol', 12000, 1000, 'tablet'),
+(2, '0012', 'Paracetamol @600ml', 'Paracetamol', 12000, 1000, 'botol');
 
 -- --------------------------------------------------------
 
@@ -400,15 +439,54 @@ CREATE TABLE `tb_pasien` (
   `golongan_darah` varchar(100) DEFAULT NULL,
   `alamat` varchar(100) DEFAULT NULL,
   `catatan` varchar(100) DEFAULT NULL,
-  `nik` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `nik` varchar(100) DEFAULT NULL,
+  `status_pulang` int(11) NOT NULL DEFAULT 1,
+  `create_date` date NOT NULL DEFAULT current_timestamp(),
+  `umur` int(11) NOT NULL,
+  `kamar` varchar(100) NOT NULL,
+  `tgl_selesai` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tb_pasien`
 --
 
-INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`) VALUES
-(22, 'abdul', 'azis', 'Pria', 'A', 'test', 'test', '1404082109960003');
+INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES
+(45, 'fassfa', 'asfasf', 'Pria', 'B', '', '', '123213', 1, '2023-05-23', 0, '', '0000-00-00'),
+(48, 'asdasdad', 'asdasd', 'Wanita', 'A', '', '', '1233', 1, '2023-05-23', 0, '', '0000-00-00'),
+(49, 'wqe', 'qeqe', 'Pria', NULL, '', '1231', '213213', 1, '2023-05-23', 24, '', '0000-00-00'),
+(50, '123', 'wqeqe', 'Pria', NULL, '', '', '12313', 2, '2023-05-23', 25, '', '0000-00-00'),
+(51, 'muhammad', 'nuh', 'Pria', 'A', 'Sungai Guntung, Indragi Hilir, Riau', 'asdfasf', '1404082109960003', 2, '2023-05-23', 22, 'BANGSAL', '2023-05-01'),
+(52, 'ABDUL', 'AZIS', 'Pria', 'A', 'Jala Hibrida No 1', 'tidak terlau sakit, masih normal', '14040821009960003', 2, '2023-05-23', 26, 'cerry', '2023-05-17');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_resep`
+--
+
+CREATE TABLE `tb_resep` (
+  `nik` varchar(100) NOT NULL,
+  `id_obat` int(11) NOT NULL,
+  `diperiksa_oleh` varchar(100) NOT NULL,
+  `catatan` varchar(100) NOT NULL,
+  `qty` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_resep`
+--
+
+INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES
+('2212', 1, 'sada', 'dsad', 1),
+('2212', 2, 'sada', 'dsad', 1),
+('123213', 1, 'asdsad', '', 1),
+('1233', 1, 'qwewewq', '', 1),
+('213213', 1, 'adsad', '1231', 1),
+('123213', 1, '1212', 'asdsad', 1),
+('12313', 1, 'qwewqe', '', 1),
+('1404082109960003', 1, 'asdfdasf', 'asdfasf', 1),
+('14040821009960003', 2, 'dr. Abdullah', 'tidak terlau sakit, masih normal', 2);
 
 -- --------------------------------------------------------
 
@@ -421,14 +499,49 @@ CREATE TABLE `tb_temp_cart` (
   `id_obat` int(11) DEFAULT NULL,
   `qty` int(11) DEFAULT NULL,
   `created_by` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `tb_temp_cart`
+-- Table structure for table `tb_temp_layanan`
 --
 
-INSERT INTO `tb_temp_cart` (`id`, `id_obat`, `qty`, `created_by`) VALUES
-(NULL, 1, 2, NULL);
+CREATE TABLE `tb_temp_layanan` (
+  `id_layanan` int(11) NOT NULL,
+  `nama_layanan` int(11) NOT NULL,
+  `harga` int(11) NOT NULL,
+  `qty` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_trans_layanan`
+--
+
+CREATE TABLE `tb_trans_layanan` (
+  `id` int(11) NOT NULL,
+  `layanan_id` int(11) NOT NULL,
+  `nik` varchar(100) NOT NULL,
+  `qty` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_trans_layanan`
+--
+
+INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES
+(10, 1, '213213', 2),
+(11, 2, '213213', 1),
+(12, 3, '213213', 1),
+(13, 2, '123213', 1),
+(14, 3, '12313', 1),
+(15, 1, '1404082109960003', 1),
+(16, 2, '1404082109960003', 1),
+(17, 4, '1404082109960003', 1),
+(18, 1, '14040821009960003', 1),
+(19, 2, '14040821009960003', 2);
 
 --
 -- Indexes for dumped tables
@@ -501,6 +614,12 @@ ALTER TABLE `tb_diagnosa`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tb_layanan`
+--
+ALTER TABLE `tb_layanan`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tb_obat`
 --
 ALTER TABLE `tb_obat`
@@ -510,6 +629,12 @@ ALTER TABLE `tb_obat`
 -- Indexes for table `tb_pasien`
 --
 ALTER TABLE `tb_pasien`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tb_trans_layanan`
+--
+ALTER TABLE `tb_trans_layanan`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -550,25 +675,37 @@ ALTER TABLE `setting_web`
 -- AUTO_INCREMENT for table `tb_anamnesa`
 --
 ALTER TABLE `tb_anamnesa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tb_diagnosa`
 --
 ALTER TABLE `tb_diagnosa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `tb_layanan`
+--
+ALTER TABLE `tb_layanan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tb_obat`
 --
 ALTER TABLE `tb_obat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_pasien`
 --
 ALTER TABLE `tb_pasien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+
+--
+-- AUTO_INCREMENT for table `tb_trans_layanan`
+--
+ALTER TABLE `tb_trans_layanan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
