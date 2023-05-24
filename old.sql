@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 24, 2023 at 07:37 PM
+-- Generation Time: May 23, 2023 at 07:41 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -130,7 +130,6 @@ INSERT INTO `ch_gen_tbl_utl_menu_access` (`user_group_id`, `menu_id`) VALUES
 (1, 2000),
 (1, 2100),
 (1, 4000),
-(1, 4001),
 (1, 4100);
 
 -- --------------------------------------------------------
@@ -161,7 +160,6 @@ INSERT INTO `ch_gen_tbl_utl_menu_dtl` (`menudtl_id`, `menudtl_title`, `menudtl_l
 (1200, 'Master Users', 'C_Mst_User', 'fa-database', NULL, 1000, 'aziz', '2023-05-21 10:51:37', NULL, NULL),
 (1300, 'Layanan', 'C_Mst_Layanan', 'fa-align-left', NULL, 1000, 'aziz', '2023-05-23 19:12:36', NULL, NULL),
 (2100, 'Kunjungan', 'C_Medical_Record', 'fa-align-left', NULL, 2000, 'aziz', '2023-05-21 10:53:27', NULL, NULL),
-(4001, 'Stok Obat', 'C_Mst_Obat/stok', 'fa-align-left', NULL, 4000, 'aziz', '2023-05-24 17:03:26', NULL, NULL),
 (4100, 'Report Kunjungan', 'C_Report_Kunjungan', 'fa-align-left', NULL, 4000, 'aziz', '2023-05-21 11:46:05', NULL, NULL);
 
 -- --------------------------------------------------------
@@ -349,9 +347,7 @@ INSERT INTO `tb_anamnesa` (`id`, `keluhan`, `tinggi_badan`, `berat_badan`, `teka
 (12, 'asdasf', 121, 1212, 12, 12, 1212, 21, '2212', '2023-05-23'),
 (14, 'dsafasf', 1, 2, 2, 2, 2, 2, '123456789', '2023-05-23'),
 (15, 'sakit kepala sebelah', 21, 2, 2, 2, 2, 2, '1404082109960003', '2023-05-23'),
-(16, 'Sakit Kepala Mual', 170, 76, 120, 90, 89, 32, '14040821009960003', '2023-05-23'),
-(17, 'sdasdsa', 1221, 21, 1, 1, 2, 2, '11231241', '2023-05-24'),
-(18, 'asdasd', 12, 1221, 21, 12, 0, 0, '21321', '2023-05-24');
+(16, 'Sakit Kepala Mual', 170, 76, 120, 90, 89, 32, '14040821009960003', '2023-05-23');
 
 -- --------------------------------------------------------
 
@@ -380,9 +376,7 @@ INSERT INTO `tb_diagnosa` (`id`, `id_pasien`, `subjektif`, `objektif`, `assesmen
 (6, NULL, 'dsa', 'as', 'as', 'dasd', '2212'),
 (8, NULL, 'ada', 'sfafa', 'sfdas', 'fsadf', '123456789'),
 (9, NULL, 'sadfaf', 'fdsaf', 'sadfas', 'fdasdf', '1404082109960003'),
-(10, NULL, 'pokpk', 'kok', 'okok', 'oko', '14040821009960003'),
-(11, NULL, 'asdasd', 'asdsad', 'asdsa', 'dasdsa', '11231241'),
-(12, NULL, 'sadfas', 'fdsaf', 'asfsaf', 'asf', '21321');
+(10, NULL, 'pokpk', 'kok', 'okok', 'oko', '14040821009960003');
 
 -- --------------------------------------------------------
 
@@ -429,7 +423,7 @@ CREATE TABLE `tb_obat` (
 
 INSERT INTO `tb_obat` (`id`, `kode_obat`, `nama_obat`, `jenis_obat`, `harga`, `stok`, `satuan`) VALUES
 (1, '0012', 'Paracetamol @600ml', 'Paracetamol', 12000, 1000, 'tablet'),
-(2, '0012', 'Paracetamol @700ml', 'Paracetamol', 12000, 1000, 'botol');
+(2, '0012', 'Paracetamol @600ml', 'Paracetamol', 12000, 1000, 'botol');
 
 -- --------------------------------------------------------
 
@@ -458,14 +452,12 @@ CREATE TABLE `tb_pasien` (
 --
 
 INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES
-(45, 'fassfa', 'asfasf', 'Pria', 'B', '', '', '123213', 1, '2023-05-21', 0, '', '0000-00-00'),
-(48, 'asdasdad', 'asdasd', 'Wanita', 'A', '', '', '1233', 1, '2023-05-20', 0, '', '0000-00-00'),
+(45, 'fassfa', 'asfasf', 'Pria', 'B', '', '', '123213', 1, '2023-05-23', 0, '', '0000-00-00'),
+(48, 'asdasdad', 'asdasd', 'Wanita', 'A', '', '', '1233', 1, '2023-05-23', 0, '', '0000-00-00'),
 (49, 'wqe', 'qeqe', 'Pria', NULL, '', '1231', '213213', 1, '2023-05-23', 24, '', '0000-00-00'),
 (50, '123', 'wqeqe', 'Pria', NULL, '', '', '12313', 2, '2023-05-23', 25, '', '0000-00-00'),
 (51, 'muhammad', 'nuh', 'Pria', 'A', 'Sungai Guntung, Indragi Hilir, Riau', 'asdfasf', '1404082109960003', 2, '2023-05-23', 22, 'BANGSAL', '2023-05-01'),
-(52, 'ABDUL', 'AZIS', 'Pria', 'A', 'Jala Hibrida No 1', 'tidak terlau sakit, masih normal', '14040821009960003', 2, '2023-05-23', 26, 'cerry', '2023-05-17'),
-(53, 'muhamad', 'sofyan', 'Wanita', 'A', 'sadas', 'asdsad', '11231241', 2, '2023-05-24', 22, 'wqeqewe', '2023-05-26'),
-(54, 'asdasd', 'asdasda', 'Pria', 'AB', '', 'asdfasf', '21321', 1, '2023-05-24', 0, '', '0000-00-00');
+(52, 'ABDUL', 'AZIS', 'Pria', 'A', 'Jala Hibrida No 1', 'tidak terlau sakit, masih normal', '14040821009960003', 2, '2023-05-23', 26, 'cerry', '2023-05-17');
 
 -- --------------------------------------------------------
 
@@ -494,9 +486,7 @@ INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VA
 ('123213', 1, '1212', 'asdsad', 1),
 ('12313', 1, 'qwewqe', '', 1),
 ('1404082109960003', 1, 'asdfdasf', 'asdfasf', 1),
-('14040821009960003', 2, 'dr. Abdullah', 'tidak terlau sakit, masih normal', 2),
-('11231241', 1, 'asdada', 'asdsad', 1),
-('21321', 1, 'sadf', 'asdfasf', 1);
+('14040821009960003', 2, 'dr. Abdullah', 'tidak terlau sakit, masih normal', 2);
 
 -- --------------------------------------------------------
 
@@ -551,9 +541,7 @@ INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES
 (16, 2, '1404082109960003', 1),
 (17, 4, '1404082109960003', 1),
 (18, 1, '14040821009960003', 1),
-(19, 2, '14040821009960003', 2),
-(20, 1, '11231241', 1),
-(21, 3, '11231241', 1);
+(19, 2, '14040821009960003', 2);
 
 --
 -- Indexes for dumped tables
@@ -687,13 +675,13 @@ ALTER TABLE `setting_web`
 -- AUTO_INCREMENT for table `tb_anamnesa`
 --
 ALTER TABLE `tb_anamnesa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tb_diagnosa`
 --
 ALTER TABLE `tb_diagnosa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tb_layanan`
@@ -705,19 +693,19 @@ ALTER TABLE `tb_layanan`
 -- AUTO_INCREMENT for table `tb_obat`
 --
 ALTER TABLE `tb_obat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_pasien`
 --
 ALTER TABLE `tb_pasien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `tb_trans_layanan`
 --
 ALTER TABLE `tb_trans_layanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
