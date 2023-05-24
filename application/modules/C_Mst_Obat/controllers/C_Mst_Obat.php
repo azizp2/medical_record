@@ -85,16 +85,33 @@ class C_Mst_Obat extends BaseController
 				return;
 			}
 
+			if($param['id']>0)
+			{
+				$this->db->where('id', $param['id']);
+				$exec = $this->db->update('tb_obat', $param);
+			}else{
+				$exec = $this->db->insert('tb_obat',$param);
+			}
 
-			$save = $this->db->insert('tb_obat',$param);
-
-			if ($save) {
-				echo $this->httpResponseCode("200", "Save Data Successfully");
+			if ($exec) {
+				$lable = $param['id'] > 0 ? "Update" : "Save";
+				echo $this->httpResponseCode("200", "$lable Data Successfully");
 			} else {
 				echo $this->httpResponseCode("400", "Database Error");
 			}
 		} catch (\Throwable $th) {
 			echo $this->httpResponseCode(400, $th->getMessage());
+		}
+	}
+
+	function delete()
+	{
+		$this->db->where('id', $this->input->post('id'));
+		$sql = $this->db->delete('tb_obat');
+		if ($sql) {
+			echo $this->httpResponseCode("200", "Delete Data Successfully");
+		} else {
+			echo $this->httpResponseCode("400", "Database Error");
 		}
 	}
 	
