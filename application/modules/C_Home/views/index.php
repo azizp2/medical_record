@@ -1,125 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
+<style>
+    .opacity-50 {
+        opacity: 0.5;
+    }
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <title>Stexo - Responsive Admin & Dashboard Template | Themesdesign</title>
-    <meta content="Responsive admin theme build on top of Bootstrap 4" name="description" />
-    <meta content="Themesdesign" name="author" />
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
-
-    <link href="<?= base_url() ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="<?= base_url() ?>assets/css/metismenu.min.css" rel="stylesheet" type="text/css">
-    <link href="<?= base_url() ?>assets/css/icons.css" rel="stylesheet" type="text/css">
-    <link href="<?= base_url() ?>assets/css/style.css" rel="stylesheet" type="text/css">
-    <link href="<?= base_url() ?>assets/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
-
-
-</head>
-
-<body>
-
-    <!-- Begin page -->
-    <div class="accountbg"></div>
-    <div class="home-btn d-none d-sm-block">
-        <!-- <a href="index.html" class="text-white"><i class="fas fa-home h2"></i></a> -->
-    </div>
-    <div class="wrapper-page">
-        <div class="card card-pages shadow-none">
-
+    .pointer-events-none {
+        pointer-events: none;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card m-b-30">
             <div class="card-body">
-                <div class="text-center m-t-0 m-b-15">
-                    <!-- <a href="index.html" class="logo logo-admin"><img src="assets/images/logo-dark.png" alt="" height="24"></a> -->
-                </div>
-                <h5 class="font-18 text-center">Sign In Container Handling</h5>
 
-                <form class="form-horizontal m-t-30" action="index.html" method="post" id="formLogin">
+                <h4 class="mt-0 header-title">Statistik Kunjungan Pasien</h4>
+                <hr>
+                
+                <canvas id="myChart" height="100"></canvas>
 
-                    <div class="form-group">
-                        <div class="col-12">
-                            <label>Username</label>
-                            <input class="form-control user_id" type="text" required="" name="uname" placeholder="Username">
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        <div class="col-12">
-                            <label>Password</label>
-                            <input class="form-control password" type="password" name="password" required="" placeholder="Password">
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        <div class="col-12">
-                            <div class="checkbox checkbox-primary">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                    <label class="custom-control-label" for="customCheck1"> Remember me</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group text-center m-t-20">
-                        <div class="col-12">
-                            <button class="btn btn-primary btn-block btn-lg waves-effect waves-light" id="login" type="button">Log In</button>
-                        </div>
-                    </div>
-
-                    <div class="form-group row m-t-30 m-b-0">
-                        <div class="col-sm-7">
-                            <a href="pages-recoverpw.html" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot your password?</a>
-                        </div>
-                        <div class="col-sm-5 text-right">
-                            <a href="pages-register.html" class="text-muted">Create an account</a>
-                        </div>
-                    </div>
-                </form>
             </div>
-
         </div>
     </div>
-    <!-- END wrapper -->
+    <!-- <div class="col-xl-4">
+        <div class="card m-b-30">
+            <div class="card-body">
 
-    <!-- jQuery  -->
-    <script src="<?= base_url() ?>assets/js/jquery.min.js"></script>
-    <script src="<?= base_url() ?>assets/js/bootstrap.bundle.min.js"></script>
-    <script src="<?= base_url() ?>assets/js/metismenu.min.js"></script>
-    <script src="<?= base_url() ?>assets/js/jquery.slimscroll.js"></script>
-    <script src="<?= base_url() ?>assets/js/waves.min.js"></script>
-    <script src="<?= base_url() ?>assets/plugins/sweet-alert2/sweetalert2.all.min.js"></script>
-    <script src="<?= base_url() ?>assets/js/script.js"></script>
+                <h4 class="mt-0 header-title">Riwayat Kunjungan</h4>
+                <hr>
+                <p class="sub-title">Use the tab JavaScript plugin—include
+                    it individually or through the compiled <code class="highlighter-rouge">bootstrap.js</code>
+                    file—to extend our navigational tabs and pills to create tabbable panes
+                    of local content, even via dropdown menus.</p>
 
 
 
-    <!-- App js -->
-    <script src="<?= base_url() ?>assets/js/app.js"></script>
+            </div>
+        </div>
+    </div> -->
+</div>
+
     <script>
-        $(document).on("click", "#login", function() {
-            $.ajax({
-                url: "<?= base_url('C_Auth/Authorize') ?>",
-                method: "POST",
-                dataType: "JSON",
-                data: $("#formLogin").serialize(),
-                beforeSend: function() {
-                    $('#login').html("<span>Loading...</span>")
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chartData = <?php echo json_encode($chartData); ?>;
+        var labels = [];
+        var rawatJalanData = [];
+        var rawatInapData = [];
+
+        for (var i = 0; i < chartData.length; i++) {
+            labels.push(chartData[i].create_date);
+            rawatJalanData.push(chartData[i].rawat_jalan);
+            rawatInapData.push(chartData[i].rawat_inap);
+        }
+
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Rawat Jalan',
+                    data: rawatJalanData,
+                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    borderWidth: 1
                 },
-                success: function(response) {
-                    if (response == true) {
-                        sw_alert("Login Success", "", "success");
-                        location.reload()
-                    } else {
-                        sw_alert("Login Failed", String(response.message), "error");
-                        $('#login').html("<span>Login</span>")
+                {
+                    label: 'Rawat Inap',
+                    data: rawatInapData,
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
-            })
-
+            }
         });
     </script>
-
-</body>
-
-</html>

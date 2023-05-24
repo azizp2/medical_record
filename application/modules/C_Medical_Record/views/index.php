@@ -41,6 +41,11 @@
                             <span class="d-none d-md-block">Tindakan dan Pengobatan</span><span class="d-block d-md-none"><i class="mdi mdi-settings h5"></i></span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#finish" role="tab">
+                            <span class="d-none d-md-block">Selesai</span><span class="d-block d-md-none"><i class="mdi mdi-settings h5"></i></span>
+                        </a>
+                    </li>
                 </ul>
 
                 <!-- Tab panes -->
@@ -417,7 +422,21 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div><hr>
+                            </div>
+                            <hr>
+                            <!-- <button type="button" class="btn btn-primary col-md-1 btn-pasien">Save</button> -->
+                            <a type="button" class="btn btn-warning btn-sm col-md-2 col-lg-2 col-sm-3" style="padding: 7px;" href="<?= base_url('C_Medical_Record') ?>">Create New</a>
+                            <a class="btn btn-primary col-md-2 col-lg-2 col-sm-3" data-toggle="tab" href="#finish" role="tab">Next</a>
+                            <button type="button" class="btn btn-success col-md-2 col-lg-2 col-sm-3 btn-find">Find</button>
+                            <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2" <?= isset($edit) ? "" : "hidden" ?> target="_blank" href="<?= base_url("C_Medical_Record/cetak/$id") ?>" >Cetak</a>
+
+
+
+                        </div>
+                    <!-- End Resept Obat -->
+                    <!-- Resep Obat -->
+                    <div class="tab-pane p-3" id="finish" role="tabpanel">
+                            
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">

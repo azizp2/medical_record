@@ -7,6 +7,12 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu" id="side-menu">
+            <li>
+                                <a href="<?= base_url() ?>" class="waves-effect">
+                                    <!-- <i class="icon-accelerator"></i><span class="badge badge-success badge-pill float-right">9+</span> <span> Dashboard </span> -->
+                                    <i class="icon-home"></i></span> <span>Dashboard</span>
+                                </a>
+                            </li>
                 <?php foreach ($listMenu as $item) : ?>
                     <li class="menu-title"><?= $item['title'] ?></li>
                     <?php foreach ($item['menuLevel2'] as $submenu) : ?>

@@ -41,13 +41,25 @@ class C_Report_Kunjungan extends BaseController
 	public function index()
 	{
 
+		$param = $this->input->get();
+
+		$from = $param['from'];
+		$to = $param['to'];
+
+		$data['from'] = $from;
+		$data['to'] = $to;
+
 		$data['titlePage'] = "Report Kunjungan";
 		$this->db->select("a.*, a.id as norm, keluhan, c.*, diperiksa_oleh");
         $this->db->from('tb_pasien a');
         $this->db->join('tb_anamnesa b', 'a.nik = b.id_pasien', 'left');
         $this->db->join('tb_diagnosa c', 'a.nik = c.nik', 'left');
         $this->db->join('tb_resep d', 'a.nik = d.nik', 'left');
-        $this->db->where('a.create_date', date("Y-m-d"));
+		if(!isset($param['from'])){
+			$this->db->where('a.create_date', date("Y-m-d"));
+		}else{
+			$this->db->where("a.create_date between '$from' and '$to'",false, false);
+		}
         $this->db->group_by("a.nik");
         $sql = $this->db->get()->result();
 		$data['list'] =  $sql;

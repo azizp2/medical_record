@@ -48,30 +48,45 @@ class C_Mst_Obat extends BaseController
 		$this->layout('index', $data);
 	}
 
+	public function stok()
+	{
+
+		$data['titlePage'] = "Report Stok Obat";
+
+		$data['listObat'] = $this->Obat->getAll();
+
+		$this->layout('stok', $data);
+	}
+
 	function save()
 	{
 		try {
 			$param = $this->input->post();
 			
-			if(strlen($param['nama_depan']) ==0){
-				echo $this->httpResponseCode("400", "nik tidak boleh kosong");
+			if(strlen($param['kode_obat']) ==0){
+				echo $this->httpResponseCode("400", "kode obat tidak boleh kosong");
 				return;
 			}
-			if(strlen($param['nama_depan']) ==0){
+
+			if(strlen($param['nama_obat']) ==0){
+				echo $this->httpResponseCode("400", "nama obat tidak boleh kosong");
+				return;
+			}
+			if(strlen($param['jenis_obat']) ==0){
 				echo $this->httpResponseCode("400", "nama depan tidak boleh kosong");
 				return;
 			}
-			if(strlen($param['nama_belakang']) ==0){
-				echo $this->httpResponseCode("400", "nama belakang tidak boleh kosong");
+			if(strlen($param['harga']) ==0){
+				echo $this->httpResponseCode("400", "harga belakang tidak boleh kosong");
 				return;
 			}
-			if(strlen($param['gender']) ==0){
-				echo $this->httpResponseCode("400", "jenis kelamin tidak boleh kosong");
+			if(strlen($param['stok']) ==0){
+				echo $this->httpResponseCode("400", "stok tidak boleh kosong");
 				return;
 			}
 
 
-			$save = $this->MedicalRecord->store($param);
+			$save = $this->db->insert('tb_obat',$param);
 
 			if ($save) {
 				echo $this->httpResponseCode("200", "Save Data Successfully");

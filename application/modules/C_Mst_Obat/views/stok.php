@@ -14,67 +14,39 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <h4 class="mt-0 header-title">Report Kunjungan</h4>
                 </div>
-                
+                <div class="col-md-6">
+                </div>
             </div>
-                <hr>
-                <form action="<?= base_url('C_Report_Kunjungan') ?>">
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label for="inputEmail4">From Date</label>
-                        <input type="date" name="from" class="form-control" id="inputEmail4" placeholder="Email" required value="<?= $from ?>">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="inputPassword4">To Date</label>
-                        <input type="date" name="to" class="form-control" id="inputPassword4" placeholder="Password" required value="<?= $to ?>">
-                    </div>
-                    <div class="form-group col-md-3 mt-4" style="padding-top: 2px;">
-                        <button type="submit" class="btn btn-danger" onclick="refresh()">Refresh</button>
-                    </div>
-                </div>
-                <form>
-
                
 
-                    <table class="table table-striped table-bordered"  style="border-collapse: collapse; border-spacing: 0; width: 100%; font-size:10px;">
+                    <table class="table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
-                            <th>No. RM</th>
-                            <th>Nama Lengkap</th>
-                            <th>Umur</th>
-                            <th>Tanggal Masuk</th>
-                            <th>Tanggal Keluar</th>
-                            <th>Status Pasien</th>
-                            <th>Keluhan</th>
-                            <th>Diagnosa</th>
-                            <th>Diperiksa Oleh</th>
-                            <th>Action</th>
+                            <th class="nowrap w-10">Kode Obat</th>
+                            <th>Nama Obat</th>
+                            <th>Jenis Obat</th>
+                            <th>Harga</th>
+                            <th>Stok</th>
+                            <th>Subtotal</th>
                         </thead>
                         <tbody>
-                        <?php foreach($list as $val)
+                        <?php foreach($listObat as $val)
                         {
-                            $status_pasien = $val->status_pulang == 1 ? "Rawat Jalan" : "Rawat Inap";
+                            // $total = 0;
                             echo "<tr>";
-                            echo "<td>$val->norm</td>";
-                            echo "<td>$val->nama_depan $val->nama_belakang</td>";
-                            echo "<td>$val->umur Tahun</td>";
-                            echo "<td>$val->create_date</td>";
-                            echo "<td>$val->tgl_selesai</td>";
-                            echo "<td>$status_pasien</td>";
-                            echo "<td>$val->keluhan</td>";
-                            
-                            echo "<td><pre style=text-align:left>S : $val->subjektif 
-O : $val->objektif 
-A : $val->assesment 
-P : $val->planning</pre></td>";
-                            echo "<td>$val->diperiksa_oleh</td>";
-                            echo "<td>
-                                <a href=".base_url('C_Medical_Record/cetak/').$val->norm." class='btn btn-danger'>Cetak</a>
-                            </td>";
+                            echo "<td>$val->kode_obat</td>";
+                            echo "<td>$val->nama_obat</td>";
+                            echo "<td>$val->jenis_obat</td>";
+                            echo "<td>Rp. ". number_format($val->harga, '2','.')."</td>";
+                            echo "<td>$val->stok</td>";
+                            echo "<td>Rp. ". number_format($val->harga * $val->stok, '2','.')."</td>";
+                           
                             echo "</tr>";
+                            $total += $val->harga * $val->stok;
                         } ?>
                         </tbody>
                     </table>
+                    <div class="alert alert-danger col-md-4"><b>Grand Total : Rp. <?= number_format($total, '2','.') ?></b></div>
 
             </div>
         </div>
