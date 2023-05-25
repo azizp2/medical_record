@@ -35,7 +35,7 @@
                         <?php foreach($list as $key=>$val)
                         {
                             echo "<tr>";
-                            echo "<td>".($key+1)."</td>";
+                            echo "<td>".($key+1)."</td>"; 
                             echo "<td>$val->nomor_kamar</td>";
                             echo "<td>$val->jenis_kamar</td>";
                             echo "<td>$val->fasilitas</td>";
