@@ -36,7 +36,7 @@
                             echo "<tr>";
                             echo "<td>$val->nama_layanan</td>";
                             echo "<td>$val->satuan</td>";
-                            echo "<td>Rp. ". number_format($val->harga, '2',',')."</td>";
+                            echo "<td>Rp. ". number_format($val->harga)."</td>";
                             echo "<td>
                                     <button class='btn btn-danger'>Delete</button>
                                     <button class='btn btn-primary'>Edit</button>

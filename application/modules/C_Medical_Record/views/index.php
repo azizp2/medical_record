@@ -418,7 +418,13 @@
                                     <div class="form-group">
                                         <label>Diperikasa Oleh</label>
                                         <div>
-                                            <input name="diperiksa_oleh" type="text" class="form-control" placeholder="isi nama dokter yang menangani pasien">
+                                            <!-- <input name="diperiksa_oleh" type="text" class="form-control" placeholder="isi nama dokter yang menangani pasien"> -->
+                                            <select class="form-control" name="diperiksa_oleh">
+                                                <option disabled selected>...</option>
+                                                <?php foreach($listDokter as $val): ?>
+                                                <option><?= $val->nama ?></option>
+                                                <?php endforeach ?>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -456,7 +462,13 @@
                                     <div class="form-group">
                                         <label>Kamar</label>
                                         <div>
-                                            <input name="kamar" type="text" class="form-control" >
+                                            <!-- <input name="kamar" type="text" class="form-control" > -->
+                                            <select class="form-control" name="kamar">
+                                                <option disabled selected>...</option>
+                                                <?php foreach($listKamar as $val): ?>
+                                                <option><?= $val->nomor_kamar ?></option>
+                                                <?php endforeach ?>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

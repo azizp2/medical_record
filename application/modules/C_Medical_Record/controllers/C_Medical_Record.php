@@ -54,6 +54,8 @@ class C_Medical_Record extends BaseController
 		$data['listObat'] = $this->Obat->getAll();
 		$data['listLayanan'] = $this->db->get('tb_layanan')->result();
 		$data['listKunjungan'] = $this->MedicalRecord->getAllKunjungan();
+		$data['listKamar'] = $this->db->get('tb_mst_kamar')->result();
+		$data['listDokter'] = $this->db->get('tb_mst_dokter')->result();
 
 		$this->layout('index', $data);
 	}

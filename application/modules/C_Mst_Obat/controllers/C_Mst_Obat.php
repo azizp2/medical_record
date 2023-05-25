@@ -53,7 +53,29 @@ class C_Mst_Obat extends BaseController
 
 		$data['titlePage'] = "Report Stok Obat";
 
-		$data['listObat'] = $this->Obat->getAll();
+		$listObat = $this->Obat->getAll();
+		
+		foreach($listObat as $val):
+			$row = $this->db->query("select count(*) as total from tb_resep where id_obat = '$val->id'")->row();
+			$data['listObat'][] = [
+
+
+				'id' => $val->id,
+				'kode_obat' => $val->kode_obat,
+				'nama_obat' => $val->nama_obat,
+				'jenis_obat' => $val->jenis_obat,
+				'harga' => $val->harga,
+				'stok' => $val->stok,
+				'satuan' => $val->satuan,
+				'total_terjual' => $row->total
+			];
+		endforeach;
+
+		// $dataArr = json_decode(json_encode($data['listObat']));
+
+		// echo "<pre>";
+		// print_r($dataArr);
+		// die;
 
 		$this->layout('stok', $data);
 	}

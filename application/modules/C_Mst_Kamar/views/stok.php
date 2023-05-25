@@ -28,31 +28,25 @@
                             <th>Harga</th>
                             <th>Stok</th>
                             <th>Subtotal</th>
-                            <th>Terjual</th>
                         </thead>
                         <tbody>
-                        <?php 
-                        $listObat = json_decode(json_encode($listObat));
-                        foreach($listObat as $val)
+                        <?php foreach($listObat as $val)
                         {
                             // $total = 0;
                             echo "<tr>";
                             echo "<td>$val->kode_obat</td>";
                             echo "<td>$val->nama_obat</td>";
                             echo "<td>$val->jenis_obat</td>";
-                            echo "<td>Rp. ". number_format($val->harga)."</td>";
+                            echo "<td>Rp. ". number_format($val->harga, '2','.')."</td>";
                             echo "<td>$val->stok</td>";
-                            echo "<td>Rp. ". number_format($val->harga * $val->stok)."</td>";
-                            echo "<td>$val->total_terjual</td>";
+                            echo "<td>Rp. ". number_format($val->harga * $val->stok, '2','.')."</td>";
                            
                             echo "</tr>";
                             $total += $val->harga * $val->stok;
-                            $totalTerjual += $val->total_terjual * $val->stok;
                         } ?>
                         </tbody>
                     </table>
-                    <div class="alert alert-danger col-md-4"><b>Grand Total Gudang : Rp. <?= number_format($total) ?></b></div>
-                    <div class="alert alert-danger col-md-4"><b>Grand Total Penjualan : Rp. <?= number_format($totalTerjual) ?></b></div>
+                    <div class="alert alert-danger col-md-4"><b>Grand Total : Rp. <?= number_format($total, '2','.') ?></b></div>
 
             </div>
         </div>

@@ -40,7 +40,7 @@
                             echo "<td>$val->kode_obat</td>";
                             echo "<td>$val->nama_obat</td>";
                             echo "<td>$val->jenis_obat</td>";
-                            echo "<td>Rp. ". number_format($val->harga, '2',',')."</td>";
+                            echo "<td>Rp. ". number_format($val->harga)."</td>";
                             echo "<td>$val->satuan</td>";
                             echo "<td>$val->stok</td>";
                             echo "<td hidden>$val->harga</td>";

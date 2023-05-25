@@ -26,7 +26,7 @@
                     <table class="datatable table table-striped table-bordered dt-responsive nowrap table-search" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                             <th class="nowrap w-10">No</th>
-                            <th>No Kamar</th>
+                            <th>Nama Kamar</th>
                             <th>Jenis Kamar</th>
                             <th>Fasilitas</th>
                             <th>Action</th>
@@ -84,7 +84,7 @@
             <form id="form-data">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">No Kamar</label>
+                        <label for="exampleInputEmail1">Nama Kamar</label>
                         <input type="hidden" class="form-control" name="id">
                         <input type="text" class="form-control" name="nomor_kamar">
                     </div>
