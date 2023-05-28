@@ -12,7 +12,7 @@
         <div class="card m-b-30">
             <div class="card-body">
 
-                <h4 class="mt-0 header-title">Kunjungan Pasien</h4>
+                <h4 class="mt-0 header-title">Rekam Medis</h4>
                 <hr>
                 <p class="sub-title">Use the tab JavaScript plugin—include
                     it individually or through the compiled <code class="highlighter-rouge">bootstrap.js</code>
@@ -23,7 +23,7 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#home" role="tab">
-                            <span class="d-none d-md-block">Personal Info Pasien</span><span class="d-block d-md-none"><i class="mdi mdi-home-variant h5"></i></span>
+                            <span class="d-none d-md-block">Data Pasien</span><span class="d-block d-md-none"><i class="mdi mdi-home-variant h5"></i></span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -74,21 +74,24 @@
                             <div x-show="showPilihPasien" class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Pilih Pasien</label>
-                                        <div>
-                                            <select class="form-control">
-                                                <option disabled selected>...</option>
-
-                                                <option>erwer</option>
-                                                <option>erwer</option>
-                                                <option>erwer</option>
-                                                <option>erwer</option>
+                                        <div> 
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <?php $d = $row['hdr']; ?>
+                            <div class="row" x-show="!showPilihPasien">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Tanggal Kunjungan</label>
+                                        <div>
+                                            <input type="datetime-local" name="create_date" class="form-control" value="<?php echo date("Y-m-d\TH:i:s"); ?>">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row" x-show="!showPilihPasien">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -169,7 +172,7 @@
                                     <div class="form-group">
                                         <label>Catatan</label>
                                         <div>
-                                            <textarea name="catatan" id="" class="form-control" cols="10" rows="3" placeholder="isi keterangan pasien mengenai riwayat medis atau alergi dll"><?= $d->catatan_pasien ?></textarea>
+                                            <textarea name="catatan" id="" class="form-control" cols="10" rows="3" placeholder="isi keterangan pasien mengenai riwayat medis, alergi dsb "><?= $d->catatan_pasien ?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -280,7 +283,7 @@
                                     <div class="form-group">
                                         <label>Subjektif</label>
                                         <div>
-                                            <textarea name="subjektif" id="" class="form-control" cols="10" rows="3" placeholder="alamat lengkap pasien"><?= $d->subjektif ?></textarea>
+                                            <textarea name="subjektif" id="" class="form-control" cols="10" rows="3" placeholder="isikan diagnosa subyektif"><?= $d->subjektif ?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -288,7 +291,7 @@
                                     <div class="form-group">
                                         <label>Objektif</label>
                                         <div>
-                                            <textarea name="objektif" id="" class="form-control" cols="10" rows="3" placeholder="isi keterangan pasien mengenai riwayat medis atau alergi dll"><?= $d->objektif ?></textarea>
+                                            <textarea name="objektif" id="" class="form-control" cols="10" rows="3" placeholder="isikan diagnosa obyektif"><?= $d->objektif ?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -299,15 +302,15 @@
                                     <div class="form-group">
                                         <label>Assesment</label>
                                         <div>
-                                            <textarea name="assesment" id="" class="form-control" cols="10" rows="3" placeholder="alamat lengkap pasien"><?= $d->assesment ?></textarea>
+                                            <textarea name="assesment" id="" class="form-control" cols="10" rows="3" placeholder="isikan saran dokter"><?= $d->assesment ?></textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Planning</label>
+                                        <label>Terapi</label>
                                         <div>
-                                            <textarea name="planning" id="" class="form-control" cols="10" rows="3" placeholder="isi keterangan pasien mengenai riwayat medis atau alergi dll"><?= $d->planning ?></textarea>
+                                            <textarea name="planning" id="" class="form-control" cols="10" rows="3" placeholder="isikan perencanaan dokter untuk kedepan"><?= $d->planning ?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -331,7 +334,7 @@
                             <div class="row" x-show="!showPilihPasien">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Reset Obat</label>
+                                        <label>Obat & BMHP</label>
                                         <div>
                                             <select class="form-control" id="id_obat">
                                                 <option disabled selected>...</option>
@@ -364,7 +367,7 @@
                                     <div class="form-group">
                                     <table class="table table-hover">
                                         <thead>
-                                            <th>Nama Obat</th>
+                                            <th>Obat & BMHP</th>
                                             <th>Qty</th>
                                             <th>Subtotal</th>
                                         </thead>
@@ -407,7 +410,7 @@
                                     <div class="form-group">
                                         <label>Catatan</label>
                                         <div>
-                                            <textarea name="catatan" id="" class="form-control" cols="10" rows="3" placeholder="isi keterangan pasien mengenai riwayat medis atau alergi dll"></textarea>
+                                            <textarea name="catatan" id="" class="form-control" cols="10" rows="3" placeholder="isikan catatan yang diperlukan"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -416,7 +419,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Diperikasa Oleh</label>
+                                        <label>Diperikasa Oleh Dokter</label>
                                         <div>
                                             <!-- <input name="diperiksa_oleh" type="text" class="form-control" placeholder="isi nama dokter yang menangani pasien"> -->
                                             <select class="form-control" name="diperiksa_oleh">
@@ -446,7 +449,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Status Pulang</label>
+                                        <label>Status Pasien</label>
                                         <div>
                                             <select class="form-control" name="status_pulang">
                                                 <option disabled selected>...</option>
@@ -460,7 +463,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Kamar</label>
+                                        <label>Nama Kamar</label>
                                         <div>
                                             <!-- <input name="kamar" type="text" class="form-control" > -->
                                             <select class="form-control" name="kamar">
@@ -486,7 +489,7 @@
                             <div class="row" x-show="!showPilihPasien">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Pilih Layanan</label>
+                                        <label>Pilih Biaya</label>
                                         <div>
                                             <select class="form-control" id="id_layanan">
                                                 <option disabled selected>...</option>
@@ -519,7 +522,7 @@
                                     <div class="form-group">
                                     <table class="table table-hover">
                                         <thead>
-                                            <th>Nama Layanan</th>
+                                            <th>Nama Biaya</th>
                                             <th>Qty</th>
                                             <th>Subtotal</th>
                                         </thead>

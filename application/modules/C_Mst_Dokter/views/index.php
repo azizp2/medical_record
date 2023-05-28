@@ -14,7 +14,7 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <h4 class="mt-0 header-title">List Of Master Dokter</h4>
+                    <h4 class="mt-0 header-title">Daftar Dokter</h4>
                 </div>
                 <div class="col-md-6">
                     <button class='btn btn-primary float-right col-md-3 open-modal'>Tambah Data</button>

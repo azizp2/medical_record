@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <title>Stexo - Responsive Admin & Dashboard Template | Themesdesign</title>
+    <title>SIM-KUPM</title>
     <meta content="Responsive admin theme build on top of Bootstrap 4" name="description" />
     <meta content="Themesdesign" name="author" />
     <link rel="shortcut icon" href="assets/images/favicon.ico">
@@ -33,7 +33,7 @@
                 <div class="text-center m-t-0 m-b-15">
                     <!-- <a href="index.html" class="logo logo-admin"><img src="assets/images/logo-dark.png" alt="" height="24"></a> -->
                 </div>
-                <h5 class="font-18 text-center">Sign In Container Management</h5>
+                <h5 class="font-18 text-center">Selamat Datang di Aplikasi SIM-KUPM</h5>
 
                 <form class="form-horizontal m-t-30" action="index.html" method="post" id="formLogin">
 

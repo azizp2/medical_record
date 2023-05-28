@@ -44,11 +44,16 @@ class C_Home extends BaseController
 	public function index()
 	{
 		$data['titlePage'] ='Dashboard';
-		$data['chartData'] = $this->db->query("SELECT create_date, 
-									SUM(CASE WHEN status_pulang = '1' THEN 1 ELSE 0 END) AS rawat_jalan, 
-									SUM(CASE WHEN status_pulang = '2' THEN 1 ELSE 0 END) AS rawat_inap 
-							FROM tb_pasien 
-							GROUP BY create_date")->result_array();
+		// $data['chartData'] = $this->db->query("SELECT create_date, 
+		// 							SUM(CASE WHEN status_pulang = '1' THEN 1 ELSE 0 END) AS rawat_jalan, 
+		// 							SUM(CASE WHEN status_pulang = '2' THEN 1 ELSE 0 END) AS rawat_inap 
+		// 					FROM tb_pasien 
+		// 					GROUP BY create_date")->result_array();
+		$data['chartData'] = $this->db->query("SELECT MONTH(create_date) AS create_date,
+		SUM(CASE WHEN status_pulang = '1' THEN 1 ELSE 0 END) AS rawat_jalan,
+		SUM(CASE WHEN status_pulang = '2' THEN 1 ELSE 0 END) AS rawat_inap
+		FROM tb_pasien
+		GROUP BY MONTH(create_date)")->result_array();
 
 		// echo "<pre>";
 		// print_r($data);

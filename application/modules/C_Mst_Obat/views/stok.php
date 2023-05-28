@@ -22,13 +22,12 @@
 
                     <table class="table" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
-                            <th class="nowrap w-10">Kode Obat</th>
-                            <th>Nama Obat</th>
-                            <th>Jenis Obat</th>
+                            <th class="nowrap w-10">Kode</th>
+                            <th>Nama Obat/BMHP</th>
+                            <th>Jenis</th>
                             <th>Harga</th>
                             <th>Stok</th>
                             <th>Subtotal</th>
-                            <th>Terjual</th>
                         </thead>
                         <tbody>
                         <?php 
@@ -43,17 +42,14 @@
                             echo "<td>Rp. ". number_format($val->harga)."</td>";
                             echo "<td>$val->stok</td>";
                             echo "<td>Rp. ". number_format($val->harga * $val->stok)."</td>";
-                            echo "<td>$val->total_terjual</td>";
                            
                             echo "</tr>";
                             $total += $val->harga * $val->stok;
-                            $totalTerjual += $val->total_terjual * $val->stok;
                         } ?>
                         </tbody>
                     </table>
-                    <div class="alert alert-danger col-md-4"><b>Grand Total Gudang : Rp. <?= number_format($total) ?></b></div>
-                    <div class="alert alert-danger col-md-4"><b>Grand Total Penjualan : Rp. <?= number_format($totalTerjual) ?></b></div>
-
+                    <div class="alert alert-danger col-md-4"><b>Total Stok : Rp. <?= number_format($total) ?></b></div>
+                    
             </div>
         </div>
     </div>

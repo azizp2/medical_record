@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <title>Stexo - Responsive Admin & Dashboard Template | Themesdesign</title>
+    <title>SIM-KUPM</title>
     <meta content="Responsive admin theme build on top of Bootstrap 4" name="description" />
     <meta content="Themesdesign" name="author" />
     <link rel="shortcut icon" href="<?= base_url() ?>assets/images/favicon.ico">
@@ -28,7 +28,7 @@
             <!-- LOGO -->
             <div class="topbar-left">
                 <a href="<?= base_url() ?>" class="logo">
-                <img src="<?= base_url('assets/images/logo-bakti.png') ?>" style="width: 60px; padding-top: 5px;"/>
+                <img src="<?= base_url('assets/images/logo-kpm.png') ?>" style="width: 150px; padding-top: 15px;"/>
                     <!-- <span class="logo-light">
                         <i class="mdi mdi-camera-control"></i> Stexo
                     </span>
@@ -59,9 +59,9 @@
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-right">
-                                    <li class="breadcrumb-item"><a href="javascript:void(0);">Stexo</a></li>
-                                    <li class="breadcrumb-item"><a href="javascript:void(0);">Tables</a></li>
-                                    <li class="breadcrumb-item active">Data Table</li>
+                                    <li class="breadcrumb-item"><a href="javascript:void(0);"></a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:void(0);"></a></li>
+                                    <li class="breadcrumb-item active"></li>
                                 </ol>
                             </div>
                         </div> <!-- end row -->
@@ -84,7 +84,7 @@
             <!-- content -->
 
             <footer class="footer">
-                © 2019 Stexo <span class="d-none d-sm-inline-block"> - Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesdesign</span>.
+                © KUPM <span class="d-none d-sm-inline-block"> - 2023 <i class="mdi mdi-checkbox-blank"></i> by dr. Ilum Anam, Sp.PD-KGEH</span>.
             </footer>
 
         </div>

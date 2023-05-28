@@ -57,6 +57,8 @@ CREATE TABLE `ch_gen_tbl_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 INSERT INTO `ch_gen_tbl_user` (`userid`, `userpassword`, `groupid`, `position_id`, `jabatan`, `firstname`, `lastname`, `mobilenumber`, `photo`, `email`, `approval`, `notactive`, `telegramid`, `otp`, `count_otp_req`, `created_by`, `created_date`, `updated_by`, `updated_date`, `factory_id`) VALUES ('aziz', '6116afedcb0bc31083935c1c262ff4c9', '1', 1, NULL, 'abdul', 'azis', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '2023-05-21 19:32:38', NULL, NULL, NULL);
+INSERT INTO `ch_gen_tbl_user` (`userid`, `userpassword`, `groupid`, `position_id`, `jabatan`, `firstname`, `lastname`, `mobilenumber`, `photo`, `email`, `approval`, `notactive`, `telegramid`, `otp`, `count_otp_req`, `created_by`, `created_date`, `updated_by`, `updated_date`, `factory_id`) VALUES ('admin', '6116afedcb0bc31083935c1c262ff4c9', NULL, 0, NULL, 'adminstrator', NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '2023-05-28 00:45:15', NULL, NULL, NULL);
+INSERT INTO `ch_gen_tbl_user` (`userid`, `userpassword`, `groupid`, `position_id`, `jabatan`, `firstname`, `lastname`, `mobilenumber`, `photo`, `email`, `approval`, `notactive`, `telegramid`, `otp`, `count_otp_req`, `created_by`, `created_date`, `updated_by`, `updated_date`, `factory_id`) VALUES ('faisal', '8843028fefce50a6de50acdf064ded27', NULL, 0, NULL, 'muhammad faisal', NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '2023-05-28 01:03:07', NULL, NULL, NULL);
 
 
 #
@@ -94,7 +96,9 @@ INSERT INTO `ch_gen_tbl_utl_menu_access` (`user_group_id`, `menu_id`) VALUES ('1
 INSERT INTO `ch_gen_tbl_utl_menu_access` (`user_group_id`, `menu_id`) VALUES ('1', '2100');
 INSERT INTO `ch_gen_tbl_utl_menu_access` (`user_group_id`, `menu_id`) VALUES ('1', '4000');
 INSERT INTO `ch_gen_tbl_utl_menu_access` (`user_group_id`, `menu_id`) VALUES ('1', '4001');
+INSERT INTO `ch_gen_tbl_utl_menu_access` (`user_group_id`, `menu_id`) VALUES ('1', '4002');
 INSERT INTO `ch_gen_tbl_utl_menu_access` (`user_group_id`, `menu_id`) VALUES ('1', '4100');
+INSERT INTO `ch_gen_tbl_utl_menu_access` (`user_group_id`, `menu_id`) VALUES ('1', '4200');
 
 
 #
@@ -124,7 +128,9 @@ INSERT INTO `ch_gen_tbl_utl_menu_dtl` (`menudtl_id`, `menudtl_title`, `menudtl_l
 INSERT INTO `ch_gen_tbl_utl_menu_dtl` (`menudtl_id`, `menudtl_title`, `menudtl_link`, `menudtl_icon`, `column_group`, `menuhdr_id`, `created_by`, `created_date`, `updated_by`, `updated_date`) VALUES ('1500', 'Master Kamar', 'C_Mst_Kamar', 'fa-align-left', NULL, '1000', 'aziz', '2023-05-25 20:56:17', NULL, NULL);
 INSERT INTO `ch_gen_tbl_utl_menu_dtl` (`menudtl_id`, `menudtl_title`, `menudtl_link`, `menudtl_icon`, `column_group`, `menuhdr_id`, `created_by`, `created_date`, `updated_by`, `updated_date`) VALUES ('2100', 'Kunjungan', 'C_Medical_Record', 'fa-align-left', NULL, '2000', 'aziz', '2023-05-21 10:53:27', NULL, NULL);
 INSERT INTO `ch_gen_tbl_utl_menu_dtl` (`menudtl_id`, `menudtl_title`, `menudtl_link`, `menudtl_icon`, `column_group`, `menuhdr_id`, `created_by`, `created_date`, `updated_by`, `updated_date`) VALUES ('4001', 'Stok Obat', 'C_Mst_Obat/stok', 'fa-align-left', NULL, '4000', 'aziz', '2023-05-24 17:03:26', NULL, NULL);
+INSERT INTO `ch_gen_tbl_utl_menu_dtl` (`menudtl_id`, `menudtl_title`, `menudtl_link`, `menudtl_icon`, `column_group`, `menuhdr_id`, `created_by`, `created_date`, `updated_by`, `updated_date`) VALUES ('4002', 'Obat Keluar', 'C_Report_Kunjungan/report_trans_obat', 'fa-align-left', NULL, '4000', 'faisal', '2023-05-28 10:14:52', NULL, NULL);
 INSERT INTO `ch_gen_tbl_utl_menu_dtl` (`menudtl_id`, `menudtl_title`, `menudtl_link`, `menudtl_icon`, `column_group`, `menuhdr_id`, `created_by`, `created_date`, `updated_by`, `updated_date`) VALUES ('4100', 'Report Kunjungan', 'C_Report_Kunjungan', 'fa-align-left', NULL, '4000', 'aziz', '2023-05-21 11:46:05', NULL, NULL);
+INSERT INTO `ch_gen_tbl_utl_menu_dtl` (`menudtl_id`, `menudtl_title`, `menudtl_link`, `menudtl_icon`, `column_group`, `menuhdr_id`, `created_by`, `created_date`, `updated_by`, `updated_date`) VALUES ('4200', 'Resume Dokter', 'C_Report_Kunjungan/resumeDokter', 'fa-align-left', NULL, '4000', 'faisal', '2023-05-28 18:07:00', NULL, NULL);
 
 
 #
@@ -289,7 +295,7 @@ CREATE TABLE `tb_anamnesa` (
   `id_pasien` varchar(100) DEFAULT NULL,
   `create_date` date NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 INSERT INTO `tb_anamnesa` (`id`, `keluhan`, `tinggi_badan`, `berat_badan`, `tekanan_darah`, `pernapasan`, `detak_jantung`, `suhu_tubuh`, `id_pasien`, `create_date`) VALUES (1, '', '0', '0', '0', '0', '0', '0', '213213213', '2023-05-23');
 INSERT INTO `tb_anamnesa` (`id`, `keluhan`, `tinggi_badan`, `berat_badan`, `tekanan_darah`, `pernapasan`, `detak_jantung`, `suhu_tubuh`, `id_pasien`, `create_date`) VALUES (2, '', '0', '0', '0', '0', '0', '0', '1404082109960003', '2023-05-23');
@@ -306,6 +312,13 @@ INSERT INTO `tb_anamnesa` (`id`, `keluhan`, `tinggi_badan`, `berat_badan`, `teka
 INSERT INTO `tb_anamnesa` (`id`, `keluhan`, `tinggi_badan`, `berat_badan`, `tekanan_darah`, `pernapasan`, `detak_jantung`, `suhu_tubuh`, `id_pasien`, `create_date`) VALUES (16, 'Sakit Kepala Mual', '170', '76', '120', '90', '89', '32', '14040821009960003', '2023-05-23');
 INSERT INTO `tb_anamnesa` (`id`, `keluhan`, `tinggi_badan`, `berat_badan`, `tekanan_darah`, `pernapasan`, `detak_jantung`, `suhu_tubuh`, `id_pasien`, `create_date`) VALUES (17, 'sdasdsa', '1221', '21', '1', '1', '2', '2', '11231241', '2023-05-24');
 INSERT INTO `tb_anamnesa` (`id`, `keluhan`, `tinggi_badan`, `berat_badan`, `tekanan_darah`, `pernapasan`, `detak_jantung`, `suhu_tubuh`, `id_pasien`, `create_date`) VALUES (18, 'asdasd', '12', '1221', '21', '12', '0', '0', '21321', '2023-05-24');
+INSERT INTO `tb_anamnesa` (`id`, `keluhan`, `tinggi_badan`, `berat_badan`, `tekanan_darah`, `pernapasan`, `detak_jantung`, `suhu_tubuh`, `id_pasien`, `create_date`) VALUES (19, 'tetesa', '0', '0', '0', '0', '0', '0', '141231', '2023-05-28');
+INSERT INTO `tb_anamnesa` (`id`, `keluhan`, `tinggi_badan`, `berat_badan`, `tekanan_darah`, `pernapasan`, `detak_jantung`, `suhu_tubuh`, `id_pasien`, `create_date`) VALUES (20, 'dfgsggds', '0', '0', '0', '0', '0', '0', '2124141', '2023-05-28');
+INSERT INTO `tb_anamnesa` (`id`, `keluhan`, `tinggi_badan`, `berat_badan`, `tekanan_darah`, `pernapasan`, `detak_jantung`, `suhu_tubuh`, `id_pasien`, `create_date`) VALUES (21, 'safddsaf', '0', '0', '0', '0', '0', '0', '123313', '2023-05-28');
+INSERT INTO `tb_anamnesa` (`id`, `keluhan`, `tinggi_badan`, `berat_badan`, `tekanan_darah`, `pernapasan`, `detak_jantung`, `suhu_tubuh`, `id_pasien`, `create_date`) VALUES (22, 'sadf', '0', '0', '0', '0', '0', '0', '213213213', '2023-05-28');
+INSERT INTO `tb_anamnesa` (`id`, `keluhan`, `tinggi_badan`, `berat_badan`, `tekanan_darah`, `pernapasan`, `detak_jantung`, `suhu_tubuh`, `id_pasien`, `create_date`) VALUES (23, 'sadfas', '0', '0', '0', '0', '0', '0', '12313', '2023-05-28');
+INSERT INTO `tb_anamnesa` (`id`, `keluhan`, `tinggi_badan`, `berat_badan`, `tekanan_darah`, `pernapasan`, `detak_jantung`, `suhu_tubuh`, `id_pasien`, `create_date`) VALUES (24, 'asdasda', '0', '0', '0', '0', '0', '0', '1213213', '2023-05-28');
+INSERT INTO `tb_anamnesa` (`id`, `keluhan`, `tinggi_badan`, `berat_badan`, `tekanan_darah`, `pernapasan`, `detak_jantung`, `suhu_tubuh`, `id_pasien`, `create_date`) VALUES (25, 'sadfasfas', '0', '0', '0', '0', '0', '0', '13212323', '2023-05-28');
 
 
 #
@@ -323,7 +336,7 @@ CREATE TABLE `tb_diagnosa` (
   `planning` varchar(100) DEFAULT NULL,
   `nik` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 INSERT INTO `tb_diagnosa` (`id`, `id_pasien`, `subjektif`, `objektif`, `assesment`, `planning`, `nik`) VALUES (1, NULL, 'test subjektif', 'test objektif', 'test assesment', 'test planning', '1404082109960003');
 INSERT INTO `tb_diagnosa` (`id`, `id_pasien`, `subjektif`, `objektif`, `assesment`, `planning`, `nik`) VALUES (2, NULL, 'tes sub', 'tes objek', 'test asess', 'tes plan', '1404082109960004');
@@ -334,6 +347,13 @@ INSERT INTO `tb_diagnosa` (`id`, `id_pasien`, `subjektif`, `objektif`, `assesmen
 INSERT INTO `tb_diagnosa` (`id`, `id_pasien`, `subjektif`, `objektif`, `assesment`, `planning`, `nik`) VALUES (10, NULL, 'pokpk', 'kok', 'okok', 'oko', '14040821009960003');
 INSERT INTO `tb_diagnosa` (`id`, `id_pasien`, `subjektif`, `objektif`, `assesment`, `planning`, `nik`) VALUES (11, NULL, 'asdasd', 'asdsad', 'asdsa', 'dasdsa', '11231241');
 INSERT INTO `tb_diagnosa` (`id`, `id_pasien`, `subjektif`, `objektif`, `assesment`, `planning`, `nik`) VALUES (12, NULL, 'sadfas', 'fdsaf', 'asfsaf', 'asf', '21321');
+INSERT INTO `tb_diagnosa` (`id`, `id_pasien`, `subjektif`, `objektif`, `assesment`, `planning`, `nik`) VALUES (13, NULL, 'sdfasfas', 'fsaf', 'sadfas', 'fdsadf', '141231');
+INSERT INTO `tb_diagnosa` (`id`, `id_pasien`, `subjektif`, `objektif`, `assesment`, `planning`, `nik`) VALUES (14, NULL, 'dfgsd', 'gsdgds', 'gdsfg', 'sdf', '2124141');
+INSERT INTO `tb_diagnosa` (`id`, `id_pasien`, `subjektif`, `objektif`, `assesment`, `planning`, `nik`) VALUES (15, NULL, 'sadfasf', 'dsafsdaf', 'asfd', 'sdaf', '123313');
+INSERT INTO `tb_diagnosa` (`id`, `id_pasien`, `subjektif`, `objektif`, `assesment`, `planning`, `nik`) VALUES (16, NULL, 'sadfas', 'fasdfa', 'fds', 'fasf', '213213213');
+INSERT INTO `tb_diagnosa` (`id`, `id_pasien`, `subjektif`, `objektif`, `assesment`, `planning`, `nik`) VALUES (17, NULL, 'sadfasfd', 'asdfsa', 'fdsaf', 'dsafdfa', '12313');
+INSERT INTO `tb_diagnosa` (`id`, `id_pasien`, `subjektif`, `objektif`, `assesment`, `planning`, `nik`) VALUES (18, NULL, 'sdasd', 'asdasd', 'asdasd', 'adsdas', '1213213');
+INSERT INTO `tb_diagnosa` (`id`, `id_pasien`, `subjektif`, `objektif`, `assesment`, `planning`, `nik`) VALUES (19, NULL, 'safsa', 'fsadf', 'asfd', 'asdf', '13212323');
 
 
 #
@@ -348,7 +368,7 @@ CREATE TABLE `tb_layanan` (
   `harga` int(11) NOT NULL,
   `satuan` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `tb_layanan` (`id`, `nama_layanan`, `harga`, `satuan`) VALUES (1, 'Pembuatan Kartu Berobat', 13000, 'kali');
 INSERT INTO `tb_layanan` (`id`, `nama_layanan`, `harga`, `satuan`) VALUES (2, 'Biaya Kamar', 10000, 'malam');
@@ -410,8 +430,8 @@ CREATE TABLE `tb_obat` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
-INSERT INTO `tb_obat` (`id`, `kode_obat`, `nama_obat`, `jenis_obat`, `harga`, `stok`, `satuan`) VALUES (1, '0012', 'Paracetamol @600ml', 'Paracetamol', '12000', 1000, 'tablet');
-INSERT INTO `tb_obat` (`id`, `kode_obat`, `nama_obat`, `jenis_obat`, `harga`, `stok`, `satuan`) VALUES (2, '0013', 'kAbrocitinib', 'Obat imunosupresan', '10000', 10, 'kapsul');
+INSERT INTO `tb_obat` (`id`, `kode_obat`, `nama_obat`, `jenis_obat`, `harga`, `stok`, `satuan`) VALUES (1, '0012', 'Paracetamol @600ml', 'Paracetamol', '12000', 988, 'tablet');
+INSERT INTO `tb_obat` (`id`, `kode_obat`, `nama_obat`, `jenis_obat`, `harga`, `stok`, `satuan`) VALUES (2, '0013', 'kAbrocitinib', 'Obat imunosupresan', '10000', 3, 'kapsul');
 INSERT INTO `tb_obat` (`id`, `kode_obat`, `nama_obat`, `jenis_obat`, `harga`, `stok`, `satuan`) VALUES (7, '0014', 'PEGINTERFERON ALFA-2B', 'Vitamin', '7000', 100, 'tablet');
 
 
@@ -431,21 +451,27 @@ CREATE TABLE `tb_pasien` (
   `catatan` varchar(100) DEFAULT NULL,
   `nik` varchar(100) DEFAULT NULL,
   `status_pulang` int(11) NOT NULL DEFAULT 1,
-  `create_date` date NOT NULL DEFAULT current_timestamp(),
+  `create_date` datetime NOT NULL,
   `umur` int(11) NOT NULL,
   `kamar` varchar(100) NOT NULL,
   `tgl_selesai` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
-INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (45, 'fassfa', 'asfasf', 'Pria', 'B', '', '', '123213', 1, '2023-05-21', 0, '', '0000-00-00');
-INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (48, 'asdasdad', 'asdasd', 'Wanita', 'A', '', '', '1233', 1, '2023-05-20', 0, '', '0000-00-00');
-INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (49, 'wqe', 'qeqe', 'Pria', NULL, '', '1231', '213213', 1, '2023-05-23', 24, '', '0000-00-00');
-INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (50, '123', 'wqeqe', 'Pria', NULL, '', '', '12313', 2, '2023-05-23', 25, '', '0000-00-00');
-INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (51, 'muhammad', 'nuh', 'Pria', 'A', 'Sungai Guntung, Indragi Hilir, Riau', 'asdfasf', '1404082109960003', 2, '2023-05-23', 22, 'BANGSAL', '2023-05-01');
-INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (52, 'ABDUL', 'AZIS', 'Pria', 'A', 'Jala Hibrida No 1', 'tidak terlau sakit, masih normal', '14040821009960003', 2, '2023-05-23', 26, 'cerry', '2023-05-17');
-INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (53, 'muhamad', 'sofyan', 'Wanita', 'A', 'sadas', 'asdsad', '11231241', 2, '2023-05-24', 22, 'wqeqewe', '2023-05-26');
-INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (54, 'asdasd', 'asdasda', 'Pria', 'AB', '', 'asdfasf', '21321', 1, '2023-05-24', 0, '', '0000-00-00');
+INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (45, 'fassfa', 'asfasf', 'Pria', 'B', '', '', '123213', 1, '2023-05-21 00:00:00', 0, '', '0000-00-00');
+INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (48, 'asdasdad', 'asdasd', 'Wanita', 'A', '', '', '1233', 1, '2023-05-20 00:00:00', 0, '', '0000-00-00');
+INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (49, 'wqe', 'qeqe', 'Pria', NULL, '', '1231', '213213', 1, '2023-05-23 00:00:00', 24, '', '0000-00-00');
+INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (50, '123', 'wqeqe', 'Pria', NULL, '', '', '12313', 2, '2023-05-23 00:00:00', 25, '', '0000-00-00');
+INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (51, 'muhammad', 'nuh', 'Pria', 'A', 'Sungai Guntung, Indragi Hilir, Riau', 'asdfasf', '1404082109960003', 2, '2023-05-23 00:00:00', 22, 'BANGSAL', '2023-05-01');
+INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (52, 'ABDUL', 'AZIS', 'Pria', 'A', 'Jala Hibrida No 1', 'tidak terlau sakit, masih normal', '14040821009960003', 2, '2023-05-23 00:00:00', 26, 'cerry', '2023-05-17');
+INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (53, 'muhamad', 'sofyan', 'Wanita', 'A', 'sadas', 'asdsad', '11231241', 2, '2023-05-24 00:00:00', 22, 'wqeqewe', '2023-05-26');
+INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (54, 'asdasd', 'asdasda', 'Pria', 'AB', '', 'asdfasf', '21321', 1, '2023-05-24 00:00:00', 0, '', '2023-05-26');
+INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (55, 'Muhammad', 'Ardi', 'Pria', 'A', '', 'test', '141231', 2, '2023-05-28 00:00:00', 28, 'Kamar A', '2023-05-28');
+INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (56, 'sdafaf', 'sdfadfsa', 'Pria', 'AB', '', 'sdgfsdg', '2124141', 2, '2023-05-26 00:00:00', 33, 'Kamar A', '2023-05-04');
+INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (57, 'aasfsdfds', 'sdfdsf', 'Pria', 'B', '', 'asdfdasf', '123313', 2, '0000-00-00 00:00:00', 22, 'Kamar A', '2023-05-30');
+INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (58, 'sfdsf', 'sdfdsf', 'Pria', 'B', 'asdfa', 'sadfsaf', '213213213', 2, '0000-00-00 00:00:00', 22, 'Kamar A', '2023-05-28');
+INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (59, 'asdasda', 'sasda', 'Wanita', 'A', 'asd', 'asdasd', '1213213', 2, '2023-05-28 17:57:37', 22, 'Kamar A', '2023-05-28');
+INSERT INTO `tb_pasien` (`id`, `nama_depan`, `nama_belakang`, `gender`, `golongan_darah`, `alamat`, `catatan`, `nik`, `status_pulang`, `create_date`, `umur`, `kamar`, `tgl_selesai`) VALUES (60, 'Mardani', 'Ali', 'Pria', 'B', 'dsafa', 'asfsad', '13212323', 2, '2023-05-28 17:59:50', 22, 'Kamar B', '2023-05-31');
 
 
 #
@@ -462,17 +488,17 @@ CREATE TABLE `tb_resep` (
   `qty` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('2212', 1, 'sada', 'dsad', 1);
-INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('2212', 2, 'sada', 'dsad', 1);
-INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('123213', 1, 'asdsad', '', 1);
-INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('1233', 1, 'qwewewq', '', 1);
-INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('213213', 1, 'adsad', '1231', 1);
-INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('123213', 1, '1212', 'asdsad', 1);
-INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('12313', 1, 'qwewqe', '', 1);
-INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('1404082109960003', 1, 'asdfdasf', 'asdfasf', 1);
-INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('14040821009960003', 2, 'dr. Abdullah', 'tidak terlau sakit, masih normal', 2);
-INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('11231241', 1, 'asdada', 'asdsad', 1);
-INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('21321', 1, 'sadf', 'asdfasf', 1);
+INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('141231', 1, 'dr. aziz', 'test', 2);
+INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('141231', 2, 'dr. aziz', 'test', 4);
+INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('141231', 7, 'dr. aziz', 'test', 1);
+INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('2124141', 1, 'dr. aziz', 'sdgfsdg', 5);
+INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('2124141', 2, 'dr. aziz', 'sdgfsdg', 1);
+INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('123313', 1, 'dr. aziz', 'asdfdasf', 10);
+INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('123313', 2, 'dr. aziz', 'asdfdasf', 5);
+INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('213213213', 2, 'dr. aziz', 'sadfsaf', 1);
+INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('12313', 1, 'dr. aziz', 'sdfs', 1);
+INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('1213213', 1, 'dr. aziz', 'asdasd', 1);
+INSERT INTO `tb_resep` (`nik`, `id_obat`, `diperiksa_oleh`, `catatan`, `qty`) VALUES ('13212323', 2, 'dr. aziz', 'asfsad', 1);
 
 
 #
@@ -513,7 +539,7 @@ CREATE TABLE `tb_trans_layanan` (
   `nik` varchar(100) NOT NULL,
   `qty` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES (10, 1, '213213', 2);
 INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES (11, 2, '213213', 1);
@@ -527,5 +553,15 @@ INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES (18, 1,
 INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES (19, 2, '14040821009960003', 2);
 INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES (20, 1, '11231241', 1);
 INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES (21, 3, '11231241', 1);
+INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES (22, 1, '141231', 1);
+INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES (23, 1, '2124141', 1);
+INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES (24, 2, '2124141', 1);
+INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES (25, 3, '2124141', 1);
+INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES (26, 4, '2124141', 1);
+INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES (27, 2, '123313', 1);
+INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES (28, 2, '213213213', 1);
+INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES (29, 2, '12313', 1);
+INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES (30, 2, '1213213', 1);
+INSERT INTO `tb_trans_layanan` (`id`, `layanan_id`, `nik`, `qty`) VALUES (31, 1, '13212323', 1);
 
 

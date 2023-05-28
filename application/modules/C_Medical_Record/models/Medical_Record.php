@@ -19,6 +19,7 @@ class Medical_Record extends CI_Model
             $pasien = [
                 'nik' => $param['nik'],
                 'nama_depan' => $param['nama_depan'],
+                'create_date' => date('Y-m-d H:i:s', strtotime($param['create_date'])),
                 'nama_belakang' => $param['nama_belakang'],
                 'gender' => $param['gender'],
                 'alamat' => $param['alamat'],
