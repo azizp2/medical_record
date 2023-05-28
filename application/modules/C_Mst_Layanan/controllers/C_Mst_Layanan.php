@@ -54,28 +54,31 @@ class C_Mst_Layanan extends BaseController
 		try {
 			$param = $this->input->post();
 			
-			if(strlen($param['nama_depan']) ==0){
-				echo $this->httpResponseCode("400", "nik tidak boleh kosong");
+			if(strlen($param['nama_layanan']) ==0){
+				echo $this->httpResponseCode("400", "nama layanan tidak boleh kosong");
 				return;
 			}
-			if(strlen($param['nama_depan']) ==0){
-				echo $this->httpResponseCode("400", "nama depan tidak boleh kosong");
+			if(strlen($param['harga']) ==0){
+				echo $this->httpResponseCode("400", "harga tidak boleh kosong");
 				return;
 			}
-			if(strlen($param['nama_belakang']) ==0){
-				echo $this->httpResponseCode("400", "nama belakang tidak boleh kosong");
-				return;
-			}
-			if(strlen($param['gender']) ==0){
-				echo $this->httpResponseCode("400", "jenis kelamin tidak boleh kosong");
+			if(strlen($param['satuan']) ==0){
+				echo $this->httpResponseCode("400", "satuan tidak boleh kosong");
 				return;
 			}
 
-
-			$save = $this->MedicalRecord->store($param);
+			if($param['id'] > 0)
+			{
+				$this->db->where('id', $param['id']);
+				$save = $this->db->update('tb_layanan', $param);	
+				$action = "Update";			
+			}else{
+				$save = $this->db->insert('tb_layanan', $param);				
+				$action = "Save";			
+			}
 
 			if ($save) {
-				echo $this->httpResponseCode("200", "Save Data Successfully");
+				echo $this->httpResponseCode("200", "$action Data Successfully");
 			} else {
 				echo $this->httpResponseCode("400", "Database Error");
 			}
@@ -83,33 +86,17 @@ class C_Mst_Layanan extends BaseController
 			echo $this->httpResponseCode(400, $th->getMessage());
 		}
 	}
+
+	function delete()
+	{
+		$this->db->where('id', $this->input->post('id'));
+		$sql = $this->db->delete('tb_layanan');
+		if ($sql) {
+			echo $this->httpResponseCode("200", "Delete Data Successfully");
+		} else {
+			echo $this->httpResponseCode("400", "Database Error");
+		}
+	}
 	
 
-	function getAllAjax()
-	{
-		$param = $this->input->post();
-
-		$data['getOutward'] = $this->Container->getAllOutwardByParam($param);
-		$contid = $data['getOutward']['contHdr']->contid;
-		$data['containerReceived'] = $this->Container->getContainerReceived(true, $contid);
-		$isNotReceived = $this->Container->getContainerReceived(false, $contid);
-		$data['disabledButton'] = "";
-		$data['message'] = "";
-
-		if (count($isNotReceived) == 0) {
-			$data['disabledButton'] = "disabled";
-			$data['message'] = 'All containers have been received';
-		}
-
-
-		if ($contid == null) {
-			echo $this->httpResponseCode("400", "Data Not Found");
-			die;
-		}
-		$data['containerNotReceived'] = count($isNotReceived);
-
-
-
-		$this->load->view("_data/loadOutwardAjax", $data);
-	}
 }

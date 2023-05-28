@@ -64,8 +64,8 @@ class C_Medical_Record extends BaseController
 	{
 		try {
 			$param = $this->input->post();
-			
-			
+
+
 			if(strlen($param['nik']) ==0){
 				echo $this->httpResponseCode("400", "nik tidak boleh kosong");
 				return;
@@ -212,5 +212,13 @@ class C_Medical_Record extends BaseController
 		// print_r($data);
 		// die;
 		$this->load->view('cetak', $data);
+	}
+	function cetak_dokter($id)
+	{
+		$data['row'] = $this->MedicalRecord->getKunjunganById($id);
+		// echo "<pre>";
+		// print_r($data);
+		// die;
+		$this->load->view('cetak-dokter', $data);
 	}
 }

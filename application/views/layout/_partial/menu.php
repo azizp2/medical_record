@@ -10,7 +10,7 @@
             <li>
                                 <a href="<?= base_url() ?>" class="waves-effect">
                                     <!-- <i class="icon-accelerator"></i><span class="badge badge-success badge-pill float-right">9+</span> <span> Dashboard </span> -->
-                                    <i class="icon-home"></i></span> <span>Dashboard</span>
+                                    <i class="icon-home"></i></span> <span>Beranda</span>
                                 </a>
                             </li>
                 <?php foreach ($listMenu as $item) : ?>

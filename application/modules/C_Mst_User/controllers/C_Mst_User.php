@@ -51,63 +51,84 @@ class C_Mst_User extends BaseController
 	{
 		try {
 			$param = $this->input->post();
-			
-			if(strlen($param['nama_depan']) ==0){
-				echo $this->httpResponseCode("400", "nik tidak boleh kosong");
-				return;
-			}
-			if(strlen($param['nama_depan']) ==0){
-				echo $this->httpResponseCode("400", "nama depan tidak boleh kosong");
-				return;
-			}
-			if(strlen($param['nama_belakang']) ==0){
-				echo $this->httpResponseCode("400", "nama belakang tidak boleh kosong");
-				return;
-			}
-			if(strlen($param['gender']) ==0){
-				echo $this->httpResponseCode("400", "jenis kelamin tidak boleh kosong");
+			$firstname = trim($param['firstname']);
+			$userid = trim($param['userid']);
+			$password = trim($param['password']);
+			$c_password = trim($param['c_password']);
+
+			if (empty($firstname)) {
+				echo $this->httpResponseCode("400", "Fullname tidak boleh kosong");
 				return;
 			}
 
+			if (empty($userid)) {
+				echo $this->httpResponseCode("400", "Userid tidak boleh kosong");
+				return;
+			}
 
-			$save = $this->MedicalRecord->store($param);
+			$cekUser = $this->db->get_where('ch_gen_tbl_user', ['userid' => $userid])->row();
+
+			$hashedPassword = md5(sha1(strtolower($password)));
+
+			$data = [
+				'firstname' => $firstname,
+				'userid' => $userid,
+			];
+
+			if ($cekUser) {
+				if (!empty($password) && !empty($c_password)) {
+					if (empty($password)) {
+						echo $this->httpResponseCode("400", "Password tidak boleh kosong");
+						return;
+					}
+					if (empty($c_password)) {
+						echo $this->httpResponseCode("400", "Confirm password tidak boleh kosong");
+						return;
+					}
+
+					$data['userpassword'] = $hashedPassword;
+				}
+
+				$this->db->where('userid', $userid);
+				$save = $this->db->update('ch_gen_tbl_user', $data);
+				$action = 'Update';
+			} else {
+				if (empty($password)) {
+					echo $this->httpResponseCode("400", "Password tidak boleh kosong");
+					return;
+				}
+				if (empty($c_password)) {
+					echo $this->httpResponseCode("400", "Confirm password tidak boleh kosong");
+					return;
+				}
+
+				$data['userpassword'] = $hashedPassword;
+				$save = $this->db->insert('ch_gen_tbl_user', $data);
+				$action = 'Save';
+			}
 
 			if ($save) {
-				echo $this->httpResponseCode("200", "Save Data Successfully");
+				echo $this->httpResponseCode("200", "$action Data Successfully");
 			} else {
 				echo $this->httpResponseCode("400", "Database Error");
 			}
+
 		} catch (\Throwable $th) {
 			echo $this->httpResponseCode(400, $th->getMessage());
 		}
 	}
+
+	function delete()
+	{
+		$this->db->where('userid', $this->input->post('id'));
+		$sql = $this->db->delete('ch_gen_tbl_user');
+		if ($sql) {
+			echo $this->httpResponseCode("200", "Delete Data Successfully");
+		} else {
+			echo $this->httpResponseCode("400", "Database Error");
+		}
+	}
 	
 
-	function getAllAjax()
-	{
-		$param = $this->input->post();
 
-		$data['getOutward'] = $this->Container->getAllOutwardByParam($param);
-		$contid = $data['getOutward']['contHdr']->contid;
-		$data['containerReceived'] = $this->Container->getContainerReceived(true, $contid);
-		$isNotReceived = $this->Container->getContainerReceived(false, $contid);
-		$data['disabledButton'] = "";
-		$data['message'] = "";
-
-		if (count($isNotReceived) == 0) {
-			$data['disabledButton'] = "disabled";
-			$data['message'] = 'All containers have been received';
-		}
-
-
-		if ($contid == null) {
-			echo $this->httpResponseCode("400", "Data Not Found");
-			die;
-		}
-		$data['containerNotReceived'] = count($isNotReceived);
-
-
-
-		$this->load->view("_data/loadOutwardAjax", $data);
-	}
 }

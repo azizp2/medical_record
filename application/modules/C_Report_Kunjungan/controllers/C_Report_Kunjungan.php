@@ -63,12 +63,90 @@ class C_Report_Kunjungan extends BaseController
         $this->db->group_by("a.nik");
         $sql = $this->db->get()->result();
 		$data['list'] =  $sql;
-// echo"<pre>";
-// print_r($data);die;
+
 
 		$this->layout('index', $data);
 	}
 
+	public function ResumeDokter()
+	{
+
+		$param = $this->input->get();
+
+		$from = $param['from'];
+		$to = $param['to'];
+
+		$data['from'] = $from;
+		$data['to'] = $to;
+
+		$data['titlePage'] = "Report Kunjungan";
+		$this->db->select("a.*, a.id as norm, keluhan, c.*, diperiksa_oleh");
+        $this->db->from('tb_pasien a');
+        $this->db->join('tb_anamnesa b', 'a.nik = b.id_pasien', 'left');
+        $this->db->join('tb_diagnosa c', 'a.nik = c.nik', 'left');
+        $this->db->join('tb_resep d', 'a.nik = d.nik', 'left');
+		if(!isset($param['from'])){
+			$this->db->where('a.create_date', date("Y-m-d"));
+		}else{
+			$this->db->where("a.create_date between '$from' and '$to'",false, false);
+		}
+        $this->db->group_by("a.nik");
+        $sql = $this->db->get()->result();
+		$data['list'] =  $sql;
+
+
+		$this->layout('resume', $data);
+	}
+
+	public function report_trans_obat()
+	{
+
+		$param = $this->input->get();
+
+		$from = $param['from'];
+		$to = $param['to'];
+
+		$data['from'] = $from;
+		$data['to'] = $to;
+
+		$data['titlePage'] = "Report Kunjungan";
+
+
+		$this->db->select("*");
+        $this->db->from('tb_obat');
+        $sql = $this->db->get()->result();
+
+		$data['listObat'] =  $sql;
+
+		$this->db->select("a.create_date, b.*")
+			->from("tb_pasien a")
+			->join("tb_resep b", "a.nik = b.nik");
+
+		if (!isset($param['from'])) {
+			$this->db->like('a.create_date', date("Y-m-d"));
+		} else {
+			$from = $param['from'];
+			$to = $param['to'];
+
+			$this->db->where("a.create_date BETWEEN '{$from} 00:00:00' AND '{$to} 23:59:59'");
+		}
+
+		$this->db->order_by('a.create_date desc');
+		$sql2 = $this->db->get()->result();
+
+
+
+		$data['listTrans'] =$sql2;
+
+		// echo "<pre>";
+		// print_r($data);
+		// die;
+
+
+
+		$this->layout('index-trans-obat', $data);
+	}
+	
 	function save()
 	{
 		try {

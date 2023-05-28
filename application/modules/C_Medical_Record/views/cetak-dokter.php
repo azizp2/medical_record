@@ -47,16 +47,7 @@
         </td>
         <td align="center"><b></td>
     </tr>
-    <tr>
-        <td align="left" style="width:200px;"><b>Tanggal Masuk</td>
-        <td align="left"><b>: <?= $row['hdr']->create_date ?></td>
-        <td align="center"><b></td>
-    </tr>
-    <tr>
-        <td align="left" style="width:200px;"><b>Tanggal Keluar</td>
-        <td align="left"><b>: <?= $row['hdr']->tgl_selesai ?></td>
-        <td align="center"><b></td>
-    </tr>
+
 </table>
 
 <br>
@@ -64,10 +55,6 @@
 <tr>
     <th style="width: 10px;">No</th>
     <th>Description</th>
-    <th>Jumlah</th>
-    <th>Satuan</th>
-    <th>Harga</th>
-    <th>Total</th>
 </tr>
 <?php foreach($row['det_obat'] as $key => $obt): 
     // $total = 0;
@@ -75,52 +62,6 @@
 <tr>
     <td><?= $key +1 ?></td>
     <td><?= $obt->nama_obat ?></td>
-    <td><?= $obt->qty ?></td>
-    <td><?= $obt->satuan ?></td>
-    <td>Rp. <?= number_format($obt->harga,) ?></td>
-    <td>Rp. <?= number_format($obt->harga * $obt->qty,) ?></td>
 </tr>
 <?php
-    $total += $obt->harga * $obt->qty;
 endforeach; ?>
-<tr>
-    <td colspan="6" align="center"><b>Obat Obatan & BHP</b></td>
-</tr>
-<?php foreach($row['det_layanan'] as $key => $obt): 
-    // $total2 = 0;
-    ?>
-<tr>
-    <td><?= $key +1 ?></td>
-    <td><?= $obt->nama_layanan ?></td>
-    <td><?= $obt->qty ?></td>
-    <td><?= $obt->satuan ?></td>
-    <td>Rp. <?= number_format($obt->harga,) ?></td>
-    <td>Rp. <?= number_format($obt->harga * $obt->qty,) ?></td>
-</tr>
-<?php 
-    $total2 += $obt->harga * $obt->qty;
-endforeach; ?>
-<tr>
-    <td colspan="5" align="center"><b>Total </b></td>
-    <td>Rp.  <?= number_format($total + $total2,) ?></td>
-</tr>
-</table>
-
-
-<table style="width: 100%;">
-<tr>
-<td style="width: 50%; text-align: center;">Adminstrasi</td>
-    <td style="width: 50%;  text-align: center;">
-        Pasien / Keluarga Pasien<br>
-        Meulaboh, <?= date("d F Y") ?>
-    </td>
-</tr>
-<tr>
-    <td style="height: 60px;"></td>
-</tr>
-<tr>
-<td style="width: 50%; text-align: center;"><b>Klinik Utama Permata Medika</b></td>
-<td style="width: 50%; text-align: center;"><b>( <?= $row['hdr']->nama_depan." ".$row['hdr']->nama_belakang ?>)</b></td>
-    
-</tr>
-</table>

@@ -14,7 +14,7 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <h4 class="mt-0 header-title">List Of Master Obat</h4>
+                    <h4 class="mt-0 header-title">Data Obat & BMHP</h4>
                 </div>
                 <div class="col-md-6">
                     <button class='btn btn-primary float-right col-md-3 open-modal'>Tambah Data</button>
@@ -25,9 +25,9 @@
 
                     <table class="datatable table table-striped table-bordered dt-responsive nowrap table-search" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
-                            <th class="nowrap w-10">Kode Obat</th>
-                            <th>Nama Obat</th>
-                            <th>Jenis Obat</th>
+                            <th class="nowrap w-10">Kode</th>
+                            <th>Nama Obat/BMHP</th>
+                            <th>Jenis</th>
                             <th>Harga</th>
                             <th>Satuan</th>
                             <th>Stok</th>
@@ -89,16 +89,16 @@
             <form id="form-data">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Kode Obat</label>
+                        <label for="exampleInputEmail1">Kode</label>
                         <input type="hidden" class="form-control" name="id">
                         <input type="text" class="form-control" name="kode_obat">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Nama Obat</label>
+                        <label for="exampleInputPassword1">Nama Obat/BMHP</label>
                         <input type="text" class="form-control" name="nama_obat">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Jenis Obat</label>
+                        <label for="exampleInputPassword1">Jenis</label>
                         <input type="text" class="form-control" name="jenis_obat">
                     </div>
                     <div class="form-group">
@@ -114,7 +114,7 @@
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Stok Awal</label>
+                                <label for="exampleInputPassword1">Stok</label>
                                 <input type="text" class="form-control" name="stok">
                             </div>
                         </div>

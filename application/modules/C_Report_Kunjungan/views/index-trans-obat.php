@@ -14,12 +14,12 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <h4 class="mt-0 header-title">Laporan Pasien</h4>
+                    <h4 class="mt-0 header-title">Laporan Obat Keluar</h4>
                 </div>
                 
             </div>
                 <hr>
-                <form action="<?= base_url('C_Report_Kunjungan') ?>">
+                <form action="<?= base_url('C_Report_Kunjungan/report_trans_obat') ?>">
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="inputEmail4">From Date</label>
@@ -37,45 +37,44 @@
 
                
 
-                    <table class="table table-striped table-bordered"  style="border-collapse: collapse; border-spacing: 0; width: 100%; font-size:10px;">
+                    <table class="table table-bordered"  style="border-collapse: collapse; border-spacing: 0; width: 100%; font-size:10px;">
                         <thead>
-                            <th>No. RM</th>
-                            <th>Nama Lengkap</th>
-                            <th>Umur</th>
-                            <th>Tanggal Masuk</th>
-                            <th>Tanggal Keluar</th>
-                            <th>Status Pasien</th>
-                            <th>Keluhan</th>
-                            <th>Diagnosa</th>
-                            <th>Diperiksa Oleh</th>
-                            <th>Action</th>
+                            <th>Kode Obat</th>
+                            <th>Satuan</th>
+                            <th>Tanggal Trans</th>
+                            <th>Harga</th>
+                            <th>Qty</th>
+                            <th>Subtotal</th>
                         </thead>
                         <tbody>
-                        <?php foreach($list as $val)
+                        <?php foreach($listObat as $val)
                         {
                             $status_pasien = $val->status_pulang == 1 ? "Rawat Jalan" : "Rawat Inap";
-                            echo "<tr>";
-                            echo "<td>$val->norm</td>";
-                            echo "<td>$val->nama_depan $val->nama_belakang</td>";
-                            echo "<td>$val->umur Tahun</td>";
-                            echo "<td>$val->create_date</td>";
-                            echo "<td>$val->tgl_selesai</td>";
-                            echo "<td>$status_pasien</td>";
-                            echo "<td>$val->keluhan</td>";
-                            
-                            echo "<td><pre style=text-align:left>S : $val->subjektif 
-O : $val->objektif 
-A : $val->assesment 
-P : $val->planning</pre></td>";
-                            echo "<td>$val->diperiksa_oleh</td>";
-                            echo "<td>
-                                <a href=".base_url('C_Medical_Record/cetak/').$val->norm." class='btn btn-danger mb-2'>Cetak</a>
-                                <a href=".base_url('C_Medical_Record/cetak_dokter/').$val->norm." class='btn btn-primary mb-2'>Resume Dokter</a>
-                            </td>";
+                            echo "<tr style='background-color: #2F4F4F;color: white; line-height: 0.5px;'>";
+                            echo "<td colspan=6 style='padding-left: 50px;'>$val->nama_obat</td>";
                             echo "</tr>";
+
+                            
+                            foreach($listTrans as $item):
+                                if($item->id_obat == $val->id){
+                                    echo "<tr style='line-height: 0.5px;'>";
+                                    echo "<td style='padding-left: 100px;'>$val->kode_obat</td>";
+                                    echo "<td>$val->satuan</td>";
+                                    echo "<td>$item->create_date</td>";
+                                    echo "<td>Rp. ".number_format($val->harga)."</td>";
+                                    echo "<td>$item->qty</td>";
+                                    echo "<td>Rp. ".number_format($item->qty * $val->harga)."</td>";
+                                    echo "</tr>";
+                                    $total += $item->qty * $val->harga;
+                                }
+                            endforeach;
                         } ?>
                         </tbody>
                     </table>
+
+
+                    <div class="alert alert-danger col-md-4"><b>Total Terjual : Rp. <?= number_format($total) ?></b></div>
+
 
             </div>
         </div>

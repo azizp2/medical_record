@@ -14,7 +14,7 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <h4 class="mt-0 header-title">List Of Master Dokter</h4>
+                    <h4 class="mt-0 header-title">Daftar Kamar</h4>
                 </div>
                 <div class="col-md-6">
                     <button class='btn btn-primary float-right col-md-3 open-modal'>Tambah Data</button>
@@ -52,22 +52,7 @@
             </div>
         </div>
     </div>
-    <!-- <div class="col-xl-4">
-        <div class="card m-b-30">
-            <div class="card-body">
 
-                <h4 class="mt-0 header-title">Riwayat Kunjungan</h4>
-                <hr>
-                <p class="sub-title">Use the tab JavaScript plugin—include
-                    it individually or through the compiled <code class="highlighter-rouge">bootstrap.js</code>
-                    file—to extend our navigational tabs and pills to create tabbable panes
-                    of local content, even via dropdown menus.</p>
-
-
-
-            </div>
-        </div>
-    </div> -->
 </div>
 
 

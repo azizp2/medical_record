@@ -13,7 +13,7 @@
         <div class="card m-b-30">
             <div class="card-body">
 
-                <h4 class="mt-0 header-title">Statistik Kunjungan Pasien</h4>
+                <h4 class="mt-0 header-title">Statistik Rawat Inap & Rawat Jalan</h4>
                 <hr>
                 
                 <canvas id="myChart" height="100"></canvas>
