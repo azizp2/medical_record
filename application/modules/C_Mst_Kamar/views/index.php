@@ -30,6 +30,7 @@
                             <th>Jenis Kamar</th>
                             <th>Fasilitas</th>
                             <th>Action</th>
+                            <th hidd>Action</th>
                         </thead>
                         <tbody>
                         <?php foreach($list as $key=>$val)

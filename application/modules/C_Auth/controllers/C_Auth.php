@@ -59,17 +59,17 @@ class C_Auth extends CI_Controller
 
 
 
-		// cek apakah user sudah terdaftar?
-		if (!$user) {
-			echo json_encode(["message" => "user tidak dikenal"]);
-			die;
-		}
+		// // cek apakah user sudah terdaftar?
+		// if (!$user) {
+		// 	echo json_encode(["message" => "user tidak dikenal"]);
+		// 	die;
+		// }
 
-		// cek apakah passwordnya benar?
-		if (md5(sha1(strtolower($param['password']))) != $user->userpassword) {
-			echo json_encode(["message" => "password login anda salah"]);
-			die;
-		}
+		// // cek apakah passwordnya benar?
+		// if (md5(sha1(strtolower($param['password']))) != $user->userpassword) {
+		// 	echo json_encode(["message" => "password login anda salah"]);
+		// 	die;
+		// }
 
 		$this->session->set_userdata('userId', $user->userid);
 		$this->session->set_userdata('factoryId', $user->firstname);

@@ -29,6 +29,8 @@
                             <th>Satuan</th>
                             <th>Harga</th>
                             <th>Action</th>
+                            <th hidden>Action</th>
+                            <th hidden>Action</th>
                         </thead>
                         <tbody>
                         <?php foreach($list as $val)

@@ -37,9 +37,10 @@
 
                
 
-                    <table class="table table-striped table-bordered"  style="border-collapse: collapse; border-spacing: 0; width: 100%; font-size:10px;">
+                    <table class="table table-striped table-bordered table-search table-responsive"  style="border-collapse: collapse; border-spacing: 0; font-size:10px;">
                         <thead>
                             <th>No. RM</th>
+                            <th>NIK</th>
                             <th>Nama Lengkap</th>
                             <th>Umur</th>
                             <th>Tanggal Masuk</th>
@@ -53,24 +54,25 @@
                         <tbody>
                         <?php foreach($list as $val)
                         {
-                            $status_pasien = $val->status_pulang == 1 ? "Rawat Jalan" : "Rawat Inap";
+                            $status_pasien = $val->status_pulang == 3 ? "Observasi" : ($val->status_pulang == 2 ? "Rawat Inap" : "Rawat Jalan");
+
                             echo "<tr>";
                             echo "<td>$val->norm</td>";
+                            echo "<td>$val->nikktp</td>";
                             echo "<td>$val->nama_depan $val->nama_belakang</td>";
                             echo "<td>$val->umur Tahun</td>";
                             echo "<td>$val->create_date</td>";
                             echo "<td>$val->tgl_selesai</td>";
-                            echo "<td>$status_pasien</td>";
+                            echo "<td>".getStatusPulang($val->status_pulang)."</td>";
                             echo "<td>$val->keluhan</td>";
                             
-                            echo "<td><pre style=text-align:left>S : $val->subjektif 
-O : $val->objektif 
-A : $val->assesment 
-P : $val->planning</pre></td>";
+                            echo "<td><pre style=text-align:left>Diangnosa 1 : $val->objektif 
+Diagnosa 2 : $val->subjektif 
+</pre></td>";
                             echo "<td>$val->diperiksa_oleh</td>";
                             echo "<td>
-                                <a href=".base_url('C_Medical_Record/cetak/').$val->norm." class='btn btn-danger mb-2'>Cetak</a>
-                                <a href=".base_url('C_Medical_Record/cetak_dokter/').$val->norm." class='btn btn-primary mb-2'>Resume Dokter</a>
+                                <a href=".base_url('C_Medical_Record/cetak/').$val->idx." class='btn btn-danger mb-2'>Cetak</a>
+                                <a href=".base_url('C_Medical_Record/cetak_dokter/').$val->idx." class='btn btn-primary mb-2'>Resume Dokter</a>
                             </td>";
                             echo "</tr>";
                         } ?>

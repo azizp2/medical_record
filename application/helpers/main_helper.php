@@ -16,3 +16,23 @@ function getAlertBs($alertType, $message)
             </div>";
     return $html;
 }
+
+function getStatusPulang($id)
+{
+    if($id == 1)
+    {
+        return 'Rawat Jalan';
+    }
+    else if($id == 2)
+    {
+        return 'Rawat Inap';
+    }
+    else if($id == 3)
+    {
+        return 'Observasi';
+    }
+    else if($id == 4)
+    {
+        return 'Penjualan Bebas';
+    }
+}

@@ -48,12 +48,23 @@ class C_Home extends BaseController
 		// 							SUM(CASE WHEN status_pulang = '1' THEN 1 ELSE 0 END) AS rawat_jalan, 
 		// 							SUM(CASE WHEN status_pulang = '2' THEN 1 ELSE 0 END) AS rawat_inap 
 		// 					FROM tb_pasien 
-		// 					GROUP BY create_date")->result_array();
-		$data['chartData'] = $this->db->query("SELECT MONTH(create_date) AS create_date,
-		SUM(CASE WHEN status_pulang = '1' THEN 1 ELSE 0 END) AS rawat_jalan,
-		SUM(CASE WHEN status_pulang = '2' THEN 1 ELSE 0 END) AS rawat_inap
-		FROM tb_pasien
-		GROUP BY MONTH(create_date)")->result_array();
+		// 			
+// Mendapatkan bulan dan tahun saat ini
+$currentMonth = date('m');
+$currentYear = date('Y');
+
+// Query SQL dengan klausa WHERE untuk hanya mengambil data bulan ini
+$query = "SELECT MONTH(create_date) AS create_date,
+            SUM(CASE WHEN status_pulang = '1' THEN 1 ELSE 0 END) AS rawat_jalan,
+            SUM(CASE WHEN status_pulang = '2' THEN 1 ELSE 0 END) AS rawat_inap
+            FROM tb_pasien
+            WHERE MONTH(tgl_selesai) = ? AND YEAR(tgl_selesai) = ?
+            ";
+            
+// Eksekusi query dengan menggunakan parameter bulan dan tahun saat ini
+$data['chartData'] = $this->db->query($query, array($currentMonth, $currentYear))->result_array();
+
+
 
 		// echo "<pre>";
 		// print_r($data);

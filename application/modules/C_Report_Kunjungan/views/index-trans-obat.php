@@ -47,30 +47,48 @@
                             <th>Subtotal</th>
                         </thead>
                         <tbody>
-                        <?php foreach($listObat as $val)
-                        {
-                            $status_pasien = $val->status_pulang == 1 ? "Rawat Jalan" : "Rawat Inap";
-                            echo "<tr style='background-color: #2F4F4F;color: white; line-height: 0.5px;'>";
-                            echo "<td colspan=6 style='padding-left: 50px;'>$val->nama_obat</td>";
-                            echo "</tr>";
+                        <?php
+foreach ($listObat as $val) {
+    $found = false;
+    foreach ($listTrans as $item) {
+        if ($item->id_obat == $val->id && $item->qty > 0) {
+            $found = true;
+            break;
+        }
+    }
+    
+    if ($found) {
+        $status_pasien = getStatusPulang($val->status_pulang);
+        echo "<tr style='background-color: #2F4F4F;color: white; line-height: 0.5px;'>";
+        echo "<td colspan='6' style='padding-left: 50px;'>$val->nama_obat</td>";
+        echo "</tr>";
+        $totalQty = 0;
+    foreach ($listTrans as $item) {
+        if ($item->id_obat == $val->id && $item->qty > 0) {
+            echo "<tr style='line-height: 0.5px;'>";
+            echo "<td style='padding-left: 100px;'>$val->kode_obat</td>";
+            echo "<td>$val->satuan</td>";
+            echo "<td>$item->create_date</td>";
+            echo "<td>Rp. " . number_format($val->harga) . "</td>";
+            echo "<td>$item->qty</td>";
+            echo "<td>Rp. " . number_format($item->qty * $val->harga) . "</td>";
+            echo "</tr>";
+            $total += $item->qty * $val->harga;
 
-                            
-                            foreach($listTrans as $item):
-                                if($item->id_obat == $val->id){
-                                    echo "<tr style='line-height: 0.5px;'>";
-                                    echo "<td style='padding-left: 100px;'>$val->kode_obat</td>";
-                                    echo "<td>$val->satuan</td>";
-                                    echo "<td>$item->create_date</td>";
-                                    echo "<td>Rp. ".number_format($val->harga)."</td>";
-                                    echo "<td>$item->qty</td>";
-                                    echo "<td>Rp. ".number_format($item->qty * $val->harga)."</td>";
-                                    echo "</tr>";
-                                    $total += $item->qty * $val->harga;
-                                }
-                            endforeach;
-                        } ?>
-                        </tbody>
-                    </table>
+            $totalQty += $item->qty;
+        }
+    }
+    echo "<tr>";
+    echo "<td  colspan=5>Total Transaksi </td>";
+    echo "<td>".$totalQty."</td>";
+    echo "</tr>";
+
+    }
+}
+?>
+</tbody>
+</table>
+
 
 
                     <div class="alert alert-danger col-md-4"><b>Total Terjual : Rp. <?= number_format($total) ?></b></div>

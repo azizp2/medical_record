@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class C_Medical_Record extends BaseController
+class C_KunjunganRujukan extends BaseController
 {
 
 	/**
@@ -57,6 +57,11 @@ class C_Medical_Record extends BaseController
 		$data['listKamar'] = $this->db->get('tb_mst_kamar')->result();
 		$data['listDokter'] = $this->db->get('tb_mst_dokter')->result();
 		$data['listMstDiagnosa'] = $this->db->get('tb_mst_diagnosa')->result();
+		$data['listPasien'] = $this->db->get('tb_pasien')->result();
+
+		// echo json_encode($data['listPasien']);
+		// die;
+
 
 		$this->layout('index', $data);
 	}
@@ -65,6 +70,9 @@ class C_Medical_Record extends BaseController
 	{
 		try {
 			$param = $this->input->post();
+
+			echo json_encode($param);
+			die;
 
 
 			// if(strlen($param['nik']) ==0){

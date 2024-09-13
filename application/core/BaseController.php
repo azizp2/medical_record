@@ -41,6 +41,7 @@ class BaseController extends MX_Controller
         // This function returns the main CodeIgniter object.
         // Normally, to call any of the available CodeIgniter object or pre defined library classes then you need to declare.
         $CI = &get_instance();
+date_default_timezone_set('Asia/Jakarta');
 
         // Copyright year calculation for the footer
         $begin = 2019;

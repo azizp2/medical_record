@@ -32,6 +32,8 @@
                             <th>Satuan</th>
                             <th>Stok</th>
                             <th>Action</th>
+                            <th  hidden="">Action</th>
+                            <th hidden="">Action</th>
                         </thead>
                         <tbody>
                         <?php foreach($listObat as $val)
@@ -161,7 +163,7 @@
             if(id > 0)
             {
                 $('#form-data input[name="kode_obat"]').attr('readonly', true);
-                $('#form-data input[name="stok"]').attr('readonly', true);
+                $('#form-data input[name="stok"]').attr('readonly', false);
             }else{
                 $('#form-data input[name="kode_obat"]').attr('readonly', false);
                 $('#form-data input[name="stok"]').attr('readonly', false);

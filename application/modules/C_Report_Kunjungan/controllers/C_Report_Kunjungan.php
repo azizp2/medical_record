@@ -49,21 +49,21 @@ class C_Report_Kunjungan extends BaseController
 		$data['from'] = $from;
 		$data['to'] = $to;
 
-		$data['titlePage'] = "Report Kunjungan";
-		$this->db->select("a.*, a.id as norm, keluhan, c.*, diperiksa_oleh");
+		$this->db->select("a.*, a.nik as nikktp, a.id as norm, keluhan, c.*, diperiksa_oleh");
         $this->db->from('tb_pasien a');
-        $this->db->join('tb_anamnesa b', 'a.nik = b.id_pasien', 'left');
-        $this->db->join('tb_diagnosa c', 'a.nik = c.nik', 'left');
-        $this->db->join('tb_resep d', 'a.nik = d.nik', 'left');
+        $this->db->join('tb_anamnesa b', 'a.idx = b.id_pasien', 'left');
+        $this->db->join('tb_diagnosa c', 'a.idx = c.nik', 'left');
+        $this->db->join('tb_resep d', 'a.idx = d.nik', 'left');
 		if(!isset($param['from'])){
-			$this->db->where('a.create_date', date("Y-m-d"));
+			$this->db->like('a.tgl_selesai', date("Y-m-d"));
 		}else{
-			$this->db->where("a.create_date between '$from' and '$to'",false, false);
+			$this->db->where("a.tgl_selesai between '$from 00:00:00' and '$to 23:59:59'",false, false);
 		}
-        $this->db->group_by("a.nik");
-        $sql = $this->db->get()->result();
-		$data['list'] =  $sql;
+        $this->db->order_by("a.tgl_selesai desc");
+        $this->db->group_by("a.idx");
+        $sql = $this->db->get()->result();		$data['titlePage'] = "Report Kunjungan";
 
+		$data['list'] =  $sql;
 
 		$this->layout('index', $data);
 	}
@@ -120,18 +120,18 @@ class C_Report_Kunjungan extends BaseController
 
 		$this->db->select("a.create_date, b.*")
 			->from("tb_pasien a")
-			->join("tb_resep b", "a.nik = b.nik");
+			->join("tb_resep b", "a.idx = b.nik");
 
 		if (!isset($param['from'])) {
-			$this->db->like('a.create_date', date("Y-m-d"));
+			$this->db->like('a.tgl_selesai', date("Y-m-d"));
 		} else {
 			$from = $param['from'];
 			$to = $param['to'];
 
-			$this->db->where("a.create_date BETWEEN '{$from} 00:00:00' AND '{$to} 23:59:59'");
+			$this->db->where("a.tgl_selesai BETWEEN '{$from} 00:00:00' AND '{$to} 23:59:59'");
 		}
 
-		$this->db->order_by('a.create_date desc');
+		$this->db->order_by('a.tgl_selesai desc');
 		$sql2 = $this->db->get()->result();
 
 

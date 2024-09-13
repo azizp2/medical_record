@@ -101,6 +101,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>No Rkm</label>
+                                        <div>
+                                            <input  name="id" class="form-control" value="<?php echo $d->id ?>">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row" x-show="!showPilihPasien">
                                 <div class="col-md-6">
@@ -261,6 +269,48 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="row" x-show="!showPilihPasien">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>SPO2</label>
+                                        <div>
+                                            <input type="text" name="spo2" class="form-control" value="<?= $d->spo2 ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nilai DM</label>
+                                        <div>
+                                            <input type="text" name="dm" class="form-control" value="<?= $d->dm ?>">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" x-show="!showPilihPasien">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nilai Kolestrol</label>
+                                        <div>
+                                            <input type="text" name="kolestrol" class="form-control" value="<?= $d->kolestrol ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nilai Asam Urat</label>
+                                        <div>
+                                            <input type="text" name="asam_urat" class="form-control" value="<?= $d->asam_urat ?>">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <hr>
                             <a type="button" class="btn btn-warning btn-sm col-md-2 col-lg-2 col-sm-3" style="padding: 7px;" href="<?= base_url('C_Medical_Record') ?>">Create New</a>
 
@@ -279,43 +329,39 @@
                     <!-- Diagnosa -->
                         <div class="tab-pane p-3" id="messages" role="tabpanel">
                             <div class="row" x-show="!showPilihPasien">
-                                <div class="col-md-6">
+                            <div class="col-md-7">
                                     <div class="form-group">
-                                        <label>Subjektif</label>
+                                        <label>Diagnosa 1</label>
                                         <div>
-                                            <textarea name="subjektif" id="" class="form-control" cols="10" rows="3" placeholder="isikan diagnosa subyektif"><?= $d->subjektif ?></textarea>
+                                            <select class="form-control" name="objektif">
+                                                <option>...</option>
+                                                <?php 
+                                                    foreach($listMstDiagnosa as $val):
+                                                        echo "<option>$val->diagnosa</option>";
+                                                    endforeach;
+                                                ?>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-7">
                                     <div class="form-group">
-                                        <label>Objektif</label>
+                                        <label>Diagnosa 2</label>
                                         <div>
-                                            <textarea name="objektif" id="" class="form-control" cols="10" rows="3" placeholder="isikan diagnosa obyektif"><?= $d->objektif ?></textarea>
+                                            <select class="form-control" name="subjektif">
+                                                <option>...</option>
+                                                <?php 
+                                                    foreach($listMstDiagnosa as $val):
+                                                        echo "<option>$val->diagnosa</option>";
+                                                    endforeach;
+                                                ?>
+                                            </select>
                                         </div>
                                     </div>
-                                </div>
+                                </div>     
 
                             </div>
-                            <div class="row" x-show="!showPilihPasien">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Assesment</label>
-                                        <div>
-                                            <textarea name="assesment" id="" class="form-control" cols="10" rows="3" placeholder="isikan saran dokter"><?= $d->assesment ?></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Terapi</label>
-                                        <div>
-                                            <textarea name="planning" id="" class="form-control" cols="10" rows="3" placeholder="isikan perencanaan dokter untuk kedepan"><?= $d->planning ?></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
+                           
                             <hr>
                             <!-- <button type="button" class="btn btn-primary col-md-1 btn-pasien">Save</button> -->
                             <a type="button" class="btn btn-warning btn-sm col-md-2 col-lg-2 col-sm-3" style="padding: 7px;" href="<?= base_url('C_Medical_Record') ?>">Create New</a>
@@ -455,6 +501,8 @@
                                                 <option disabled selected>...</option>
                                                 <option value="1">Rawat Jalan</option>
                                                 <option value="2">Rawat Inap</option>
+                                                <option value="3">Observasi</option>
+                                                <option value="4">Penjualan Bebas</option>
                                             </select>
                                         </div>
                                     </div>
@@ -481,7 +529,8 @@
                                     <div class="form-group">
                                         <label>Tanggal Pulang</label>
                                         <div>
-                                            <input name="tgl_selesai" type="date" class="form-control" placeholder="">
+                                            <!-- <input name="tgl_selesai" type="date" class="form-control" placeholder=""> -->
+                                            <input type="datetime-local" name="tgl_selesai" class="form-control" value="<?php echo date("Y-m-d\TH:i:s"); ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -825,7 +874,7 @@ $('.btn.btn-primary').click(function() {
         });
     }
     
-    function addCart() {  
+    function addCart() {   
         var id_obat = $("#id_obat").find(':selected').val()
         var qty = $("#qty").val()
         $.ajax({

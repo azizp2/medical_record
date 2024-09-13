@@ -14,7 +14,7 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <h4 class="mt-0 header-title">Daftar Dokter</h4>
+                    <h4 class="mt-0 header-title">Data Diagnosa</h4>
                 </div>
                 <div class="col-md-6">
                     <button class='btn btn-primary float-right col-md-3 open-modal'>Tambah Data</button>
@@ -25,22 +25,18 @@
 
                     <table class="datatable table table-striped table-bordered dt-responsive nowrap table-search" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
-                            <th class="nowrap w-10">No</th>
-                            <th>Nama Dokter</th>
-                            <th>Spesialis</th>
+                            <th class="nowrap w-10">Kode</th>
+                            <th>Diagnosa</th>
                             <th>Action</th>
-                            <th hidden="">Action</th>
                         </thead>
                         <tbody>
-                        <?php foreach($list as $key=>$val)
+                        <?php foreach($list as $val)
                         {
                             echo "<tr>";
-                            echo "<td>$key+1</td>";
-                            echo "<td>$val->nama</td>";
-                            echo "<td>$val->spesialisasi</td>";
-                            echo "<td hidden>$val->id</td>";
+                            echo "<td>$val->id</td>";
+                            echo "<td>$val->diagnosa</td>";
                             echo "<td>
-                                    <button class='btn btn-danger' onclick='deleted(".$val->id.")'>Delete</button>
+                                    <button class='btn btn-danger' onclick=deleted('$val->id')>Delete</button>
                                     <button class='btn btn-primary open-modal'>Edit</button>
                                 </td>";
                             echo "</tr>";
@@ -83,13 +79,12 @@
             <form id="form-data">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Nama</label>
-                        <input type="hidden" class="form-control" name="id">
-                        <input type="text" class="form-control" name="nama">
+                        <label for="exampleInputPassword1">Kode Diagnosa</label>
+                        <input type="" class="form-control" name="id">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">spesialisasi</label>
-                        <input type="text" class="form-control" name="spesialisasi">
+                        <label for="exampleInputPassword1">Diagnosa</label>
+                        <input type="text" class="form-control" name="diagnosa">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -113,24 +108,12 @@
             var row = $(this).closest('tr');
 
             // Get the text content of each cell in the row
-            var id = row.find('td:eq(3)').text();
-            var nama = row.find('td:eq(1)').text();
-            var spesialisasi = row.find('td:eq(2)').text();
-
-      
+            var id = row.find('td:eq(0)').text();
+            var name = row.find('td:eq(1)').text();
 
             // Populate the form fields with the retrieved values
             $('#form-data input[name="id"]').val(id);
-            $('#form-data input[name="nama"]').val(nama);
-            $('#form-data input[name="spesialisasi"]').val(spesialisasi);
-
-            if(id > 0)
-            {
-                $('#form-data input[name="id"]').attr('readonly', true);
-            }else{
-                $('#form-data input[name="id"]').attr('readonly', false);
-
-            }
+            $('#form-data input[name="diagnosa"]').val(name);
 
             // Call your edit function or perform any other desired actions
             // ...
@@ -178,7 +161,7 @@
                 return new Promise(function(resolve) {
                     $.ajax({
                         type: "post",
-                        url: "<?= base_url("C_Mst_Dokter/save") ?>",
+                        url: "<?= base_url("C_Mst_Diagnosa/save") ?>",
                         data: $("#form-data").serialize(),
                         dataType: "json",
                         beforeSend: function() {
@@ -229,7 +212,7 @@
                 return new Promise(function(resolve) {
                     $.ajax({
                         type: "post",
-                        url: "<?= base_url("C_Mst_Dokter/delete") ?>",
+                        url: "<?= base_url("C_Mst_Diagnosa/delete") ?>",
                         data: {
                             'id' : id
                         },
