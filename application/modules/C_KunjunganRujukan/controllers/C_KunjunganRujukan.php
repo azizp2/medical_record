@@ -48,67 +48,110 @@ class C_KunjunganRujukan extends BaseController
 			$data['row'] = $this->MedicalRecord->getKunjunganById($id);
 			$data['edit'] = true;
 			$data['id'] = $id;
-}
+		}
 
-		$data['titlePage'] = "Medical Record";
-		$data['listObat'] = $this->Obat->getAll();
-		$data['listLayanan'] = $this->db->get('tb_layanan')->result();
-		$data['listKunjungan'] = $this->MedicalRecord->getAllKunjungan();
-		$data['listKamar'] = $this->db->get('tb_mst_kamar')->result();
-		$data['listDokter'] = $this->db->get('tb_mst_dokter')->result();
-		$data['listMstDiagnosa'] = $this->db->get('tb_mst_diagnosa')->result();
+		$rujukanList = $this->db
+		->select('tb_rujukan.*, tb_pasien.* ') // Pilih kolom yang diinginkan
+		->from('tb_rujukan')
+		->join('tb_pasien', 'tb_pasien.idx = tb_rujukan.pasien_id') // Memperbaiki sintaks join
+		->get()
+		->result();
+
+
+		// Ambil semua rujukan
+		$data['listRujukan'] = $rujukanList;
+
+
+		// $data['titlePage'] = "Medical Record";
+		// $data['listObat'] = $this->Obat->getAll();
+		// $data['listLayanan'] = $this->db->get('tb_layanan')->result();
+		// $data['listKunjungan'] = $this->MedicalRecord->getAllKunjungan();
+		// $data['listKamar'] = $this->db->get('tb_mst_kamar')->result();
+		// $data['listDokter'] = $this->db->get('tb_mst_dokter')->result();
+		// $data['listMstDiagnosa'] = $this->db->get('tb_mst_diagnosa')->result();
 		$data['listPasien'] = $this->db->get('tb_pasien')->result();
 
-		// echo json_encode($data['listPasien']);
+		// echo json_encode($data);
 		// die;
 
 
 		$this->layout('index', $data);
 	}
 
-	function save()
-	{
-		try {
-			$param = $this->input->post();
+	public function save()
+{
+    try {
+        $param = $this->input->post();
+        
+        $save = $this->db->insert('tb_rujukan', $param);
 
-			echo json_encode($param);
-			die;
-
-
-			// if(strlen($param['nik']) ==0){
-			// 	echo $this->httpResponseCode("400", "nik tidak boleh kosong");
-			// 	return;
-			// }
-			if(strlen($param['nama_depan']) ==0){
-				echo $this->httpResponseCode("400", "nama depan tidak boleh kosong");
-				return;
-			}
-			// if(strlen($param['nama_belakang']) ==0){
-			// 	echo $this->httpResponseCode("400", "nama belakang tidak boleh kosong");
-			// 	return;
-			// }
-			// if(strlen($param['gender']) ==0){
-			// 	echo $this->httpResponseCode("400", "jenis kelamin tidak boleh kosong");
-			// 	return;
-			// }
-
-			// if(strlen($param['diperiksa_oleh']) ==0){
-			// 	echo $this->httpResponseCode("400", "diperiksa oleh tidak boleh kosong");
-			// 	return;
-			// }
+        if ($save) {
+            echo $this->httpResponseCode("200", "Save data successfully");
+        } else {
+            echo $this->httpResponseCode("400", "Save data failed");
+        }
+    } catch (Exception $e) {
+        echo $this->httpResponseCode("500", "Internal server error: " . $e->getMessage());
+    }
+}
 
 
-			$save = $this->MedicalRecord->store($param);
+	// function save()
+	// {
+	// 	try {
+	// 		$param = $this->input->post();
+			
+	// 		$save  = $this->db->insert('tb_rujukan', $param);
 
-			if ($save) {
-				echo $this->httpResponseCode("200", "Save Data Successfully");
-			} else {
-				echo $this->httpResponseCode("400", "Database Error");
-			}
-		} catch (\Throwable $th) {
-			echo $this->httpResponseCode(400, $th->getMessage());
-		}
-	}
+	// 		if($save)
+	// 		{
+	// 			echo $this->httpResponseCode("200", "Save data successfully");
+	// 			return;
+	// 		}else{}
+
+
+	// 		echo $this->httpResponseCode("400", "Save data failed");
+	// 		return;
+
+
+	// 		echo json_encode($param);
+	// 		die;
+
+
+	// 		// if(strlen($param['nik']) ==0){
+	// 		// 	echo $this->httpResponseCode("400", "nik tidak boleh kosong");
+	// 		// 	return;
+	// 		// }
+	// 		if(strlen($param['nama_depan']) ==0){
+	// 			echo $this->httpResponseCode("400", "nama depan tidak boleh kosong");
+	// 			return;
+	// 		}
+	// 		// if(strlen($param['nama_belakang']) ==0){
+	// 		// 	echo $this->httpResponseCode("400", "nama belakang tidak boleh kosong");
+	// 		// 	return;
+	// 		// }
+	// 		// if(strlen($param['gender']) ==0){
+	// 		// 	echo $this->httpResponseCode("400", "jenis kelamin tidak boleh kosong");
+	// 		// 	return;
+	// 		// }
+
+	// 		// if(strlen($param['diperiksa_oleh']) ==0){
+	// 		// 	echo $this->httpResponseCode("400", "diperiksa oleh tidak boleh kosong");
+	// 		// 	return;
+	// 		// }
+
+
+	// 		$save = $this->MedicalRecord->store($param);
+
+	// 		if ($save) {
+	// 			echo $this->httpResponseCode("200", "Save Data Successfully");
+	// 		} else {
+	// 			echo $this->httpResponseCode("400", "Database Error");
+	// 		}
+	// 	} catch (\Throwable $th) {
+	// 		echo $this->httpResponseCode(400, $th->getMessage());
+	// 	}
+	// }
 
 	function getChart()
 	{

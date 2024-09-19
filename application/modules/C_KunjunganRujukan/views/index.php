@@ -33,20 +33,34 @@
                             <th>Tempat / Tgl Lahir</th>
                             <th>Telp</th>
                             <th>Alamat</th>
+
+                            <th>Nama Wali</th>
+                            <th>Tempat / Tgl Lahir</th>
+                            <th>Telp Wali</th>
+                            <th>Alamat Wali</th>
+
                             <th>Diagnosa</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
-                                <tr>
+                        <?php foreach ($listRujukan as $item): ?>
+                            <tr>
                                 <td class="nowrap w-10">5</td>
-                                <td>001-21-5</td>
-                                <td>21/02/2024</td>
-                                <td>Khairmyanto Gunawan</td>
-                                <td>Laki - Laki</td>
-                                <td>Batam, 30/12/2004</td>
-                                <td>0823867678</td>
-                                <td>Jala Kaharudin Nst No. 12 Batam</td>
-                                <td>DYSPEPSIA</td>
+                                <td><?php echo $item->no_rkm; ?></td>
+                                <td><?php echo date('d/m/Y', strtotime($item->tgl_lahir)); ?></td>
+                                <td><?php echo $item->nama_depan. ' '. $item->nama_belakang; ?></td>
+                                <td><?php echo $item->jenis_kelamin; ?></td>
+                                <td><?php echo $item->tempat_lahir . ', ' . date('d/m/Y', strtotime($item->tgl_lahir_wali)); ?></td>
+                                <td><?php echo $item->no_telp; ?></td>
+                                <td><?php echo $item->alamat; ?></td>
+                                
+                                <td><?php echo $item->nama_wali; ?></td>
+                                <td><?php echo $item->tempat_lahir_wali . ', ' . date('d/m/Y', strtotime($item->tgl_lahir_wali)); ?></td>
+                                <td><?php echo $item->no_telp_wali; ?></td>
+                                <td><?php echo $item->alamat_wali; ?></td>
+
+                                <td>diagnosa</td>
+
                                 <td>
                                     <button type="button" class="btn btn-primary btn-sm modal-triase">Triase</button>
                                     <button type="button" class="btn btn-success btn-sm modal-evaluasi">Evaluasi</button>
@@ -55,7 +69,8 @@
                                     <button type="button" class="btn btn-warning btn-sm modal-farmasi">Farmasi</button>
                                     <button type="button" class="btn btn-danger btn-sm modal-selesai">Selesai</button>
                                 </td>
-                        </tr>
+                            </tr>
+                        <?php endforeach; ?>
                         </tbody>
                     </table>
 
@@ -66,7 +81,7 @@
 </div>
 
 
-<!-- Modal -->
+<!-- Modal Input Rujukan -->
 <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="modalFormTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -101,17 +116,23 @@
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Jenis Kelamin</label>
-                                <input type="text" class="form-control" name="jk">
+                                <select class="form-control" name="jenis_kelamin">
+                                    <option selected disabled>...</option>
+                                    <option>Permpuan</option>
+                                    <option>Laki-Laki</option>
+
+                                </select>
+
                             </div>                    
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Tgl Lahir</label>
-                                <input type="date" class="form-control" name="tgl_lahir">
+                                <input type="date" class="form-control tgl-lahir"  name="tgl_lahir">
                             </div>                    
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Umur</label>
-                                <input type="text" class="form-control" name="umur">
+                                <input type="text" readonly class="form-control umur" name="umur">
                             </div>                    
                         </div>
 
@@ -126,18 +147,23 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Tempat / Tgl Lahir</label>
-                                <input type="text" class="form-control" name="tgl_lahir">
+                                <label for="exampleInputEmail1">Tempat Lahir</label>
+                                <input type="text" class="form-control" name="tempat_lahir_wali">
+                            </div>                   
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Tgl Lahir</label>
+                                <input type="date" class="form-control" name="tgl_lahir_wali">
                             </div>                    
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Alamat</label>
-                                <input type="text" class="form-control" name="alamat">
+                                <input type="text" class="form-control" name="alamat_wali">
                             </div>                    
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">No. Telp / Hp</label>
-                                <input type="text" class="form-control" name="hp">
+                                <input type="text" class="form-control" name="no_telp_wali">
                             </div>                    
                         </div>
 
@@ -1606,6 +1632,19 @@
 
 
 <script>
+
+
+        $(document).on('change', '.tgl-lahir', function (e) {
+
+            var tanggalLahir = $(this).val();
+    
+            var umur = hitungUmur(tanggalLahir);
+
+            var umurInput = document.querySelector('.umur');
+            umurInput.value = umur;
+        })
+
+
         $(document).on('click', '.modal-triase',function() {
 
             $('#modalTriase').modal('show')
@@ -1730,21 +1769,21 @@
                             $('.btn-action').attr('disabled', true);
                         },
                         success: function(response) {
-                            console.log(response);
-                            // setTimeout(() => {
-                            //     if (response.code == 200) {
-                            //         sw_alert("Success", String(response.message), "success");
-                            //         setTimeout(() => {
-                            //             location.reload()
-                            //         }, 3000);
-                            //     } else {
-                            //         sw_alert("Error", String(response.message), "error");
-                            //         $('.btn-save').html('Save');
-                            //     }
+                            
+                            setTimeout(() => {
+                                if (response.code == 200) {
+                                    sw_alert("Success", String(response.message), "success");
+                                    setTimeout(() => {
+                                        location.reload()
+                                    }, 3000);
+                                } else {
+                                    sw_alert("Error", String(response.message), "error");
+                                    $('.btn-save').html('Save');
+                                }
                                 
-                            // $('.btn-action').html('save');
-                            // $('.btn-action').attr('disabled', false);
-                            // }, 3000);
+                            $('.btn-action').html('save');
+                            $('.btn-action').attr('disabled', false);
+                            }, 3000);
 
 
                         },
@@ -1810,6 +1849,39 @@
             },
         });
     }
+
+
+    <!-- function -->
+function hitungUmur(tglLahir) {
+    // Mengubah string tanggal lahir menjadi objek Date
+    var dob = new Date(tglLahir);
+    var today = new Date();
+    
+    // Menghitung umur
+    var umur = today.getFullYear() - dob.getFullYear();
+    var m = today.getMonth() - dob.getMonth();
+    
+    // Mengoreksi jika belum merayakan ulang tahun tahun ini
+    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+        umur--;
+    }
+    
+    return umur;
+}
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- <?php $this->load->view("_partials/script") ?> -->
