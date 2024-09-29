@@ -62,7 +62,7 @@
                                 <td>diagnosa</td>
 
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-sm modal-triase">Triase</button>
+                                    <button type="button" class="btn btn-primary btn-sm modal-triase" data-id="<?= $item->pasien_id ?>">Triase</button>
                                     <button type="button" class="btn btn-success btn-sm modal-evaluasi">Evaluasi</button>
                                     <button type="button" class="btn btn-info btn-sm modal-tatalaksana">Tatalaksana</button>
                                     <button type="button" class="btn btn-info btn-sm modal-cppt">Cppt</button>
@@ -98,7 +98,7 @@
                         <h5>Data Pasien</h5><hr>    
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Pilih Pasien</label>
-                                <select class="form-control" name="pasien_id">
+                                <select class="form-control pilih-pasien" name="pasien_id">
                                     <option>...</option>
                                     <?php foreach($listPasien as $val)
                                     {
@@ -111,15 +111,15 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">No RKM</label>
                                 <input type="hidden" class="form-control" name="id">
-                                <input type="text" class="form-control" name="no_rkm">
+                                <input type="text" readonly class="form-control" name="no_rkm">
                             </div>                    
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Jenis Kelamin</label>
-                                <select class="form-control" name="jenis_kelamin">
+                                <select class="form-control" readonly name="jenis_kelamin">
                                     <option selected disabled>...</option>
-                                    <option>Permpuan</option>
-                                    <option>Laki-Laki</option>
+                                    <option>Wanita</option>
+                                    <option>Pria</option>
 
                                 </select>
 
@@ -127,7 +127,7 @@
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Tgl Lahir</label>
-                                <input type="date" class="form-control tgl-lahir"  name="tgl_lahir">
+                                <input type="" class="form-control tgl-lahir" readonly  name="tgl_lahir">
                             </div>                    
 
                             <div class="form-group">
@@ -207,17 +207,17 @@
                                 <tr>
                                     <td style="width: 70px">Nama</td>
                                     <td>:</td>
-                                    <td> Bayu Widodo</td>
+                                    <td> <span id="badge-fullname"></span></td>
                                 </tr>
                                 <tr>
                                     <td>Tgl Lahir</td>
                                     <td>:</td>
-                                    <td> 21/10/1999</td>
+                                    <td> <span id="badge-tgl-lahir"></span></td>
                                 </tr>
                                 <tr>
                                     <td>No RKM</td>
                                     <td>:</td>
-                                    <td> 010123</td>
+                                    <td> <span id="badge-norkm"></span></td>
                                 </tr>
                             </table>
                         </td>
@@ -301,44 +301,44 @@
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
+                                <input class="form-check-input" type="checkbox" value="" id="trauma">
+                                <label class="form-check-label" for="trauma">
                                     Trauma
                                 </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                            <label class="form-check-label" for="flexCheckChecked">
+                            <input class="form-check-input" type="checkbox" value="" id="nonTrauma" >
+                            <label class="form-check-label" for="nonTrauma">
                                 Non Trauma
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="" id="obstetri">
+                            <label class="form-check-label" for="obstetri">
                                 Obstetri
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                            <label class="form-check-label" for="flexCheckChecked">
+                            <input class="form-check-input" type="checkbox" value="" id="infeksius" >
+                            <label class="form-check-label" for="infeksius">
                                 Infeksius
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="" id="pediatri">
+                            <label class="form-check-label" for="pediatri">
                                 Pediatri
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                            <label class="form-check-label" for="flexCheckChecked">
+                            <input class="form-check-input" type="checkbox" value="" id="nenatatus" >
+                            <label class="form-check-label" for="nenatatus">
                                 Nenatatus
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                            <label class="form-check-label" for="flexCheckChecked">
+                            <input class="form-check-input" type="checkbox" value="" id="doa" >
+                            <label class="form-check-label" for="doa">
                                 Doa
                             </label>
                             </div>
@@ -843,11 +843,11 @@
 
                             </div>
                             <hr>
-                            <!-- <button type="button" class="btn btn-primary col-md-1 col-sm-2 col-lg-2 btn-pasien">Save</button> -->
-                            <a type="button" class="btn btn-warning btn-sm col-md-2 col-lg-2 col-sm-3" style="padding: 7px;" href="<?= base_url('C_Medical_Record') ?>">Create New</a>
+                            <button type="button" class="btn btn-primary col-md-1 col-sm-2 col-lg-2" onclick="saveTriase()">Save</button>
+                            <!-- <a type="button" class="btn btn-warning btn-sm col-md-2 col-lg-2 col-sm-3" style="padding: 7px;" href="<?= base_url('C_Medical_Record') ?>">Create New</a> -->
 
-                            <a class="btn btn-primary  col-md-1 col-sm-2 col-lg-2" data-toggle="tab" href="#profile" role="tab">Next</a>
-                            <button type="button" class="btn btn-success col-md-1 col-sm-2 col-lg-2 btn-find">Find</button>
+                            <!-- <a class="btn btn-primary  col-md-1 col-sm-2 col-lg-2" data-toggle="tab" href="#profile" role="tab">Next</a> -->
+                            <!-- <button type="button" class="btn btn-success col-md-1 col-sm-2 col-lg-2 btn-find">Find</button> -->
                             <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2" <?= isset($edit) ? "" : "hidden" ?> target="_blank" href="<?= base_url("C_Medical_Record/cetak/$id") ?>" >Cetak</a>
 
                         </div>
@@ -1645,9 +1645,69 @@
         })
 
 
-        $(document).on('click', '.modal-triase',function() {
+        $('.pilih-pasien').on('change', function (e) {
 
-            $('#modalTriase').modal('show')
+            const pasienId = $(this).val();
+
+
+            if (pasienId) {
+                const url = `<?= base_url('C_KunjunganRujukan/getPasienById/') ?>${pasienId}`;
+                console.log("Fetching URL:", url); // Log URL yang akan di-fetch
+
+                fetch(url)
+                    .then(response => {
+                        console.log("Response Status:", response.status); // Log status respons
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log("Data received:", data); // Log data yang diterima
+                        // Memperbarui field dengan data pasien
+                        document.querySelector('input[name="id"]').value = data.idx;
+                        document.querySelector('input[name="no_rkm"]').value = data.no_rkm || ''; // Default jika tidak ada
+                        document.querySelector('select[name="jenis_kelamin"]').value = data.jenis_kelamin || ''; // Default jika tidak ada
+                        document.querySelector('input[name="tgl_lahir"]').value = data.tgl_lahir || ''; // Default jika tidak ada
+                        document.querySelector('input[name="umur"]').value = data.umur || ''; // Default jika tidak ada
+
+                    })
+                    .catch(error => {
+                        console.error('There has been a problem with your fetch operation:', error);
+                    });
+            }
+
+        })
+
+
+        $(document).on('click', '.modal-triase',function(e) {
+
+
+            const url = `<?= base_url('C_KunjunganRujukan/getPasienById/') ?>${$(this).data('id')}`;
+                console.log("Fetching URL:", url); // Log URL yang akan di-fetch
+
+                fetch(url)
+                    .then(response => {
+                        console.log("Response Status:", response.status); // Log status respons
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log("Data received:", data); // Log data yang diterima
+                        // Memperbarui field dengan data pasien
+                        $('#modalTriase').modal('show')
+
+                        document.getElementById('badge-fullname').textContent = `${data.nama_depan} ${data.nama_belakang}`;
+                        document.getElementById('badge-tgl-lahir').textContent = `${data.tgl_lahir}`;
+                        document.getElementById('badge-norkm').textContent = `${data.no_rkm}`;
+
+                    })
+                    .catch(error => {
+                        console.error('There has been a problem with your fetch operation:', error);
+                    });
+
 
         });
 
@@ -1761,6 +1821,58 @@
                     $.ajax({
                         type: "post",
                         url: "<?= base_url("C_KunjunganRujukan/save") ?>",
+                        data: $("#form-data").serialize(),
+                        dataType: "json",
+                        beforeSend: function() {
+                            // $('#spinnerSave').attr('class', 'spinner-border spinner-border-sm')
+                            $('.btn-action').html('Loading...');
+                            $('.btn-action').attr('disabled', true);
+                        },
+                        success: function(response) {
+                            
+                            setTimeout(() => {
+                                if (response.code == 200) {
+                                    sw_alert("Success", String(response.message), "success");
+                                    setTimeout(() => {
+                                        location.reload()
+                                    }, 3000);
+                                } else {
+                                    sw_alert("Error", String(response.message), "error");
+                                    $('.btn-save').html('Save');
+                                }
+                                
+                            $('.btn-action').html('save');
+                            $('.btn-action').attr('disabled', false);
+                            }, 3000);
+
+
+                        },
+                        error:  function (jqXHR, textError) { 
+                            console.log(jqXHR);
+                            console.log(textError);
+                         }
+                    });
+                });
+            },
+        });
+    }
+
+
+    function saveTriase()
+    {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "It will be saved!",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, save it!',
+            showLoaderOnConfirm: true,
+            preConfirm: function() {
+                return new Promise(function(resolve) {
+                    $.ajax({
+                        type: "post",
+                        url: "<?= base_url("C_KunjunganRujukan/saveTriase") ?>",
                         data: $("#form-data").serialize(),
                         dataType: "json",
                         beforeSend: function() {

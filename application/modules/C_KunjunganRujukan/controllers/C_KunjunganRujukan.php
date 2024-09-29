@@ -280,4 +280,26 @@ class C_KunjunganRujukan extends BaseController
 		// die;
 		$this->load->view('cetak-dokter', $data);
 	}
+
+
+
+	// -----------------------------------------------------------------------------------
+
+	public function getPasienById($id) {
+        // Tambahkan header CORS
+        header("Access-Control-Allow-Origin: *");
+        header("Content-Type: application/json; charset=UTF-8");
+
+        // Ambil data pasien berdasarkan ID
+        $pasien = $this->db->get_where('tb_pasien', ['idx' => $id])->row();
+        
+        // Cek apakah pasien ditemukan
+        if ($pasien) {
+            echo json_encode($pasien);
+        } else {
+            http_response_code(404);
+            echo json_encode(['message' => 'Pasien tidak ditemukan']);
+        }
+    }
 }
+ 
