@@ -2,9 +2,7 @@
 
 $(document).ready(function() {
     $('.table-search').DataTable();
-
-
-   
+    
 });
 
 function isActive(status)

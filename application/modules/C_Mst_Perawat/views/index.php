@@ -7,6 +7,20 @@
         pointer-events: none;
     }
 </style>
+<?php
+function hitungUmur($tgl_lahir)
+{
+
+    // Convert the birth date to a DateTime object
+    $birthDate = new DateTime($tgl_lahir);
+    $today = new DateTime();
+
+    // Calculate the age
+    $age = $today->diff($birthDate)->y; // Get the difference in years
+
+    return $age;
+}
+?>
 <div class="row">
     <div class="col-xl-12">
         <div class="card m-b-30">
@@ -14,7 +28,7 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <h4 class="mt-0 header-title">Data Diagnosa</h4>
+                        <h4 class="mt-0 header-title">Daftar Perawat</h4>
                     </div>
                     <div class="col-md-6">
                         <button class='btn btn-primary float-right col-md-3 open-modal'>Tambah Data</button>
@@ -23,20 +37,22 @@
                 <hr>
 
 
-                <table class="datatable table table-striped table-bordered dt-responsive nowrap table-search" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                <table class="datatable table table-striped table-bordered dt-responsive nowrap" id="myTable" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <thead>
-                        <th class="nowrap w-10">Kode</th>
-                        <th>Diagnosa</th>
-                        <th>Action</th>
+                        <th class="nowrap w-10">No</th>
+                        <th class="text-nowrap">Nama</th>
+                        <th class="text-nowrap">Alamat</th>
+                        <th class="text-nowrap">Action</th>
                     </thead>
                     <tbody>
-                        <?php foreach ($list as $val) {
+                        <?php foreach ($list as $key => $val) {
                             echo "<tr>";
-                            echo "<td>$val->id</td>";
-                            echo "<td>$val->diagnosa</td>";
+                            echo "<td>" . $key + 1 ?? null . "</td>";
+                            echo "<td>" . $val->nama ?? null . "</td>";
+                            echo "<td>" . $val->alamat ?? null . "</td>";
                             echo "<td>
-                                    <button class='btn btn-danger' onclick=deleted('$val->id')>Delete</button>
-                                    <button class='btn btn-primary open-modal'>Edit</button>
+                                    <button class='btn btn-danger' onclick='deleted(" . $val->id . ")'>Delete</button>
+                                    <button class='btn btn-primary open-modal' data-id=" . $val->id . ">Edit</button>
                                 </td>";
                             echo "</tr>";
                         } ?>
@@ -46,22 +62,7 @@
             </div>
         </div>
     </div>
-    <!-- <div class="col-xl-4">
-        <div class="card m-b-30">
-            <div class="card-body">
 
-                <h4 class="mt-0 header-title">Riwayat Kunjungan</h4>
-                <hr>
-                <p class="sub-title">Use the tab JavaScript plugin—include
-                    it individually or through the compiled <code class="highlighter-rouge">bootstrap.js</code>
-                    file—to extend our navigational tabs and pills to create tabbable panes
-                    of local content, even via dropdown menus.</p>
-
-
-
-            </div>
-        </div>
-    </div> -->
 </div>
 
 
@@ -78,13 +79,17 @@
             <form id="form-data">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Kode Diagnosa</label>
-                        <input type="" class="form-control" name="id">
+                        <label for="exampleInputEmail1">Nama</label>
+                        <input type="hidden" class="form-control" name="id">
+                        <input type="text" class="form-control" name="nama">
                     </div>
+
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Diagnosa</label>
-                        <input type="text" class="form-control" name="diagnosa">
+                        <label for="exampleInputEmail1">Alamat</label>
+                        <input type="text" class="form-control" name="alamat">
                     </div>
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -94,25 +99,43 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable({})
+    });
+</script>
+
 
 
 <script>
     $(document).ready(function() {
-        // Event delegation for the "Edit" button click
-        $(document).on('click', '.open-modal', function() {
-            $("#exampleModalLongTitle").html("Form Create Obat")
+        // Event delegation for the "Edit" button click\
+        $(document).on('click', '.open-modal', function(e) {
+            $("#exampleModalLongTitle").html("Form Create Perawat")
             //     $(".btn-action").attr('onclick', 'save()');
             $("#modalForm").modal('show')
             // Get the parent table row (tr)
             var row = $(this).closest('tr');
 
             // Get the text content of each cell in the row
-            var id = row.find('td:eq(0)').text();
-            var name = row.find('td:eq(1)').text();
+            var id = $(this).data('id')
+
+            var nama = row.find('td:eq(1)').text();
+            var alamat = row.find('td:eq(2)').text();
+
+
 
             // Populate the form fields with the retrieved values
             $('#form-data input[name="id"]').val(id);
-            $('#form-data input[name="diagnosa"]').val(name);
+            $('#form-data input[name="nama"]').val(nama);
+            $('#form-data input[name="alamat"]').val(alamat);
+
+            if (id > 0) {
+                $('#form-data input[name="id"]').attr('readonly', true);
+            } else {
+                $('#form-data input[name="id"]').attr('readonly', false);
+
+            }
 
             // Call your edit function or perform any other desired actions
             // ...
@@ -159,7 +182,7 @@
                 return new Promise(function(resolve) {
                     $.ajax({
                         type: "post",
-                        url: "<?= base_url("C_Mst_Diagnosa/save") ?>",
+                        url: "<?= base_url("C_Mst_Perawat/save") ?>",
                         data: $("#form-data").serialize(),
                         dataType: "json",
                         beforeSend: function() {
@@ -209,7 +232,7 @@
                 return new Promise(function(resolve) {
                     $.ajax({
                         type: "post",
-                        url: "<?= base_url("C_Mst_Diagnosa/delete") ?>",
+                        url: "<?= base_url("C_Mst_Perawat/delete") ?>",
                         data: {
                             'id': id
                         },

@@ -19,6 +19,8 @@
         <script src="<?= base_url() ?>assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
 
 
+
+
         <!-- Buttons examples -->
         <script src="<?= base_url() ?>assets/plugins/datatables/dataTables.buttons.min.js"></script>
         <script src="<?= base_url() ?>assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
@@ -38,6 +40,7 @@
 
         <!-- Datatable init js -->
         <script src="<?= base_url() ?>assets/pages/datatables.init.js"></script>
+
 
         <!-- App js -->
         <script src="<?= base_url() ?>assets/js/app.js"></script>
