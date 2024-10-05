@@ -52,7 +52,6 @@
                     <td><input type="date" class="form-control" name="waktu[]" value="<?= $val->waktu ?>"></td>
                     <td>
                         <input type="text" class="form-control" name="profesional[]" value="<?= $val->profesional ?>">
-                        <input type="text" class="form-control" name="profesional[]" value="<?= $val->profesional ?>">
                     </td>
                     <td><textarea class="form-control" name="asesmen[]"><?= $val->asesmen ?></textarea></td>
                     <td><textarea class="form-control" name="instruksi[]"><?= $val->instruksi ?></textarea></td>

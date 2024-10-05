@@ -65,6 +65,10 @@ class C_KunjunganRujukan extends BaseController
 		$data['listDokter'] = $this->db->get('tb_mst_dokter')->result();
 		$data['listObat'] = $this->db->get('tb_obat')->result();
 
+		$data['listPerawat'] = $this->db->get('tb_mst_perawat')->result();
+
+		$data['listLayanan'] = $this->db->get('tb_layanan')->result();
+
 
 
 		// $data['titlePage'] = "Medical Record";
@@ -466,20 +470,40 @@ class C_KunjunganRujukan extends BaseController
 			$selesaiId = $this->db->insert_id();
 
 
-			$this->db->delete('tb_rujukan_selesai_det', ['rujukan_selesai_id' => $selesaiId]);
 
-			foreach ($param['obat_id'] as $key => $val) {
-				$getObat = $this->db->get_where('tb_obat', ['id' => $val])->row();
-				$dataDet = [
-					'rujukan_selesai_id' => $selesaiId,
-					'obat_id' => $param['obat_id'][$key],
-					'jumlah' => $param['jumlah'][$key],
-					'dosis' => $param['dosis'][$key],
-					'frekuensi' => $param['frekuensi'][$key],
-					'cara_pembelian' => $param['cara_pembelian'][$key],
-					'nama_obat' => $getObat->nama_obat,
-				];
-				$this->db->insert('tb_rujukan_selesai_det', $dataDet);
+			if (isset($param['obat_id'])) {
+				$this->db->delete('tb_rujukan_selesai_det', ['rujukan_selesai_id' => $selesaiId]);
+				foreach ($param['obat_id'] as $key => $val) {
+					$getObat = $this->db->get_where('tb_obat', ['id' => $val])->row();
+					$dataDet = [
+						'rujukan_selesai_id' => $selesaiId,
+						'obat_id' => $param['obat_id'][$key],
+						'jumlah' => $param['jumlah'][$key],
+						'dosis' => $param['dosis'][$key],
+						'frekuensi' => $param['frekuensi'][$key],
+						'cara_pembelian' => $param['cara_pembelian'][$key],
+						'nama_obat' => $getObat->nama_obat,
+					];
+					$this->db->insert('tb_rujukan_selesai_det', $dataDet);
+				}
+			}
+
+			if (isset($param['layanan_id'])) {
+				$this->db->delete('tb_rujukan_selesai_det_layanan', ['rujukan_selesai_id' => $selesaiId]);
+
+				foreach ($param['layanan_id'] as $key => $val) {
+					$getLayanan = $this->db->get_where('tb_layanan', ['id' => $val])->row();
+					$dataLayanan = [
+						'rujukan_selesai_id' => $selesaiId,
+						'layanan_id' => $param['layanan_id'][$key],
+						'ket' => $param['ket'][$key],
+						'qty' => $param['qty'][$key],
+						'harga' => $getLayanan->harga,
+						'subtotal' => $param['qty'][$key] * $getLayanan->harga,
+						'nama_layanan' => $getLayanan->nama_layanan,
+					];
+					$this->db->insert('tb_rujukan_selesai_det_layanan', $dataLayanan);
+				}
 			}
 
 
@@ -780,6 +804,8 @@ class C_KunjunganRujukan extends BaseController
 
 			$data['pasienId'] = $pasienId;
 
+			$data['listPerawat'] = $this->db->get('tb_mst_perawat')->result();
+
 
 
 			// echo json_encode($data);
@@ -834,12 +860,15 @@ class C_KunjunganRujukan extends BaseController
 
 			$data['getSelesai'] = $this->db->get_where('tb_rujukan_selesai', ['rujukan_id' => $data['getRujukan']->id])->row();
 			$data['getSelesaiDet'] = $this->db->get_where('tb_rujukan_selesai_det', ['rujukan_selesai_id' => $data['getSelesai']->id])->result();
+			$data['getSelesaiDetLyanan'] = $this->db->get_where('tb_rujukan_selesai_det_layanan', ['rujukan_selesai_id' => $data['getSelesai']->id])->result();
 
 			$data['listObat'] = $this->db->get('tb_obat')->result();
 
 			$data['listDiagnosa'] = $this->db->get('tb_mst_diagnosa')->result();
 			$data['listDokter'] = $this->db->get('tb_mst_dokter')->result();
 			$data['pasienId'] = $pasienId;
+
+			$data['listLayanan'] = $this->db->get('tb_layanan')->result();
 
 
 
@@ -870,6 +899,47 @@ class C_KunjunganRujukan extends BaseController
 
 			echo $this->httpResponseCode("500", "Internal server error: " . $e->getMessage());
 		}
+	}
+
+	function getFormPerincian($pasienId)
+	{
+		$data['getRujukan'] = $this->db->get_where('tb_rujukan', ["pasien_id" => $pasienId])->row();
+		$data['getTriase'] = $this->db->get_where('tb_rujukan_triase', ["rujukan_id" => $data['getRujukan']->id])->row();
+		$data['getTriaseDet'] = $this->db->get_where('tb_triase_det', ["triase_id" => $data['getTriase']->id])->result();
+		$data['getTriaseSkrining'] = $this->db->get_where('tb_triase_skrining', ["triase_id" => $data['getTriase']->id])->row();
+		$data['getTriaseResikoJatuh'] = $this->db->get_where('tb_triase_resiko_jatuh', ["triase_id" => $data['getTriase']->id])->row();
+		$data['getTriaseSerahTerima'] = $this->db->get_where('tb_triase_serah_terima', ["triase_id" => $data['getTriase']->id])->row();
+
+		$data['getEvaluasi'] = $this->db->get_where('tb_triase_pasien_terintegrasi', ["triase_id" => $data['getTriase']->id])->row();
+
+		$data['listDokter'] = $this->db->get('tb_mst_dokter')->result();
+
+		$data['pasienId'] = $pasienId;
+
+
+		$dataSelesai = $this->db->get_where('tb_rujukan_selesai', ['rujukan_id' => $data['getRujukan']->id])->row();
+
+		// echo json_encode($data['getTriaseDet']);
+		// die;
+
+
+		$data['listPemakaianObat'] = $this->db->select('a.id, a.harga, a.nama_obat, SUM(b.jumlah) as total_qty') // Ganti nama_obat dengan kolom yang relevan
+			->from('tb_obat a')
+			->join('tb_rujukan_farmasi b', 'a.id = b.obat_id')
+			->where('b.rujukan_id', $data['getRujukan']->id)
+			->group_by('a.id') // Group by berdasarkan id obat
+			->get()
+			->result();
+
+		$data['listBiayaLayanan'] = $this->db->get_where('tb_rujukan_selesai_det_layanan', ["rujukan_selesai_id" => $dataSelesai->id])->result();
+
+
+		// echo json_encode($data['listBiayaLayanan']);
+		// die;
+
+
+		$data['getPasien'] = $this->db->get_where('tb_pasien', ['idx' => $pasienId])->row();
+		$this->load->view('form-perincian', $data);
 	}
 
 
@@ -1049,6 +1119,61 @@ class C_KunjunganRujukan extends BaseController
 			}
 
 			$this->load->view('form-selesai-print', $data);
+		} catch (Error $e) {
+			$this->db->trans_rollback();
+			http_response_code(400);
+			echo $this->httpResponseCode("400", "Specific error: " . $e->getMessage());
+		} catch (Exception $e) {
+			$this->db->trans_rollback();
+			http_response_code(400);
+
+			echo $this->httpResponseCode("500", "Internal server error: " . $e->getMessage());
+		}
+	}
+
+
+	function printFormPerincian($pasienId)
+	{
+		try {
+
+			$data['getRujukan'] = $this->db->get_where('tb_rujukan', ["pasien_id" => $pasienId])->row();
+			$data['getTriase'] = $this->db->get_where('tb_rujukan_triase', ["rujukan_id" => $data['getRujukan']->id])->row();
+			$data['getTriaseDet'] = $this->db->get_where('tb_triase_det', ["triase_id" => $data['getTriase']->id])->result();
+			$data['getTriaseSkrining'] = $this->db->get_where('tb_triase_skrining', ["triase_id" => $data['getTriase']->id])->row();
+			$data['getTriaseResikoJatuh'] = $this->db->get_where('tb_triase_resiko_jatuh', ["triase_id" => $data['getTriase']->id])->row();
+			$data['getTriaseSerahTerima'] = $this->db->get_where('tb_triase_serah_terima', ["triase_id" => $data['getTriase']->id])->row();
+
+			$data['getEvaluasi'] = $this->db->get_where('tb_triase_pasien_terintegrasi', ["triase_id" => $data['getTriase']->id])->row();
+
+			$data['listDokter'] = $this->db->get('tb_mst_dokter')->result();
+
+			$data['pasienId'] = $pasienId;
+
+
+			$dataSelesai = $this->db->get_where('tb_rujukan_selesai', ['rujukan_id' => $data['getRujukan']->id])->row();
+
+			// echo json_encode($data['getTriaseDet']);
+			// die;
+
+
+			$data['listPemakaianObat'] = $this->db->select('a.id, a.harga, a.nama_obat, SUM(b.jumlah) as total_qty') // Ganti nama_obat dengan kolom yang relevan
+				->from('tb_obat a')
+				->join('tb_rujukan_farmasi b', 'a.id = b.obat_id')
+				->where('b.rujukan_id', $data['getRujukan']->id)
+				->group_by('a.id') // Group by berdasarkan id obat
+				->get()
+				->result();
+
+			$data['listBiayaLayanan'] = $this->db->get_where('tb_rujukan_selesai_det_layanan', ["rujukan_selesai_id" => $dataSelesai->id])->result();
+
+
+			// echo json_encode($data['listBiayaLayanan']);
+			// die;
+
+
+			$data['getPasien'] = $this->db->get_where('tb_pasien', ['idx' => $pasienId])->row();
+
+			$this->load->view('form-perincian-print', $data);
 		} catch (Error $e) {
 			$this->db->trans_rollback();
 			http_response_code(400);

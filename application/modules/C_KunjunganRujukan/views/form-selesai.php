@@ -131,19 +131,17 @@
         </div>
     </div>
 
-    <button type="button" class="btn btn-primary mb-2 m-2 col-md4" id="add-row-btn-selesai">Add New</button>
+    <button type="button" class="btn btn-primary mb-2 m-2 col-md4" id="add-row-btn-selesai">Add Obat</button>
 
 
     <table class="table table-bordered mt-3">
         <thead>
             <tr>
                 <th>Nama Obat</th>
-                <th>Harga Satuan</th>
                 <th>Qty</th>
                 <th>Dosis</th>
                 <th>Frekuensi</th>
                 <th>Cara Pembelian</th>
-                <th>Subtotal</th>
             </tr>
         </thead>
         <tbody id="table-body-selesai">
@@ -171,6 +169,43 @@
                     </td>
                     <td>
                         <input type="text" class="form-control" name="cara_pembelian[]" required value="<?= $val->cara_pembelian ?>">
+                    </td>
+                </tr>
+
+            <?php } ?>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-primary mb-2 m-2 col-md4" id="add-row-btn-layanan">Add Layanan Lainnya</button>
+
+
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Nama Layanan</th>
+                <th>Qty</th>
+                <th>Ket</th>
+            </tr>
+        </thead>
+        <tbody id="table-body-layanan">
+            <?php foreach ($getSelesaiDetLyanan as $val) { ?>
+
+                <tr>
+                    <td>
+                        <select class="form-control" name="layanan_id[]">
+                            <option value="">Select Layanan...</option>
+                            <?php foreach ($listLayanan as $item): ?>
+                                <option value="<?= $item->id ?>" <?= $item->id == $val->layanan_id ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($item->nama_layanan) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" name="qty[]" value="<?= $val->qty ?>" required>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" name="ket[]" value="<?= $val->ket ?>" required>
                     </td>
                 </tr>
 

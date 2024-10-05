@@ -319,6 +319,31 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalPerincian" tabindex="-1" role="dialog" aria-labelledby="modalTriaseTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="m-2">
+
+
+
+                <div id="form-perincian"></div>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="modalFarmasi" tabindex="-1" role="dialog" aria-labelledby="modalTriaseTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
@@ -609,6 +634,45 @@
                     // Append the new row
                     tableBody.appendChild(newRow);
                 });
+
+                document.getElementById('add-row-btn-layanan').addEventListener('click', function() {
+                    const tableBody = document.getElementById('table-body-layanan');
+
+                    // Create a new row
+                    const newRow = document.createElement('tr');
+
+                    // Calculate the new row number
+                    const rowNumber = tableBody.children.length > 0 ?
+                        parseInt(tableBody.lastElementChild.cells[0].innerText) + 1 :
+                        1; // Default to 1 if there are no rows
+
+                    newRow.innerHTML = `
+                            <td>
+                                <select class="form-control" name="layanan_id[]">
+                                    <option value="">Select Layanan...</option>
+                                    <?php foreach ($listLayanan as $item): ?>
+                                        <option value="<?= $item->id ?>" <?= $item->id == $val->layanan_id ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($item->nama_layanan) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" name="qty[]" value="<?= $val->qty ?>" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" name="ket[]" value="<?= $val->ket ?>" required>
+                            </td>
+                        `;
+
+                    // Clear "Data Not Found" row if it exists
+                    if (tableBody.children.length === 1 && tableBody.firstElementChild.cells[0].colSpan === 8) {
+                        tableBody.innerHTML = ''; // Clear only if there's a single "Data Not Found" row
+                    }
+
+                    // Append the new row
+                    tableBody.appendChild(newRow);
+                });
             })
             .catch(error => {
                 sw_alert("Error", String(error), "error");
@@ -617,6 +681,33 @@
     });
 
 
+
+    $(document).on('click', '.modal-perincian', function() {
+
+        const rujukan_id = $(this).data('rujukan_id');
+        const url = `<?= base_url('C_KunjunganRujukan/getFormPerincian/') ?>${$(this).data('id')}`;
+        console.log("Fetching URL:", url); // Log URL yang akan di-fetch
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(data => {
+                $('#modalPerincian').modal('show')
+
+                document.getElementById('form-perincian').innerHTML = data;
+            })
+            .catch(error => {
+                sw_alert("Error", String(error), "error");
+                console.error('There has been a problem with your fetch operation:', error);
+            });
+
+
+
+    });
 
 
 
@@ -1292,31 +1383,64 @@
         const newRow = document.createElement('tr');
 
         // Calculate the new row number
-        let rowNumber = 1; // Default to 1 if there are no rows
-        if (tableBody.children.length > 0) {
-            const lastRow = tableBody.lastElementChild;
-            rowNumber = parseInt(lastRow.cells[0].innerText) + 1; // Get last row number and increment
-        }
+        let rowNumber = tableBody.children.length + 1; // Start counting from 1
 
-        newRow.innerHTML = `
-        <td><input type="date" class="form-control" name="waktu[]" required></td>
-                <td>
-                <input type="text" class="form-control" name="profesional[]" required>
-                <input type="text" class="form-control" name="profesional[]" required>
-                </td>
-                <td><textarea class="form-control" name="asesmen[]" required></textarea></td>
-                <td><textarea class="form-control" name="instruksi[]" required></textarea></td>
-                <td><input type="text" class="form-control" name="verifikasi[]" required></td>
-        `;
+
 
         // Clear "Data Not Found" row if it exists
         if (tableBody.children.length === 1 && tableBody.firstElementChild.cells[0].colSpan === 8) {
             tableBody.innerHTML = ''; // Clear only if there's a single "Data Not Found" row
         }
 
+        // Add class for even or odd rows
+        if (rowNumber % 2 != 0) {
+            newRow.classList.add('even-row'); // Add class for even rows
+
+            newRow.innerHTML = `
+                <td><input type="date" class="form-control" name="waktu[]" required></td>
+                <td>
+                    <input type="text" class="form-control" name="profesional[]" required value='Perawat' readonly>
+                </td>
+                <td><textarea class="form-control" name="asesmen[]" required></textarea></td>
+                <td><textarea class="form-control" name="instruksi[]" required></textarea></td>
+                <td>
+                <select class="form-control" name="verifikasi[]">
+                                <option value="">...</option>
+                                <?php foreach ($listPerawat as $item): ?>
+                                    <option <?= isset($getTriaseSerahTerima) && $item->nama == "$getTriaseSerahTerima->perawat_triase" ? 'selected' : '' ?>>
+                                        <?= $item->nama ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                </td>
+            `;
+        } else {
+
+            newRow.classList.add('odd-row'); // Add class for odd rows
+            newRow.innerHTML = `
+                <td><input type="date" class="form-control" name="waktu[]" required></td>
+                <td>
+                    <input type="text" class="form-control" name="profesional[]" required value='Dokter' readonly>
+                </td>
+                <td><textarea class="form-control" name="asesmen[]" required></textarea></td>
+                <td><textarea class="form-control" name="instruksi[]" required></textarea></td>
+                <td>
+                <select class="form-control" name="verifikasi[]">
+                                <option>...</option>
+                                <?php foreach ($listDokter as $item): ?>
+                                    <option <?= isset($getTriaseSerahTerima) && $item->nama == "$getTriaseSerahTerima->infomasi_by" ? 'selected' : '' ?>>
+                                        <?= $item->nama ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                </td>
+            `;
+        }
+
         // Append the new row
         tableBody.appendChild(newRow);
     });
+
 
     document.getElementById('add-row-btn-farmasi').addEventListener('click', function() {
         const tableBody = document.getElementById('table-body-farmasi');
