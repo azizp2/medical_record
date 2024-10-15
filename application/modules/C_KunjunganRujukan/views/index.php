@@ -50,15 +50,15 @@
                         <th>Action</th>
                     </thead>
                     <tbody>
-                        <?php foreach ($listRujukan as $item): ?>
+                        <?php foreach ($listRujukan as $key => $item): ?>
                             <tr>
-                                <td class="nowrap w-10">5</td>
+                                <td class="nowrap w-10"><?= $key + 1 ?></td>
                                 <td><?php echo $item->no_rkm; ?></td>
                                 <td><?php echo $item->nik; ?></td>
-                                <td><?php echo date('d/m/Y', strtotime($item->tgl_lahir)); ?></td>
+                                <td><?php echo date('d/m/Y', strtotime($item->created_at)); ?></td>
                                 <td><?php echo $item->nama_depan . ' ' . $item->nama_belakang; ?></td>
                                 <td><?php echo $item->jenis_kelamin; ?></td>
-                                <td><?php echo $item->tempat_lahir . ', ' . date('d/m/Y', strtotime($item->tgl_lahir_wali)); ?></td>
+                                <td><?php echo $item->tempat_lahir . ', ' . date('d/m/Y', strtotime($item->tgl_lahir)); ?></td>
                                 <td><?php echo $item->no_telp; ?></td>
                                 <td><?php echo $item->alamat; ?></td>
                                 <td><?php echo $item->rujukan_dari; ?></td>
@@ -109,10 +109,10 @@
                             <hr>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Pilih Pasien</label>
-                                <select class="form-control pilih-pasien" name="pasien_id">
+                                <select class="form-control pilih-pasien select2me" name="pasien_id" style="width: 100%;">
                                     <option>...</option>
                                     <?php foreach ($listPasien as $val) {
-                                        echo "<option value=\"{$val->idx}\">{$val->idx} - {$val->nama_depan} {$val->nama_belakang}</option>";
+                                        echo "<option value=\"{$val->idx}\">{$val->no_rkm} - {$val->nama_depan} {$val->nama_belakang} - {$val->alamat}</option>";
                                     }
                                     ?>
                                 </select>
@@ -504,6 +504,8 @@
             .then(data => {
                 $('#modalTatalaksana').modal('show')
                 document.getElementById('form-tatalaksana').innerHTML = data;
+                $('.select2me2').select2();
+
             })
             .catch(error => {
                 sw_alert("Error", String(error), "error");
@@ -784,6 +786,8 @@
 
 
     $(document).on('click', '.open-modal', function() {
+
+        $('.select2me').select2();
 
         $("#exampleModalLongTitle").html("Create New Kunjungan")
         $("#modalForm").modal('show')
@@ -1214,6 +1218,69 @@
                         type: "post",
                         url: "<?= base_url("C_KunjunganRujukan/saveSelesai") ?>",
                         data: $("#form-data-selesai").serialize(),
+                        dataType: "json",
+                        beforeSend: function() {
+                            // $('#spinnerSave').attr('class', 'spinner-border spinner-border-sm')
+                            $('.btn-action').html('Loading...');
+                            $('.btn-action').attr('disabled', true);
+                        },
+                        success: function(response) {
+
+                            console.log(response)
+
+                            setTimeout(() => {
+                                if (response.code == 200) {
+                                    sw_alert("Success", String(response.message), "success");
+                                    setTimeout(() => {
+                                        location.reload()
+                                    }, 3000);
+                                } else {
+                                    sw_alert("Error", String(response.message), "error");
+                                    $('.btn-save').html('Save');
+                                }
+
+                                $('.btn-action').html('save');
+                                $('.btn-action').attr('disabled', false);
+                            }, 3000);
+
+
+                        },
+                        error: function(jqXHR, textError) {
+                            let message = ''; // Gunakan let untuk bisa mengubah nilai
+
+                            // Cek jika responseJSON ada
+                            if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                                message = jqXHR.responseJSON.message;
+                            } else {
+                                message = jqXHR.statusText; // Ambil statusText jika tidak ada message
+                            }
+                            sw_alert("Error", String(message), "error");
+
+                            console.log(jqXHR);
+                            console.log(textError);
+                        }
+                    });
+                });
+            },
+        });
+    }
+
+
+    function savePerincian() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "It will be saved!",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, save it!',
+            showLoaderOnConfirm: true,
+            preConfirm: function() {
+                return new Promise(function(resolve) {
+                    $.ajax({
+                        type: "post",
+                        url: "<?= base_url("C_KunjunganRujukan/savePerincian") ?>",
+                        data: $("#form-data-perincian").serialize(),
                         dataType: "json",
                         beforeSend: function() {
                             // $('#spinnerSave').attr('class', 'spinner-border spinner-border-sm')

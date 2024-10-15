@@ -50,18 +50,25 @@ class C_Report_Kunjungan extends BaseController
 		$data['to'] = $to;
 
 		$this->db->select("a.*, a.nik as nikktp, a.id as norm, keluhan, c.*, diperiksa_oleh");
-        $this->db->from('tb_pasien a');
-        $this->db->join('tb_anamnesa b', 'a.idx = b.id_pasien', 'left');
-        $this->db->join('tb_diagnosa c', 'a.idx = c.nik', 'left');
-        $this->db->join('tb_resep d', 'a.idx = d.nik', 'left');
-		if(!isset($param['from'])){
-			$this->db->like('a.tgl_selesai', date("Y-m-d"));
-		}else{
-			$this->db->where("a.tgl_selesai between '$from 00:00:00' and '$to 23:59:59'",false, false);
+		$this->db->from('tb_pasien a');
+		$this->db->join('tb_anamnesa b', 'a.idx = b.id_pasien', 'left');
+		$this->db->join('tb_diagnosa c', 'a.idx = c.nik', 'left');
+		$this->db->join('tb_resep d', 'a.idx = d.nik', 'left');
+		// if(!isset($param['from'])){
+		// 	$this->db->like('a.tgl_selesai', date("Y-m-d"));
+		// }else{
+		// 	$this->db->where("a.tgl_selesai between '$from 00:00:00' and '$to 23:59:59'",false, false);
+		// }
+
+		if (!isset($param['from'])) {
+			$this->db->like('b.create_date', date("Y-m-d"));
+		} else {
+			$this->db->where("b.create_date between '$from 00:00:00' and '$to 23:59:59'", false, false);
 		}
-        $this->db->order_by("a.tgl_selesai desc");
-        $this->db->group_by("a.idx");
-        $sql = $this->db->get()->result();		$data['titlePage'] = "Report Kunjungan";
+		$this->db->order_by("b.create_date desc");
+		$this->db->group_by("a.idx");
+		$sql = $this->db->get()->result();
+		$data['titlePage'] = "Report Kunjungan";
 
 		$data['list'] =  $sql;
 
@@ -81,17 +88,17 @@ class C_Report_Kunjungan extends BaseController
 
 		$data['titlePage'] = "Report Kunjungan";
 		$this->db->select("a.*, a.id as norm, keluhan, c.*, diperiksa_oleh");
-        $this->db->from('tb_pasien a');
-        $this->db->join('tb_anamnesa b', 'a.nik = b.id_pasien', 'left');
-        $this->db->join('tb_diagnosa c', 'a.nik = c.nik', 'left');
-        $this->db->join('tb_resep d', 'a.nik = d.nik', 'left');
-		if(!isset($param['from'])){
+		$this->db->from('tb_pasien a');
+		$this->db->join('tb_anamnesa b', 'a.nik = b.id_pasien', 'left');
+		$this->db->join('tb_diagnosa c', 'a.nik = c.nik', 'left');
+		$this->db->join('tb_resep d', 'a.nik = d.nik', 'left');
+		if (!isset($param['from'])) {
 			$this->db->where('a.create_date', date("Y-m-d"));
-		}else{
-			$this->db->where("a.create_date between '$from' and '$to'",false, false);
+		} else {
+			$this->db->where("a.create_date between '$from' and '$to'", false, false);
 		}
-        $this->db->group_by("a.nik");
-        $sql = $this->db->get()->result();
+		$this->db->group_by("a.nik");
+		$sql = $this->db->get()->result();
 		$data['list'] =  $sql;
 
 
@@ -113,8 +120,8 @@ class C_Report_Kunjungan extends BaseController
 
 
 		$this->db->select("*");
-        $this->db->from('tb_obat');
-        $sql = $this->db->get()->result();
+		$this->db->from('tb_obat');
+		$sql = $this->db->get()->result();
 
 		$data['listObat'] =  $sql;
 
@@ -136,7 +143,7 @@ class C_Report_Kunjungan extends BaseController
 
 
 
-		$data['listTrans'] =$sql2;
+		$data['listTrans'] = $sql2;
 
 		// echo "<pre>";
 		// print_r($data);
@@ -146,25 +153,25 @@ class C_Report_Kunjungan extends BaseController
 
 		$this->layout('index-trans-obat', $data);
 	}
-	
+
 	function save()
 	{
 		try {
 			$param = $this->input->post();
-			
-			if(strlen($param['nama_depan']) ==0){
+
+			if (strlen($param['nama_depan']) == 0) {
 				echo $this->httpResponseCode("400", "nik tidak boleh kosong");
 				return;
 			}
-			if(strlen($param['nama_depan']) ==0){
+			if (strlen($param['nama_depan']) == 0) {
 				echo $this->httpResponseCode("400", "nama depan tidak boleh kosong");
 				return;
 			}
-			if(strlen($param['nama_belakang']) ==0){
+			if (strlen($param['nama_belakang']) == 0) {
 				echo $this->httpResponseCode("400", "nama belakang tidak boleh kosong");
 				return;
 			}
-			if(strlen($param['gender']) ==0){
+			if (strlen($param['gender']) == 0) {
 				echo $this->httpResponseCode("400", "jenis kelamin tidak boleh kosong");
 				return;
 			}
@@ -181,7 +188,7 @@ class C_Report_Kunjungan extends BaseController
 			echo $this->httpResponseCode(400, $th->getMessage());
 		}
 	}
-	
+
 
 	function getAllAjax()
 	{

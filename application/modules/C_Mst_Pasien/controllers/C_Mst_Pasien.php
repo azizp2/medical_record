@@ -43,7 +43,7 @@ class C_Mst_Pasien extends BaseController
 
 		$data['titlePage'] = "List Pasien";
 
-		$data['list'] = $this->db->get('tb_pasien')->result();
+		$data['list'] = $this->db->get_where('tb_pasien', ['is_active' => 1])->result();
 
 		$this->layout('index', $data);
 	}
@@ -52,6 +52,12 @@ class C_Mst_Pasien extends BaseController
 	{
 		try {
 			$param = $this->input->post();
+
+			$pasien = $this->db->get_where('tb_pasien', ['no_rkm' => $param['no_rkm']])->row();
+			if (!empty($pasien)) {
+				echo $this->httpResponseCode("400", "nik sudah pernah digunakan");
+				return;
+			}
 
 			if (strlen($param['nama_depan']) == 0) {
 				echo $this->httpResponseCode("400", "nama depan tidak boleh kosong");
@@ -67,6 +73,7 @@ class C_Mst_Pasien extends BaseController
 				$this->db->where('idx', $param['id']);
 				$exec = $this->db->update('tb_pasien', $param);
 			} else {
+				$param['is_active'] = 1;
 				$exec = $this->db->insert('tb_pasien', $param);
 			}
 

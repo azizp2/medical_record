@@ -1,4 +1,4 @@
-<form id="form-data-cppt">
+<form id="form-data-perincian">
     <input type="hidden" name="rujukan_id" id="triase-rujukan-id" value="<?= $getPasien->idx ?>">
 
 
@@ -22,6 +22,16 @@
                         <td style="width: 70px">Nama</td>
                         <td>:</td>
                         <td> <span id="badge-fullname"><?= $getPasien->nama_depan . " " . $getPasien->nama_belakang  ?></span></td>
+                    </tr>
+                    <tr>
+                        <td>Alamat</td>
+                        <td>:</td>
+                        <td> <span id="badge-norkm"><?= $getPasien->alamat ?></span></td>
+                    </tr>
+                    <tr>
+                        <td>Jenis Kelamin</td>
+                        <td>:</td>
+                        <td> <span id="badge-norkm"><?= $getPasien->gender ?></span></td>
                     </tr>
                     <tr>
                         <td>Tgl Lahir</td>
@@ -52,10 +62,10 @@
         </thead>
         <tbody id="table-body-cppt">
             <?php
-            $grandTotal = 0; // Inisialisasi grand total
+            $grandTotal1 = 0; // Inisialisasi grand total
             foreach ($listPemakaianObat as $item) {
                 $subtotal = $item->total_qty * $item->harga; // Hitung subtotal
-                $grandTotal += $subtotal; // Tambahkan subtotal ke grand total
+                $grandTotal1 += $subtotal; // Tambahkan subtotal ke grand total
             ?>
                 <tr>
                     <td><?= htmlspecialchars($item->nama_obat) ?></td>
@@ -66,7 +76,7 @@
             <?php } ?>
             <tr>
                 <td colspan="3" class="text-center bg-success text-white"><strong>Grand Total</strong></td>
-                <td>Rp. <?= number_format($grandTotal, 0, ',', '.') ?>,-</td>
+                <td>Rp. <?= number_format($grandTotal1, 0, ',', '.') ?>,-</td>
             </tr>
         </tbody>
     </table>
@@ -84,10 +94,10 @@
         </thead>
         <tbody id="table-body-cppt">
             <?php
-            $grandTotal = 0; // Inisialisasi grand total
-            foreach ($listPemakaianObat as $item) {
+            $grandTotal2 = 0; // Inisialisasi grand total
+            foreach ($listObatPulang as $item) {
                 $subtotal = $item->total_qty * $item->harga; // Hitung subtotal
-                $grandTotal += $subtotal; // Tambahkan subtotal ke grand total
+                $grandTotal2 += $subtotal; // Tambahkan subtotal ke grand total
             ?>
                 <tr>
                     <td><?= htmlspecialchars($item->nama_obat) ?></td>
@@ -98,7 +108,7 @@
             <?php } ?>
             <tr>
                 <td colspan="3" class="text-center bg-success text-white"><strong>Grand Total</strong></td>
-                <td>Rp. <?= number_format($grandTotal, 0, ',', '.') ?>,-</td>
+                <td>Rp. <?= number_format($grandTotal2, 0, ',', '.') ?>,-</td>
             </tr>
         </tbody>
     </table>
@@ -117,10 +127,10 @@
         </thead>
         <tbody id="table-body-cppt">
             <?php
-            $grandTotal = 0; // Inisialisasi grand total
+            $grandTotal3 = 0; // Inisialisasi grand total
             foreach ($listBiayaLayanan as $item) {
                 $subtotal = $item->qty * $item->harga; // Hitung subtotal
-                $grandTotal += $subtotal; // Tambahkan subtotal ke grand total
+                $grandTotal3 += $subtotal; // Tambahkan subtotal ke grand total
             ?>
                 <tr>
                     <td><?= htmlspecialchars($item->nama_layanan) ?></td>
@@ -131,14 +141,16 @@
             <?php } ?>
             <tr>
                 <td colspan="3" class="text-center bg-success text-white"><strong>Grand Total</strong></td>
-                <td>Rp. <?= number_format($grandTotal, 0, ',', '.') ?>,-</td>
+                <td>Rp. <?= number_format($grandTotal3, 0, ',', '.') ?>,-</td>
             </tr>
         </tbody>
     </table>
 
+    <p class="bg-primary text-white p-3" style="font-size: 18px;">Total Tagihan Keseluruhan : Rp. <?= number_format($grandTotal1 + $grandTotal2 + $grandTotal3) ?></p>
 
 
-    <button type="button" class="btn btn-primary col-md-1 col-sm-2 col-lg-2" onclick="saveCPPT()">Save</button>
+
+    <button type="button" class="btn btn-primary col-md-1 col-sm-2 col-lg-2" onclick="savePerincian()">Save</button>
     <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2 triase-btn-print" target="_blank" href="<?= base_url('C_KunjunganRujukan/printFormPerincian/' . $pasienId) ?>">Cetak</a>
 
 

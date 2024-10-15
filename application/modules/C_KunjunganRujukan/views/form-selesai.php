@@ -54,7 +54,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label>Ruang Rawat Terakhir</label>
-                <input type="text" class="form-control" name="ruang_rawat" value="<?= $getSelesai->ruang_rawat ?>" required>
+                <select class="form-control select-search" name="ruang_rawat">
+                    <option>...</option>
+                    <?php foreach ($listKamar as $val) { ?>
+                        <option <?= $val->nomor_kamar == $getSelesai->ruang_rawat ? 'selected' : '' ?>><?= $val->nomor_kamar ?></option>";
+                    <?php } ?>
+                </select>
+                <!-- <input type="text" class="form-control" name="ruang_rawat" value="<?= $getSelesai->ruang_rawat ?>" required> -->
             </div>
         </div>
         <div class="col-md-6">

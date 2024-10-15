@@ -47,9 +47,9 @@ function hitungUmur($tgl_lahir)
                     <tbody>
                         <?php foreach ($list as $key => $val) {
                             echo "<tr>";
-                            echo "<td>" . $key + 1 ?? null . "</td>";
-                            echo "<td>" . $val->nama ?? null . "</td>";
-                            echo "<td>" . $val->alamat ?? null . "</td>";
+                            echo "<td>" . $key + 1  . "</td>";
+                            echo "<td>" . $val->nama . "</td>";
+                            echo "<td>" . $val->alamat . "</td>";
                             echo "<td>
                                     <button class='btn btn-danger' onclick='deleted(" . $val->id . ")'>Delete</button>
                                     <button class='btn btn-primary open-modal' data-id=" . $val->id . ">Edit</button>

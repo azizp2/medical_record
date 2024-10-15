@@ -347,7 +347,15 @@ $genitalia = isset($getEvaluasi->genitalia) ? $getEvaluasi->genitalia : '';
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <input class="form-control" name="dokter" value="<?= $dokter ?>">
+                    <select class="form-control" name="dokter">
+                        <option>...</option>
+                        <?php foreach ($listDokter as $item): ?>
+                            <option <?= $item->nama == $dokter ? 'selected' : '' ?>>
+                                <?= $item->nama ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <!-- <input class="form-control" name="dokter" value="<?= $dokter ?>"> -->
                 </div>
             </div>
         </div>

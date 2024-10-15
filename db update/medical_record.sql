@@ -11,7 +11,7 @@
  Target Server Version : 100432 (10.4.32-MariaDB)
  File Encoding         : 65001
 
- Date: 22/09/2024 23:51:33
+ Date: 05/10/2024 09:36:30
 */
 
 SET NAMES utf8mb4;
@@ -115,6 +115,7 @@ INSERT INTO `ch_gen_tbl_utl_menu_access` VALUES (1, 1930);
 INSERT INTO `ch_gen_tbl_utl_menu_access` VALUES (1, 1940);
 INSERT INTO `ch_gen_tbl_utl_menu_access` VALUES (1, 1950);
 INSERT INTO `ch_gen_tbl_utl_menu_access` VALUES (1, 1970);
+INSERT INTO `ch_gen_tbl_utl_menu_access` VALUES (1, 1980);
 INSERT INTO `ch_gen_tbl_utl_menu_access` VALUES (1, 2000);
 INSERT INTO `ch_gen_tbl_utl_menu_access` VALUES (1, 2100);
 INSERT INTO `ch_gen_tbl_utl_menu_access` VALUES (1, 2200);
@@ -180,6 +181,8 @@ INSERT INTO `ch_gen_tbl_utl_menu_dtlsub` VALUES (1930, 'Layanan', 'C_Mst_Layanan
 INSERT INTO `ch_gen_tbl_utl_menu_dtlsub` VALUES (1940, 'Kamar', 'C_Mst_Kamar', 'fa-align-left', 1900, 'admin', '2023-06-04 15:19:20', NULL, NULL);
 INSERT INTO `ch_gen_tbl_utl_menu_dtlsub` VALUES (1950, 'Diagnosa', 'C_Mst_Diagnosa', 'fa-align-left', 1900, 'admin', '2023-06-04 15:19:49', NULL, NULL);
 INSERT INTO `ch_gen_tbl_utl_menu_dtlsub` VALUES (1970, 'Dokter', 'C_Mst_Dokter', 'fa-align-left', 1900, 'admin', '2023-06-04 15:20:27', NULL, NULL);
+INSERT INTO `ch_gen_tbl_utl_menu_dtlsub` VALUES (1980, 'Pasien', 'C_Mst_Pasien', 'fa-align-left', 1900, 'kupm', '2024-09-28 00:43:15', NULL, NULL);
+INSERT INTO `ch_gen_tbl_utl_menu_dtlsub` VALUES (1990, 'Perawat', 'C_Mst_Perawat', 'fa-align-left', 1900, 'kupm', '2024-09-29 12:03:03', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for ch_gen_tbl_utl_menu_hdr
@@ -5357,6 +5360,25 @@ INSERT INTO `tb_mst_kamar` VALUES (10, 'Duku', 'Ekonomi', '-');
 INSERT INTO `tb_mst_kamar` VALUES (11, 'Melon', 'Ekonomi', '-');
 
 -- ----------------------------
+-- Table structure for tb_mst_perawat
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_mst_perawat`;
+CREATE TABLE `tb_mst_perawat`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nama` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `alamat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `telepon` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tb_mst_perawat
+-- ----------------------------
+INSERT INTO `tb_mst_perawat` VALUES (15, 'Kamisah', 'Jlaa.....', NULL, NULL);
+INSERT INTO `tb_mst_perawat` VALUES (16, 'Rohmadi', 'jl......', NULL, NULL);
+
+-- ----------------------------
 -- Table structure for tb_obat
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_obat`;
@@ -5898,8 +5920,9 @@ CREATE TABLE `tb_pasien`  (
   `no_telp` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `tgl_lahir` date NULL DEFAULT NULL,
   `no_rkm` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`idx`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2609 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`idx`) USING BTREE,
+  INDEX `idx_golongan_darah`(`golongan_darah` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2611 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_pasien
@@ -8382,6 +8405,7 @@ INSERT INTO `tb_pasien` VALUES ('RJ-672', 'Mamak Arni', '', 'Wanita', NULL, 'Sua
 INSERT INTO `tb_pasien` VALUES ('RJ-720', 'Safika Zanea', '', 'Pria', NULL, 'Suak Raya', '', '', 1, '2024-09-19 19:00:41', 6, NULL, '2024-09-19 19:31:41', 2606, NULL, NULL, NULL);
 INSERT INTO `tb_pasien` VALUES ('RJ-620', 'Syarifah Humaira', '', 'Wanita', NULL, 'Meurebo', '', '', 1, '2024-09-19 19:10:52', 5, NULL, '2024-09-19 19:41:52', 2607, NULL, NULL, NULL);
 INSERT INTO `tb_pasien` VALUES ('RJ-721', 'M. Syaqil El rumi', '', 'Pria', NULL, 'Nagan Raya', '', '', 1, '2024-09-19 19:00:27', 1.1, NULL, '2024-09-19 19:52:27', 2608, NULL, NULL, NULL);
+INSERT INTO `tb_pasien` VALUES ('2610', 'Abdul', 'Azis', 'Pria', 'Pria', 'Batam', NULL, 'Abdul Azis', 1, '0000-00-00 00:00:00', 0, NULL, '0000-00-00 00:00:00', 2610, '0823173218421', '0000-00-00', '00001219');
 
 -- ----------------------------
 -- Table structure for tb_resep
@@ -23992,13 +24016,18 @@ CREATE TABLE `tb_rujukan`  (
   `tgl_lahir_wali` date NULL DEFAULT NULL,
   `alamat_wali` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `no_telp_wali` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `cara_pasien_datang` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `rujukan_dari` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `diagnosa_awal` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_rujukan
 -- ----------------------------
-INSERT INTO `tb_rujukan` VALUES (12, 12, 't-1000', 'Pria', '1990-10-10', 34, NULL, 'Abdullah', 'Batam', '1998-02-09', 'Batam Center', '08232123131');
+INSERT INTO `tb_rujukan` VALUES (12, 12, 't-1000', 'Pria', '1990-10-10', 34, NULL, 'Abdullah', 'Batam', '1998-02-09', 'Batam Center', '08232123131', NULL, NULL, NULL);
+INSERT INTO `tb_rujukan` VALUES (15, 15, '', NULL, '0000-00-00', 50, NULL, 'muhammad nuh ', 'Batam', '2024-12-31', 'Batam', '092312141', 'Datang Sendiri', 'Rs Imam Nurdin', NULL);
+INSERT INTO `tb_rujukan` VALUES (27, 27, '', NULL, '0000-00-00', 2, NULL, 'muhammad nuh ', 'Batam', '2024-09-29', 'batam', '082386340464', 'Datang Sendiri', 'Rs Imam Nurdin', '015');
 
 -- ----------------------------
 -- Table structure for tb_rujukan_cppt
@@ -24013,7 +24042,7 @@ CREATE TABLE `tb_rujukan_cppt`  (
   `instruksi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `verifikasi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_rujukan_cppt
@@ -24022,6 +24051,11 @@ INSERT INTO `tb_rujukan_cppt` VALUES (5, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `tb_rujukan_cppt` VALUES (10, 12, '2024-09-22', 'professional1', 'assemen 01', 'intruksi', 'veriifikasi1');
 INSERT INTO `tb_rujukan_cppt` VALUES (11, 12, '2024-09-22', 'professional 2', 'assement 02', 'intruksi 2', 'verifikasi 2');
 INSERT INTO `tb_rujukan_cppt` VALUES (12, 12, '2024-09-22', 'pro1', 'ass1', 'ins1', 'verif1');
+INSERT INTO `tb_rujukan_cppt` VALUES (13, 27, '2024-09-12', 'test', 'test123', 'tes', 'tes');
+INSERT INTO `tb_rujukan_cppt` VALUES (19, 15, '2024-09-30', 'Perawat', 'perawata', 'perawata', 'Rohmadi');
+INSERT INTO `tb_rujukan_cppt` VALUES (20, 15, '2024-09-30', 'Dokter', 'dokter', 'dokter', 'dr. Septi Sp. B. Onk');
+INSERT INTO `tb_rujukan_cppt` VALUES (21, 15, '2024-09-30', 'Perawat', 'perawat lagi', 'perawat', 'Rohmadi');
+INSERT INTO `tb_rujukan_cppt` VALUES (22, 15, '0000-00-00', 'Dokter', 'dokter lagi', 'dokter', 'dr. HALFIANSYAH');
 
 -- ----------------------------
 -- Table structure for tb_rujukan_farmasi
@@ -24036,7 +24070,7 @@ CREATE TABLE `tb_rujukan_farmasi`  (
   `jumlah` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `nama_obat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_rujukan_farmasi
@@ -24045,6 +24079,7 @@ INSERT INTO `tb_rujukan_farmasi` VALUES (5, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `tb_rujukan_farmasi` VALUES (17, 12, 26, '2x3', '2024-09-22', '1', 'HANDSCOON NON STERIL');
 INSERT INTO `tb_rujukan_farmasi` VALUES (18, 12, 29, '2x1', '2024-09-22', '2', 'ALKOHOL 1 LITER');
 INSERT INTO `tb_rujukan_farmasi` VALUES (19, 12, 15, '2x3', '2024-09-22', '3', 'SPUIT 1 CC');
+INSERT INTO `tb_rujukan_farmasi` VALUES (20, 27, 15, '2x3', '2024-09-29', '1', 'SPUIT 1 CC');
 
 -- ----------------------------
 -- Table structure for tb_rujukan_selesai
@@ -24062,13 +24097,14 @@ CREATE TABLE `tb_rujukan_selesai`  (
   `diagnosa_utama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `dokter_penanggung_jawab` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `riwayat_penyakit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `tgl_masuk` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_rujukan_selesai
 -- ----------------------------
-INSERT INTO `tb_rujukan_selesai` VALUES (24, 12, '2024-09-22', 'test ruang', 'penanggung pembayaran', 'Pemeriksaan Fisik', 'Pemeriksaan Penunjang', 'Terapi Pengobatan selama di Rumah Sakit', 'Diagnosa Utama', 'Terapi Pengobatan selama di Rumah Sakit', 'Ringkasan Riwayat Penyakit');
+INSERT INTO `tb_rujukan_selesai` VALUES (29, 12, '2024-09-22', 'test ruang', 'penanggung pembayaran', 'Pemeriksaan Fisik', 'Pemeriksaan Penunjang', 'Terapi Pengobatan selama di Rumah Sakit', NULL, '...', 'Ringkasan Riwayat Penyakit', '');
 
 -- ----------------------------
 -- Table structure for tb_rujukan_selesai_det
@@ -24084,7 +24120,7 @@ CREATE TABLE `tb_rujukan_selesai_det`  (
   `cara_pembelian` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `nama_obat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_rujukan_selesai_det
@@ -24093,6 +24129,38 @@ INSERT INTO `tb_rujukan_selesai_det` VALUES (26, 23, 26, '1', 'dosis1', 'frekuen
 INSERT INTO `tb_rujukan_selesai_det` VALUES (27, 23, 17, '2', 'dosis2', 'frekuensi2', 'cara beli3', 'SPUIT 5 CC');
 INSERT INTO `tb_rujukan_selesai_det` VALUES (28, 24, 25, '1', 'dosis1', 'frekuensi1', 'cara beli1', 'KASSA GULUNG');
 INSERT INTO `tb_rujukan_selesai_det` VALUES (29, 24, 26, '2', 'dosis2', 'frekuensi2', 'cara beli3', 'HANDSCOON NON STERIL');
+INSERT INTO `tb_rujukan_selesai_det` VALUES (30, 25, 25, '1', 'dosis1', 'frekuensi1', 'cara beli1', 'KASSA GULUNG');
+INSERT INTO `tb_rujukan_selesai_det` VALUES (31, 25, 26, '2', 'dosis2', 'frekuensi2', 'cara beli3', 'HANDSCOON NON STERIL');
+INSERT INTO `tb_rujukan_selesai_det` VALUES (34, 27, 25, '1', 'dosis1', 'frekuensi1', 'cara beli1', 'KASSA GULUNG');
+INSERT INTO `tb_rujukan_selesai_det` VALUES (35, 27, 26, '2', 'dosis2', 'frekuensi2', 'cara beli3', 'HANDSCOON NON STERIL');
+INSERT INTO `tb_rujukan_selesai_det` VALUES (36, 28, 25, '1', 'dosis1', 'frekuensi1', 'cara beli1', 'KASSA GULUNG');
+INSERT INTO `tb_rujukan_selesai_det` VALUES (37, 28, 26, '2', 'dosis2', 'frekuensi2', 'cara beli3', 'HANDSCOON NON STERIL');
+INSERT INTO `tb_rujukan_selesai_det` VALUES (38, 29, 25, '1', 'dosis1', 'frekuensi1', 'cara beli1', 'KASSA GULUNG');
+INSERT INTO `tb_rujukan_selesai_det` VALUES (39, 29, 26, '2', 'dosis2', 'frekuensi2', 'cara beli3', 'HANDSCOON NON STERIL');
+
+-- ----------------------------
+-- Table structure for tb_rujukan_selesai_det_layanan
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_rujukan_selesai_det_layanan`;
+CREATE TABLE `tb_rujukan_selesai_det_layanan`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `rujukan_selesai_id` int NULL DEFAULT NULL,
+  `layanan_id` int NULL DEFAULT NULL,
+  `qty` int NULL DEFAULT NULL,
+  `harga` decimal(10, 2) NULL DEFAULT NULL,
+  `subtotal` decimal(10, 2) NULL DEFAULT NULL,
+  `nama_layanan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `ket` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tb_rujukan_selesai_det_layanan
+-- ----------------------------
+INSERT INTO `tb_rujukan_selesai_det_layanan` VALUES (30, 25, 19, 1, NULL, 0.00, 'Colonoscopy', NULL);
+INSERT INTO `tb_rujukan_selesai_det_layanan` VALUES (31, 27, 19, 1, NULL, 0.00, 'Colonoscopy', 'ket');
+INSERT INTO `tb_rujukan_selesai_det_layanan` VALUES (32, 28, 14, 1, NULL, 0.00, 'Oksigen / Tabung Kecil', 'ket');
+INSERT INTO `tb_rujukan_selesai_det_layanan` VALUES (33, 29, 14, 1, 150000.00, 150000.00, 'Oksigen / Tabung Kecil', 'ket');
 
 -- ----------------------------
 -- Table structure for tb_rujukan_tatalaksana
@@ -24107,12 +24175,13 @@ CREATE TABLE `tb_rujukan_tatalaksana`  (
   `rujukan_id` int NULL DEFAULT NULL,
   `petugas` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_rujukan_tatalaksana
 -- ----------------------------
 INSERT INTO `tb_rujukan_tatalaksana` VALUES (5, 'test intstruksi lainnya', 'edukasi ', '2024-09-22', 'muhamaad', 12, 'rohma');
+INSERT INTO `tb_rujukan_tatalaksana` VALUES (6, '', '', '', '', 27, '');
 
 -- ----------------------------
 -- Table structure for tb_rujukan_tatalaksana_det
@@ -24129,7 +24198,7 @@ CREATE TABLE `tb_rujukan_tatalaksana_det`  (
   `ttd_perawat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `waktu_pembelian` date NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_rujukan_tatalaksana_det
@@ -24140,6 +24209,8 @@ INSERT INTO `tb_rujukan_tatalaksana_det` VALUES (7, '4', '0000-00-00', 'obat cai
 INSERT INTO `tb_rujukan_tatalaksana_det` VALUES (8, '4', '0000-00-00', 'obat cair 2', '2x1', 'dr. ILUM ANAM, Sp.PD-KGEH', NULL, 'rudi2', '2024-09-24');
 INSERT INTO `tb_rujukan_tatalaksana_det` VALUES (9, '5', '0000-00-00', 'obat cair 1', '2x3', 'dr. Septi Sp. B. Onk', 'cara1', 'rudi', '2024-09-23');
 INSERT INTO `tb_rujukan_tatalaksana_det` VALUES (10, '5', '0000-00-00', 'obat cair 2', '2x1', 'dr. ILUM ANAM, Sp.PD-KGEH', 'cara2', 'rudi2', '2024-09-24');
+INSERT INTO `tb_rujukan_tatalaksana_det` VALUES (11, '6', '0000-00-00', 'obat cair 1', '2x3', 'dr. Septi Sp. B. Onk', 'cara beli', 'rudi', '2024-12-31');
+INSERT INTO `tb_rujukan_tatalaksana_det` VALUES (12, '6', '0000-00-00', 'obat cair 2', '2x3', 'dr. HALFIANSYAH', 'cara beli', 'rudi2', '2024-12-31');
 
 -- ----------------------------
 -- Table structure for tb_rujukan_triase
@@ -24153,15 +24224,18 @@ CREATE TABLE `tb_rujukan_triase`  (
   `trauma` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_at` datetime NULL DEFAULT current_timestamp,
   `riwayat _penyakit_terdahulu` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `waktu_pasien_datang` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `riwayat_penyakit_sebelumnya` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_rujukan_triase
 -- ----------------------------
-INSERT INTO `tb_rujukan_triase` VALUES (10, 0, '...', '', 'Obstetri', '2024-09-21 20:32:31', NULL);
-INSERT INTO `tb_rujukan_triase` VALUES (11, 97, '...', '', 'Trauma, Non Trauma', '2024-09-21 20:35:11', NULL);
-INSERT INTO `tb_rujukan_triase` VALUES (25, 12, 'Datang Sendiri', 'test', 'Trauma, Non Trauma, Nenatatus', '2024-09-22 00:45:07', NULL);
+INSERT INTO `tb_rujukan_triase` VALUES (10, 0, '...', '', 'Obstetri', '2024-09-21 20:32:31', NULL, NULL, NULL);
+INSERT INTO `tb_rujukan_triase` VALUES (11, 97, '...', '', 'Trauma, Non Trauma', '2024-09-21 20:35:11', NULL, NULL, NULL);
+INSERT INTO `tb_rujukan_triase` VALUES (25, 12, 'Datang Sendiri', 'test', 'Trauma, Non Trauma, Nenatatus', '2024-09-22 00:45:07', NULL, '2024-09-29T12:55', NULL);
+INSERT INTO `tb_rujukan_triase` VALUES (26, 27, '...', 'Sakit Perut', NULL, '2024-09-29 13:05:29', NULL, '2024-09-29T13:05', 'sakit kepala sebelah kiri kanan');
 
 -- ----------------------------
 -- Table structure for tb_temp_cart
@@ -24192,6 +24266,8 @@ CREATE TABLE `tb_temp_layanan`  (
 -- ----------------------------
 -- Records of tb_temp_layanan
 -- ----------------------------
+INSERT INTO `tb_temp_layanan` VALUES (133, 0, 0, 1);
+INSERT INTO `tb_temp_layanan` VALUES (129, 0, 0, 1);
 
 -- ----------------------------
 -- Table structure for tb_trans_layanan
@@ -36838,79 +36914,15 @@ CREATE TABLE `tb_triase_det`  (
   `lainnya` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `reponse_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 128 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 172 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_triase_det
 -- ----------------------------
-INSERT INTO `tb_triase_det` VALUES (19, 3, 'AIRWAY', 'Paten', 'Paten', 'Sumbatan Sebagian', 'PERIKSA', '80', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (20, 3, 'Breathing', 'Frekuensi Nafas Total', 'Distres Pernapasan Ringan RR>30x/Menit', 'Sumbatan Total', 'PERIKSA', NULL, '80', '99', '102', '18', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (21, 3, 'Circulation', 'Pendarahan > 2 Detik', 'Pendarahan > 2 Detik', 'Perdarahan yang tidak terkontrol (Perdarahan aktif)', 'PERIKSA', NULL, NULL, NULL, NULL, NULL, 'Ya', 'UDANG', 'KERIPIK', 'PARACETAMOL', 'MAKANAN PEDAS', NULL);
-INSERT INTO `tb_triase_det` VALUES (28, 6, 'AIRWAY', NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (29, 6, 'Breathing', NULL, NULL, NULL, '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (30, 6, 'Circulation', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '...', '', '', '', '', NULL);
-INSERT INTO `tb_triase_det` VALUES (31, 7, 'AIRWAY', NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (32, 7, 'Breathing', NULL, NULL, NULL, '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (33, 7, 'Circulation', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '...', '', '', '', '', NULL);
-INSERT INTO `tb_triase_det` VALUES (34, 8, 'AIRWAY', NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (35, 8, 'Breathing', NULL, NULL, NULL, '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (36, 8, 'Circulation', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '...', '', '', '', '', NULL);
-INSERT INTO `tb_triase_det` VALUES (40, 10, 'AIRWAY', NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (41, 10, 'Breathing', NULL, NULL, NULL, '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (42, 10, 'Circulation', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '...', '', '', '', '', NULL);
-INSERT INTO `tb_triase_det` VALUES (43, 11, 'AIRWAY', NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (44, 11, 'Breathing', NULL, NULL, NULL, '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (45, 11, 'Circulation', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '...', '', '', '', '', NULL);
-INSERT INTO `tb_triase_det` VALUES (46, 12, 'AIRWAY', NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (47, 12, 'Breathing', NULL, NULL, NULL, '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (48, 12, 'Circulation', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '...', '', '', '', '', NULL);
-INSERT INTO `tb_triase_det` VALUES (49, 13, 'AIRWAY', NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (50, 13, 'Breathing', NULL, NULL, NULL, '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (51, 13, 'Circulation', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '...', '', '', '', '', NULL);
-INSERT INTO `tb_triase_det` VALUES (52, 14, 'AIRWAY', NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (53, 14, 'Breathing', NULL, NULL, NULL, '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (54, 14, 'Circulation', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '...', '', '', '', '', NULL);
-INSERT INTO `tb_triase_det` VALUES (55, 15, 'AIRWAY', NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (56, 15, 'Breathing', NULL, NULL, NULL, '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (57, 15, 'Circulation', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '...', '', '', '', '', NULL);
-INSERT INTO `tb_triase_det` VALUES (58, 16, 'AIRWAY', NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (59, 16, 'Breathing', NULL, NULL, NULL, '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (60, 16, 'Circulation', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '...', '', '', '', '', NULL);
-INSERT INTO `tb_triase_det` VALUES (61, 17, 'AIRWAY', 'Paten', 'Paten', 'Sumbatan Sebagian', 'PROSES', '100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (62, 17, 'Breathing', NULL, NULL, NULL, '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (63, 17, 'Circulation', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '...', '', '', '', '', NULL);
-INSERT INTO `tb_triase_det` VALUES (64, 18, 'AIRWAY', 'Paten', 'Paten', 'Sumbatan Sebagian', 'PROSES2', '100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (65, 18, 'Breathing', NULL, NULL, NULL, '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (66, 18, 'Circulation', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '...', '', '', '', '', NULL);
-INSERT INTO `tb_triase_det` VALUES (67, 19, 'AIRWAY', 'Paten', 'Paten', 'Sumbatan Sebagian', 'PROSES2', '100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (68, 19, 'Breathing', 'Frekuensi Nafas Total', 'Distres Pernapasan Ringan RR>30x/Menit', 'Penggunaan Otot Bantuan Napas', '10', NULL, '1', '2', '3', '4', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (69, 19, 'Circulation', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '...', '', '', '', '', NULL);
-INSERT INTO `tb_triase_det` VALUES (70, 20, 'AIRWAY', 'Paten', 'Paten', 'Sumbatan Sebagian', 'PROSES2', '100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (71, 20, 'Breathing', 'Frekuensi Nafas Total', 'Distres Pernapasan Ringan RR>30x/Menit', 'Penggunaan Otot Bantuan Napas', '10', NULL, '1', '2', '3', '4', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (72, 20, 'Circulation', 'Nadi Teraba (Lemah/Kuat)', 'Nadi Teraba (Lemah/Kuat)', 'Perdarahan yang tidak terkontrol (Perdarahan aktif)', 'test', NULL, NULL, NULL, NULL, NULL, 'Ya', 'alergi', 'makanan', 'obat', 'lainn', NULL);
-INSERT INTO `tb_triase_det` VALUES (73, 21, 'AIRWAY', 'Paten', 'Paten', 'Sumbatan Sebagian', 'PROSES2', '100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (74, 21, 'Breathing', 'Frekuensi Nafas Total', 'Distres Pernapasan Ringan RR>30x/Menit', 'Penggunaan Otot Bantuan Napas', '10', NULL, '1', '2', '3', '4', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (75, 21, 'Circulation', 'Nadi Teraba (Lemah/Kuat)', 'Nadi Teraba (Lemah/Kuat)', 'Perdarahan yang tidak terkontrol (Perdarahan aktif)', 'test', NULL, NULL, NULL, NULL, NULL, 'Ya', 'alergi', 'makanan', 'obat', 'lainn', NULL);
-INSERT INTO `tb_triase_det` VALUES (76, 22, 'AIRWAY', 'Paten', 'Paten', 'Sumbatan Sebagian', 'PROSES2', '100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (77, 22, 'Breathing', 'Frekuensi Nafas Total', 'Distres Pernapasan Ringan RR>30x/Menit', 'Penggunaan Otot Bantuan Napas', '10', NULL, '1', '2', '3', '4', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (78, 22, 'Circulation', 'Nadi Teraba (Lemah/Kuat)', 'Nadi Teraba (Lemah/Kuat)', 'Perdarahan yang tidak terkontrol (Perdarahan aktif)', 'test', NULL, NULL, NULL, NULL, NULL, 'Ya', 'alergi', 'makanan', 'obat', 'lainn', NULL);
-INSERT INTO `tb_triase_det` VALUES (79, 22, 'Disability', 'Nadi Teraba (Lemah/Kuat)', 'Nadi Teraba (Lemah/Kuat)', 'Perdarahan yang tidak terkontrol (Perdarahan aktif)', 'test', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (80, 23, 'AIRWAY', 'Paten', 'Paten', 'Sumbatan Sebagian', 'PROSES2', '100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (81, 23, 'Breathing', 'Frekuensi Nafas Total', 'Distres Pernapasan Ringan RR>30x/Menit', 'Penggunaan Otot Bantuan Napas', '10', NULL, '1', '2', '3', '4', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (82, 23, 'Circulation', 'Nadi Teraba (Lemah/Kuat)', 'Nadi Teraba (Lemah/Kuat)', 'Perdarahan yang tidak terkontrol (Perdarahan aktif)', 'test', NULL, NULL, NULL, NULL, NULL, 'Ya', 'alergi', 'makanan', 'obat', 'lainn', NULL);
-INSERT INTO `tb_triase_det` VALUES (83, 23, 'Disability', 'GCS 15', 'GCS 12-14', 'GCS < 12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (84, 24, 'AIRWAY', 'Paten', 'Paten', 'Sumbatan Sebagian', 'PROSES2', '100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (85, 24, 'Breathing', 'Frekuensi Nafas Total', 'Distres Pernapasan Ringan RR>30x/Menit', 'Penggunaan Otot Bantuan Napas', '10', NULL, '1', '2', '3', '4', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (86, 24, 'Circulation', 'Nadi Teraba (Lemah/Kuat)', 'Nadi Teraba (Lemah/Kuat)', 'Perdarahan yang tidak terkontrol (Perdarahan aktif)', 'test', NULL, NULL, NULL, NULL, NULL, 'Ya', 'alergi', 'makanan', 'obat', 'lainn', NULL);
-INSERT INTO `tb_triase_det` VALUES (87, 24, 'Disability', 'GCS 15', 'GCS 12-14', 'GCS < 12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (100, NULL, 'AIRWAY', 'Paten', 'Paten', 'Sumbatan Sebagian', 'PROSES2', '100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (101, NULL, 'Breathing', 'Frekuensi Nafas Total', 'Distres Pernapasan Ringan RR>30x/Menit', 'Penggunaan Otot Bantuan Napas', '10', NULL, '1', '2', '3', '4', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (102, NULL, 'Circulation', 'Nadi Teraba (Lemah/Kuat)', 'Nadi Teraba (Lemah/Kuat)', 'Perdarahan yang tidak terkontrol (Perdarahan aktif)', 'test', NULL, NULL, NULL, NULL, NULL, 'Ya', 'alergi', 'makanan', 'obat', 'lainn', NULL);
-INSERT INTO `tb_triase_det` VALUES (103, NULL, 'Disability', 'GCS 15', 'GCS 12-14', 'GCS < 12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (124, 25, 'AIRWAY', 'Paten', 'Paten', 'Sumbatan Sebagian', 'PROSES2', '100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (125, 25, 'Breathing', 'Frekuensi Nafas Total', 'Distres Pernapasan Ringan RR>30x/Menit', 'Penggunaan Otot Bantuan Napas', '10', NULL, '1', '2', '3', '4', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `tb_triase_det` VALUES (126, 25, 'Circulation', 'Nadi Teraba (Lemah/Kuat)', 'Nadi Teraba (Lemah/Kuat)', 'Perdarahan yang tidak terkontrol (Perdarahan aktif)', 'test', NULL, NULL, NULL, NULL, NULL, 'Ya', 'alergi', 'makanan', 'obat', 'lainn', NULL);
-INSERT INTO `tb_triase_det` VALUES (127, 25, 'Disability', 'GCS 15', 'GCS 12-14', 'GCS < 12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tb_triase_det` VALUES (168, 26, 'AIRWAY', 'Tidak Paten', 'Paten', NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tb_triase_det` VALUES (169, 26, 'Breathing', NULL, NULL, NULL, '', NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tb_triase_det` VALUES (170, 26, 'Circulation', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, '...', '', '', '', '', NULL);
+INSERT INTO `tb_triase_det` VALUES (171, 26, 'Disability', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_triase_pasien_terintegrasi
@@ -36948,14 +36960,15 @@ CREATE TABLE `tb_triase_pasien_terintegrasi`  (
   `lainnya` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `rencana_tindak_lanjut` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `dokter` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `modified_at` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_triase_pasien_terintegrasi
 -- ----------------------------
-INSERT INTO `tb_triase_pasien_terintegrasi` VALUES (34, NULL, 'auto', 'allo', 'rpo', 'Marah, Cemas, Takut, Tidak Masalah', 'Menikah', 'Baik', 'islam', 'BPJS', 'keada', '1', '3', 'gcs', '1', '2', 'temp', 'spo2', '100', 'kepala', 'leh', 'thorax', 'abdomen', 'extremitas', 'genitalia', 'labor', 'radiolo', 'ekg', 'lainnya', 'Pulang Berobat Jalan', 'dr. ILUM ANAM, Sp.PD-KGEH');
-INSERT INTO `tb_triase_pasien_terintegrasi` VALUES (37, 25, 'allo', 'aloo', 'rpo', 'Marah, Cemas, Takut', 'Menikah', 'Baik', 'islam', 'BPJS', 'keadaan umum', '1', '3', 'gcs', '1', '2', 'temp', 'spo', '100', 'kepala', 'leher', 'thorax', 'abdomen', 'extremitas', 'genitalia', 'labor', 'radiolo', 'ekg', 'lainnya', 'Pulang Berobat Jalan', 'dr. Destri Sanghadwi');
+INSERT INTO `tb_triase_pasien_terintegrasi` VALUES (34, NULL, 'auto', 'allo', 'rpo', 'Marah, Cemas, Takut, Tidak Masalah', 'Menikah', 'Baik', 'islam', 'BPJS', 'keada', '1', '3', 'gcs', '1', '2', 'temp', 'spo2', '100', 'kepala', 'leh', 'thorax', 'abdomen', 'extremitas', 'genitalia', 'labor', 'radiolo', 'ekg', 'lainnya', 'Pulang Berobat Jalan', 'dr. ILUM ANAM, Sp.PD-KGEH', NULL);
+INSERT INTO `tb_triase_pasien_terintegrasi` VALUES (37, 25, 'allo', 'aloo', 'rpo', 'Marah, Cemas, Takut', 'Menikah', 'Baik', 'islam', 'BPJS', 'keadaan umum', '1', '3', 'gcs', '1', '2', 'temp', 'spo', '100', 'kepala', 'leher', 'thorax', 'abdomen', 'extremitas', 'genitalia', 'labor', 'radiolo', 'ekg', 'lainnya', 'Pulang Berobat Jalan', 'dr. Destri Sanghadwi', NULL);
 
 -- ----------------------------
 -- Table structure for tb_triase_resiko_jatuh
@@ -36969,7 +36982,7 @@ CREATE TABLE `tb_triase_resiko_jatuh`  (
   `tanggal` datetime NULL DEFAULT NULL,
   `triase_id` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_triase_resiko_jatuh
@@ -36994,7 +37007,8 @@ INSERT INTO `tb_triase_resiko_jatuh` VALUES (24, '...', '', '...', '0000-00-00 0
 INSERT INTO `tb_triase_resiko_jatuh` VALUES (25, '...', '', '...', '0000-00-00 00:00:00', 23);
 INSERT INTO `tb_triase_resiko_jatuh` VALUES (26, '...', '', '...', '0000-00-00 00:00:00', 24);
 INSERT INTO `tb_triase_resiko_jatuh` VALUES (30, '...', '', '...', '0000-00-00 00:00:00', NULL);
-INSERT INTO `tb_triase_resiko_jatuh` VALUES (36, 'Ya', 'patah tulang ', 'Pulang Atas Permintaan Sendiri', '2024-09-22 00:00:00', 25);
+INSERT INTO `tb_triase_resiko_jatuh` VALUES (43, 'Ya', 'patah tulang ', 'Pulang Atas Permintaan Sendiri', '2024-09-22 00:00:00', 25);
+INSERT INTO `tb_triase_resiko_jatuh` VALUES (47, '...', 'HEPATITIS', '...', '2024-09-29 13:25:00', 26);
 
 -- ----------------------------
 -- Table structure for tb_triase_serah_terima
@@ -37012,7 +37026,7 @@ CREATE TABLE `tb_triase_serah_terima`  (
   `keluarga_pasien` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `infomasi_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_triase_serah_terima
@@ -37037,7 +37051,8 @@ INSERT INTO `tb_triase_serah_terima` VALUES (20, '...', '...', '', '', 22, '', '
 INSERT INTO `tb_triase_serah_terima` VALUES (21, '...', '...', '', '', 23, '', '', '', '...');
 INSERT INTO `tb_triase_serah_terima` VALUES (22, '...', '...', '', '', 24, '', '', '', '...');
 INSERT INTO `tb_triase_serah_terima` VALUES (26, '...', '...', '', '', NULL, '', '', '', '...');
-INSERT INTO `tb_triase_serah_terima` VALUES (32, 'dr. Septi Sp. B. Onk', 'dr. AFITASARI, M.Ked. (PED) Sp. A', 'Muhammad', 'Nuh', 25, 'Jangan Bandel Ya', '2024-09-22', 'Rudiansyah', 'dr. Destri Sanghadwi');
+INSERT INTO `tb_triase_serah_terima` VALUES (39, 'dr. Septi Sp. B. Onk', 'dr. AFITASARI, M.Ked. (PED) Sp. A', 'Muhammad', 'Nuh', 25, 'Jangan Bandel Ya', '2024-09-22', 'Rudiansyah', 'dr. Destri Sanghadwi');
+INSERT INTO `tb_triase_serah_terima` VALUES (43, '...', '', '', '', 26, '', '2024-09-29T13:25', '', '...');
 
 -- ----------------------------
 -- Table structure for tb_triase_skrining
@@ -37051,7 +37066,7 @@ CREATE TABLE `tb_triase_skrining`  (
   `skor_nyeri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `triase_id` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_triase_skrining
@@ -37076,7 +37091,8 @@ INSERT INTO `tb_triase_skrining` VALUES (21, '...', '...', '', '...', 22);
 INSERT INTO `tb_triase_skrining` VALUES (22, '...', '...', '', '...', 23);
 INSERT INTO `tb_triase_skrining` VALUES (23, '...', '...', '', '...', 24);
 INSERT INTO `tb_triase_skrining` VALUES (27, 'Ya', 'Akut', ' pinggang', 'Tidak Nyeri', NULL);
-INSERT INTO `tb_triase_skrining` VALUES (33, 'Ya', 'Akut', 'Pinggang      ', 'Ringan (1-3)', 25);
+INSERT INTO `tb_triase_skrining` VALUES (40, 'Ya', 'Akut', 'Pinggang             ', 'Ringan (1-3)', 25);
+INSERT INTO `tb_triase_skrining` VALUES (44, 'Ya', 'Akut', ' pinggang    ', 'Tidak Nyeri', 26);
 
 -- ----------------------------
 -- Triggers structure for table tb_resep

@@ -78,7 +78,7 @@ class C_KunjunganRujukan extends BaseController
 		// $data['listKamar'] = $this->db->get('tb_mst_kamar')->result();
 		// $data['listDokter'] = $this->db->get('tb_mst_dokter')->result();
 		// $data['listMstDiagnosa'] = $this->db->get('tb_mst_diagnosa')->result();
-		$data['listPasien'] = $this->db->get('tb_pasien')->result();
+		$data['listPasien'] = $this->db->get_where('tb_pasien', ['is_active' => 1])->result();;
 
 		// echo json_encode($data);
 		// die;
@@ -521,6 +521,66 @@ class C_KunjunganRujukan extends BaseController
 	}
 
 
+	public function savePerincian()
+	{
+		$this->db->trans_begin();
+		try {
+
+			$param = $this->input->post();
+
+			$this->db->where('id', $param['rujukan_id'])->update('tb_rujukan', ['isFinish' => 1]);
+
+
+			// Ambil data farmasi berdasarkan rujukan_id
+			$dataFarmasi = $this->db->get_where('tb_rujukan_farmasi', ['rujukan_id' => $param['rujukan_id']])->result();
+
+			// Update stok obat berdasarkan data farmasi
+			if (!empty($dataFarmasi)) {
+				foreach ($dataFarmasi as $value) {
+					$getDataObat = $this->db->get_where('tb_obat', ['id' => $value->obat_id])->row();
+
+					if ($getDataObat) {
+						$newStok = $getDataObat->stok - $value->jumlah;
+						$this->db->where('id', $value->obat_id);
+						$this->db->update('tb_obat', ['stok' => $newStok]);
+					}
+				}
+			}
+
+
+			$getRujukanSelesai = $this->db->get_where('tb_rujukan_selesai', ['rujukan_id' => $param['rujukan_id']])->row();
+
+			// Ambil data farmasi pulang berdasarkan id triase
+			$dataFarmasiPulang = $this->db->get_where('tb_rujukan_selesai_det', ['rujukan_selesai_id' => $getRujukanSelesai->id])->result();
+
+			// Update stok obat berdasarkan data farmasi pulang
+			if (!empty($dataFarmasiPulang)) {
+				foreach ($dataFarmasiPulang as $value) {
+					$getDataObat = $this->db->get_where('tb_obat', ['id' => $value->obat_id])->row();
+
+					if ($getDataObat) {
+						$newStok = $getDataObat->stok - $value->jumlah;
+						$this->db->where('id', $value->obat_id);
+						$this->db->update('tb_obat', ['stok' => $newStok]);
+					}
+				}
+			}
+
+
+
+			$this->db->trans_commit();
+			echo $this->httpResponseCode("200", "Save data successfully");
+		} catch (Error $e) {
+			http_response_code(400);
+			$this->db->trans_rollback();
+			echo $this->httpResponseCode("400", "Specific error: " . $e->getMessage());
+		} catch (Exception $e) {
+			$this->db->trans_rollback();
+			echo $this->httpResponseCode("500", "Internal server error: " . $e->getMessage());
+		}
+	}
+
+
 	// function save()
 	// {
 	// 	try {
@@ -779,6 +839,12 @@ class C_KunjunganRujukan extends BaseController
 
 		$data['listDokter'] = $this->db->get('tb_mst_dokter')->result();
 
+		$data['listPerawat'] = $this->db->get('tb_mst_perawat')->result();
+
+		$data['listObat'] = $this->db->get('tb_obat')->result();
+
+
+
 
 		$data['getPasien'] = $this->db->get_where('tb_pasien', ['idx' => $pasienId])->row();
 
@@ -869,6 +935,7 @@ class C_KunjunganRujukan extends BaseController
 			$data['pasienId'] = $pasienId;
 
 			$data['listLayanan'] = $this->db->get('tb_layanan')->result();
+			$data['listKamar'] = $this->db->get('tb_mst_kamar')->result();
 
 
 
@@ -921,6 +988,14 @@ class C_KunjunganRujukan extends BaseController
 
 		// echo json_encode($data['getTriaseDet']);
 		// die;
+
+		$data['listObatPulang'] = $this->db->select('a.id, a.harga, a.nama_obat, SUM(b.jumlah) as total_qty') // Ganti nama_obat dengan kolom yang relevan
+			->from('tb_obat a')
+			->join('tb_rujukan_selesai_det b', 'a.id = b.obat_id')
+			->where('b.rujukan_selesai_id', $dataSelesai->id)
+			->group_by('a.id') // Group by berdasarkan id obat
+			->get()
+			->result();
 
 
 		$data['listPemakaianObat'] = $this->db->select('a.id, a.harga, a.nama_obat, SUM(b.jumlah) as total_qty') // Ganti nama_obat dengan kolom yang relevan
@@ -1154,6 +1229,14 @@ class C_KunjunganRujukan extends BaseController
 
 			// echo json_encode($data['getTriaseDet']);
 			// die;
+
+			$data['listObatPulang'] = $this->db->select('a.id, a.harga, a.nama_obat, SUM(b.jumlah) as total_qty') // Ganti nama_obat dengan kolom yang relevan
+				->from('tb_obat a')
+				->join('tb_rujukan_selesai_det b', 'a.id = b.obat_id')
+				->where('b.rujukan_selesai_id', $dataSelesai->id)
+				->group_by('a.id') // Group by berdasarkan id obat
+				->get()
+				->result();
 
 
 			$data['listPemakaianObat'] = $this->db->select('a.id, a.harga, a.nama_obat, SUM(b.jumlah) as total_qty') // Ganti nama_obat dengan kolom yang relevan

@@ -50,9 +50,9 @@
 
                 <!-- Tab panes -->
                 <form class="form-data">
-                <div class="tab-content">
-                    <!-- Info Pasien -->
-                    
+                    <div class="tab-content">
+                        <!-- Info Pasien -->
+
                         <div x-data="{ pasienLama: true, pasienBaru: false, showPilihPasien: false }" class="tab-pane active p-3" id="home" role="tabpanel">
                             <div class="row">
                                 <!-- <div class="col-md-6">
@@ -70,11 +70,11 @@
                             <hr>
 
                             <span class="d-block mt-3"></span>
-                            
+
                             <div x-show="showPilihPasien" class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <div> 
+                                        <div>
                                             </select>
                                         </div>
                                     </div>
@@ -97,7 +97,7 @@
                                     <div class="form-group">
                                         <label>NIK</label>
                                         <div>
-                                            <input  name="nik" class="form-control" value="<?php echo $d->nik ?>">
+                                            <input name="nik" class="form-control" value="<?php echo $d->nik ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                                     <div class="form-group">
                                         <label>No Rkm</label>
                                         <div>
-                                            <input  name="id" class="form-control" value="<?php echo $d->id ?>">
+                                            <input name="id" class="form-control" value="<?php echo $d->id ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -192,12 +192,12 @@
 
                             <a class="btn btn-primary  col-md-1 col-sm-2 col-lg-2" data-toggle="tab" href="#profile" role="tab">Next</a>
                             <button type="button" class="btn btn-success col-md-1 col-sm-2 col-lg-2 btn-find">Find</button>
-                            <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2" <?= isset($edit) ? "" : "hidden" ?> target="_blank" href="<?= base_url("C_Medical_Record/cetak/$id") ?>" >Cetak</a>
+                            <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2" <?= isset($edit) ? "" : "hidden" ?> target="_blank" href="<?= base_url("C_Medical_Record/cetak/$id") ?>">Cetak</a>
 
                         </div>
-                    <!-- Info Pasien -->
+                        <!-- Info Pasien -->
 
-                    <!-- Anamensa -->
+                        <!-- Anamensa -->
                         <div class="tab-pane p-3" id="profile" role="tabpanel">
                             <div class="row" x-show="!showPilihPasien">
                                 <div class="col-md-6">
@@ -316,29 +316,29 @@
 
                             <a class="btn btn-primary col-md-2 col-lg-2 col-sm-3" data-toggle="tab" href="#messages" role="tab">Next</a>
                             <button type="button" class="btn btn-success col-md-2 col-lg-2 col-sm-3 btn-find">Find</button>
-                            <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2" <?= isset($edit) ? "" : "hidden" ?> target="_blank" href="<?= base_url("C_Medical_Record/cetak/$id") ?>" >Cetak</a>
+                            <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2" <?= isset($edit) ? "" : "hidden" ?> target="_blank" href="<?= base_url("C_Medical_Record/cetak/$id") ?>">Cetak</a>
 
 
 
-                            
+
 
                         </div>
-                    <!-- End Anamensa -->
+                        <!-- End Anamensa -->
 
 
-                    <!-- Diagnosa -->
+                        <!-- Diagnosa -->
                         <div class="tab-pane p-3" id="messages" role="tabpanel">
                             <div class="row" x-show="!showPilihPasien">
-                            <div class="col-md-7">
+                                <div class="col-md-7">
                                     <div class="form-group">
                                         <label>Diagnosa 1</label>
                                         <div>
                                             <select class="form-control" name="objektif">
                                                 <option>...</option>
-                                                <?php 
-                                                    foreach($listMstDiagnosa as $val):
-                                                        echo "<option>$val->diagnosa</option>";
-                                                    endforeach;
+                                                <?php
+                                                foreach ($listMstDiagnosa as $val):
+                                                    echo "<option>$val->diagnosa</option>";
+                                                endforeach;
                                                 ?>
                                             </select>
                                         </div>
@@ -350,32 +350,32 @@
                                         <div>
                                             <select class="form-control" name="subjektif">
                                                 <option>...</option>
-                                                <?php 
-                                                    foreach($listMstDiagnosa as $val):
-                                                        echo "<option>$val->diagnosa</option>";
-                                                    endforeach;
+                                                <?php
+                                                foreach ($listMstDiagnosa as $val):
+                                                    echo "<option>$val->diagnosa</option>";
+                                                endforeach;
                                                 ?>
                                             </select>
                                         </div>
                                     </div>
-                                </div>     
+                                </div>
 
                             </div>
-                           
+
                             <hr>
                             <!-- <button type="button" class="btn btn-primary col-md-1 btn-pasien">Save</button> -->
                             <a type="button" class="btn btn-warning btn-sm col-md-2 col-lg-2 col-sm-3" style="padding: 7px;" href="<?= base_url('C_Medical_Record') ?>">Create New</a>
                             <a class="btn btn-primary col-md-2 col-lg-2 col-sm-3" data-toggle="tab" href="#settings" role="tab">Next</a>
                             <button type="button" class="btn btn-success col-md-2 col-lg-2 col-sm-3 btn-find">Find</button>
-                            <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2" <?= isset($edit) ? "" : "hidden" ?> target="_blank" href="<?= base_url("C_Medical_Record/cetak/$id") ?>" >Cetak</a>
+                            <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2" <?= isset($edit) ? "" : "hidden" ?> target="_blank" href="<?= base_url("C_Medical_Record/cetak/$id") ?>">Cetak</a>
 
 
 
 
                         </div>
-                    <!-- End Diagnosa -->
+                        <!-- End Diagnosa -->
 
-                    <!-- Resep Obat -->
+                        <!-- Resep Obat -->
                         <div class="tab-pane p-3" id="settings" role="tabpanel">
                             <div class="row" x-show="!showPilihPasien">
                                 <div class="col-md-6">
@@ -384,7 +384,7 @@
                                         <div>
                                             <select class="form-control" id="id_obat">
                                                 <option disabled selected>...</option>
-                                                <?php foreach($listObat as $val): ?>
+                                                <?php foreach ($listObat as $val): ?>
                                                     <option value="<?= $val->id ?>"><?= $val->nama_obat ?></option>
                                                 <?php endforeach ?>
                                             </select>
@@ -395,7 +395,7 @@
                                     <div class="form-group">
                                         <label>Qty</label>
                                         <div>
-                                        <input type="text" id="qty" class="form-control">
+                                            <input type="text" id="qty" class="form-control">
 
                                         </div>
                                     </div>
@@ -404,20 +404,20 @@
                                     <div class="form-group">
                                         <label>Action</label>
                                         <div>
-                                        <button type="button" class="btn btn-primary" onclick="addCart()"> Add</button>
+                                            <button type="button" class="btn btn-primary" onclick="addCart()"> Add</button>
 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <th>Obat & BMHP</th>
-                                            <th>Qty</th>
-                                            <th>Subtotal</th>
-                                        </thead>
-                                        <?php 
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <th>Obat & BMHP</th>
+                                                <th>Qty</th>
+                                                <th>Subtotal</th>
+                                            </thead>
+                                            <?php
                                             if (isset($edit)) {
                                                 foreach ($row['det_obat'] as $obt) {
                                                     echo "<tr>";
@@ -429,13 +429,13 @@
                                             }
                                             ?>
 
-                                        <?php if(!isset($edit)) { ?>
-                                        <tbody id="loadCart">
-                                           
+                                            <?php if (!isset($edit)) { ?>
+                                                <tbody id="loadCart">
 
-                                        </tbody>
-                                        <?php } ?>
-                                    </table>
+
+                                                </tbody>
+                                            <?php } ?>
+                                        </table>
                                         <div class="alert alert-danger">
                                             <?php
                                             $total = 0;
@@ -444,14 +444,15 @@
                                                     $total += ($obt->harga * $obt->qty);
                                                 } ?>
                                                 Tota Tagihan : <b>Rp. <?= number_format($total) ?></b>
-                                            <?php }else{ ?>
+                                            <?php } else { ?>
                                                 Tota Tagihan : <b class="grandTotal">Rp. <?= number_format($total) ?></b>
-                                                
+
                                             <?php } ?>
                                         </div>
 
                                     </div>
-                                </div><hr>
+                                </div>
+                                <hr>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Catatan</label>
@@ -460,7 +461,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -470,8 +471,8 @@
                                             <!-- <input name="diperiksa_oleh" type="text" class="form-control" placeholder="isi nama dokter yang menangani pasien"> -->
                                             <select class="form-control" name="diperiksa_oleh">
                                                 <option disabled selected>...</option>
-                                                <?php foreach($listDokter as $val): ?>
-                                                <option><?= $val->nama ?></option>
+                                                <?php foreach ($listDokter as $val): ?>
+                                                    <option><?= $val->nama ?></option>
                                                 <?php endforeach ?>
                                             </select>
                                         </div>
@@ -483,15 +484,15 @@
                             <a type="button" class="btn btn-warning btn-sm col-md-2 col-lg-2 col-sm-3" style="padding: 7px;" href="<?= base_url('C_Medical_Record') ?>">Create New</a>
                             <a class="btn btn-primary col-md-2 col-lg-2 col-sm-3" data-toggle="tab" href="#finish" role="tab">Next</a>
                             <button type="button" class="btn btn-success col-md-2 col-lg-2 col-sm-3 btn-find">Find</button>
-                            <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2" <?= isset($edit) ? "" : "hidden" ?> target="_blank" href="<?= base_url("C_Medical_Record/cetak/$id") ?>" >Cetak</a>
+                            <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2" <?= isset($edit) ? "" : "hidden" ?> target="_blank" href="<?= base_url("C_Medical_Record/cetak/$id") ?>">Cetak</a>
 
 
 
                         </div>
-                    <!-- End Resept Obat -->
-                    <!-- Resep Obat -->
-                    <div class="tab-pane p-3" id="finish" role="tabpanel">
-                            
+                        <!-- End Resept Obat -->
+                        <!-- Resep Obat -->
+                        <div class="tab-pane p-3" id="finish" role="tabpanel">
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -516,8 +517,8 @@
                                             <!-- <input name="kamar" type="text" class="form-control" > -->
                                             <select class="form-control" name="kamar">
                                                 <option disabled selected>...</option>
-                                                <?php foreach($listKamar as $val): ?>
-                                                <option><?= $val->nomor_kamar ?></option>
+                                                <?php foreach ($listKamar as $val): ?>
+                                                    <option><?= $val->nomor_kamar ?></option>
                                                 <?php endforeach ?>
                                             </select>
                                         </div>
@@ -542,7 +543,7 @@
                                         <div>
                                             <select class="form-control" id="id_layanan">
                                                 <option disabled selected>...</option>
-                                                <?php foreach($listLayanan as $val): ?>
+                                                <?php foreach ($listLayanan as $val): ?>
                                                     <option value="<?= $val->id ?>"><?= $val->nama_layanan ?></option>
                                                 <?php endforeach ?>
                                             </select>
@@ -553,7 +554,7 @@
                                     <div class="form-group">
                                         <label>Qty</label>
                                         <div>
-                                        <input type="text" id="qty_layanan" class="form-control">
+                                            <input type="text" id="qty_layanan" class="form-control">
 
                                         </div>
                                     </div>
@@ -562,20 +563,20 @@
                                     <div class="form-group">
                                         <label>Action</label>
                                         <div>
-                                        <button type="button" class="btn btn-primary" onclick="addLayanan()"> Add</button>
+                                            <button type="button" class="btn btn-primary" onclick="addLayanan()"> Add</button>
 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <th>Nama Biaya</th>
-                                            <th>Qty</th>
-                                            <th>Subtotal</th>
-                                        </thead>
-                                        <?php 
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <th>Nama Biaya</th>
+                                                <th>Qty</th>
+                                                <th>Subtotal</th>
+                                            </thead>
+                                            <?php
                                             if (isset($edit)) {
                                                 foreach ($row['det_obat'] as $obt) {
                                                     echo "<tr>";
@@ -587,13 +588,13 @@
                                             }
                                             ?>
 
-                                        <?php if(!isset($edit)) { ?>
-                                        <tbody id="loadLayanan">
-                                           
+                                            <?php if (!isset($edit)) { ?>
+                                                <tbody id="loadLayanan">
 
-                                        </tbody>
-                                        <?php } ?>
-                                    </table>
+
+                                                </tbody>
+                                            <?php } ?>
+                                        </table>
                                         <div class="alert alert-danger">
                                             <?php
                                             $total = 0;
@@ -601,29 +602,29 @@
                                                 // foreach ($row['det_obat'] as $obt) {
                                                 //     $total += ($obt->harga * $obt->qty);
                                                 // } 
-                                                ?>
+                                            ?>
                                                 Total Tagihan : <b>Rp. <?= number_format($total) ?></b>
-                                            <?php }else{ ?>
+                                            <?php } else { ?>
                                                 Total Tagihan : <b class="grandTotalLayanan">Rp. <?= number_format($total, '2', ',') ?></b>
-                                                
+
                                             <?php } ?>
                                         </div>
 
                                     </div>
                                 </div>
-                                </div>
-                            
-                                <hr>
-                                <a type="button" class="btn btn-warning btn-sm col-md-2 col-lg-2 col-sm-3" style="padding: 7px;" href="<?= base_url('C_Medical_Record') ?>">Create New</a>
-                                <button type="button" class="btn btn-primary btn-pasien col-md-2 col-lg-2 col-sm-3" <?= isset($edit) ? "disabled" : "" ?>>Save & Complete</button>
-                                <button type="button" class="btn btn-success col-md-2 col-lg-2 col-sm-3 btn-find pl-4">Find</button>
-                                <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2" <?= isset($edit) ? "" : "hidden" ?> target="_blank" href="<?= base_url("C_Medical_Record/cetak/$id") ?>" >Cetak</a>
+                            </div>
+
+                            <hr>
+                            <a type="button" class="btn btn-warning btn-sm col-md-2 col-lg-2 col-sm-3" style="padding: 7px;" href="<?= base_url('C_Medical_Record') ?>">Create New</a>
+                            <button type="button" class="btn btn-primary btn-pasien col-md-2 col-lg-2 col-sm-3" <?= isset($edit) ? "disabled" : "" ?>>Save & Complete</button>
+                            <button type="button" class="btn btn-success col-md-2 col-lg-2 col-sm-3 btn-find pl-4">Find</button>
+                            <a class="btn btn-danger col-md-1 col-sm-2 col-lg-2" <?= isset($edit) ? "" : "hidden" ?> target="_blank" href="<?= base_url("C_Medical_Record/cetak/$id") ?>">Cetak</a>
 
 
                         </div>
-                    <!-- End Resept Obat -->
-                </div>
-                </from>
+                        <!-- End Resept Obat -->
+                    </div>
+                    </from>
 
 
             </div>
@@ -658,56 +659,54 @@
                 </button>
             </div>
             <div class="modal-body">
-            <table class="datatable table table-striped table-bordered dt-responsive nowrap table-search" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                <thead>
-                    <th>No RKM</th>
-                    <th>NIK</th>
-                    <th>Fullname</th>
-                    <th>Keluhan</th>
-                    <th>Status Pulang</th>
-                    <th>Action</th>
-                </thead>
-                <tbody>
-                <?php foreach($listKunjungan as $val)
-                {
-                    $status_pulang = $val->status_pulang == 1 ? 'Rawat Jalan' : 'Rawat Inap';
-                    echo "<tr>";
-                    echo "<td>$val->id</td>";
-                    echo "<td>$val->nik</td>";
-                    echo "<td>$val->nama_depan $val->nama_belakang</td>";
-                    echo "<td>$val->keluhan</td>";
-                    echo "<td>$status_pulang</td>";
-                    echo "<td>
-                            <a href='".base_url('C_Medical_Record/index/')."$val->id' class='btn btn-primary'>show</a>
+                <table class="datatable table table-striped table-bordered dt-responsive nowrap table-search" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                        <th>No RKM</th>
+                        <th>NIK</th>
+                        <th>Fullname</th>
+                        <th>Keluhan</th>
+                        <th>Status Pulang</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($listKunjungan as $val) {
+                            $status_pulang = $val->status_pulang == 1 ? 'Rawat Jalan' : 'Rawat Inap';
+                            echo "<tr>";
+                            echo "<td>$val->id</td>";
+                            echo "<td>$val->nik</td>";
+                            echo "<td>$val->nama_depan $val->nama_belakang</td>";
+                            echo "<td>$val->keluhan</td>";
+                            echo "<td>$status_pulang</td>";
+                            echo "<td>
+                            <a href='" . base_url('C_Medical_Record/index/') . "$val->id' class='btn btn-primary'>show</a>
                         </td>";
-                    echo "</tr>";
-                } ?>
-                </tbody>
-            </table>
+                            echo "</tr>";
+                        } ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    $('.btn-find').click(function() {
+        $("#modal-find").modal('show')
+    });
 
-$('.btn-find').click(function() {
-    $("#modal-find").modal('show')
-});
 
+    $('.btn.btn-primary').click(function() {
+        // Menghapus class "active" dari semua tab
+        $('.nav-tabs .nav-item .nav-link').removeClass('active');
 
-$('.btn.btn-primary').click(function() {
-    // Menghapus class "active" dari semua tab
-    $('.nav-tabs .nav-item .nav-link').removeClass('active');
-
-    // Menambahkan class "active" pada tab dengan href yang sesuai
-    var targetHref = $(this).attr('href');
-    $('.nav-tabs .nav-item .nav-link[href="' + targetHref + '"]').addClass('active');
-  });
+        // Menambahkan class "active" pada tab dengan href yang sesuai
+        var targetHref = $(this).attr('href');
+        $('.nav-tabs .nav-item .nav-link[href="' + targetHref + '"]').addClass('active');
+    });
 
     getCart()
     getLayanan()
-    
+
     $(document).on("click", ".btn-pasien", function() {
         Swal.fire({
             title: 'Are you sure?',
@@ -741,17 +740,17 @@ $('.btn.btn-primary').click(function() {
                                     sw_alert("Error", String(response.message), "error");
                                     $('.btn-save').html('Save');
                                 }
-                                
-                            $('.btn-pasien').html('save');
-                            $('.btn-pasien').attr('disabled', false);
+
+                                $('.btn-pasien').html('save');
+                                $('.btn-pasien').attr('disabled', false);
                             }, 3000);
 
 
                         },
-                        error:  function (jqXHR, textError) { 
+                        error: function(jqXHR, textError) {
                             console.log(jqXHR);
                             console.log(textError);
-                         }
+                        }
                     });
                 });
             },
@@ -765,10 +764,10 @@ $('.btn.btn-primary').click(function() {
             dataType: "json",
             success: function(response) {
                 console.log(response);
-                
+
                 // Hapus semua baris tr dari tabel sebelumnya
                 $('#loadCart').empty();
-                
+
                 var grandTotal = 0;
                 $.each(response, function(index, obat) {
                     var row = "<tr>" +
@@ -796,10 +795,10 @@ $('.btn.btn-primary').click(function() {
             dataType: "json",
             success: function(response) {
                 console.log(response);
-                
+
                 // Hapus semua baris tr dari tabel sebelumnya
                 $('#loadLayanan').empty();
-                
+
                 var grandTotal = 0;
                 $.each(response, function(index, lyn) {
                     var row = "<tr>" +
@@ -820,19 +819,19 @@ $('.btn.btn-primary').click(function() {
     }
 
 
-    function deleteCart(id)
-    {
+    function deleteCart(id) {
         $.ajax({
             type: "get",
             url: "<?= base_url("C_Medical_Record/deleteCart") ?>",
-            data: { id : id},
+            data: {
+                id: id
+            },
             dataType: "json",
             success: function(response) {
                 getCart()
-                if(response.code == 200)
-                {
+                if (response.code == 200) {
                     getCart()
-                }else {
+                } else {
                     sw_alert("Error", String(response.message), "error");
                 }
                 // var grandTotal = 0;
@@ -848,18 +847,18 @@ $('.btn.btn-primary').click(function() {
     }
 
 
-    function deleteLayanan(id)
-    {
+    function deleteLayanan(id) {
         $.ajax({
             type: "get",
             url: "<?= base_url("C_Medical_Record/deleteLayanan") ?>",
-            data: { id : id},
+            data: {
+                id: id
+            },
             dataType: "json",
             success: function(response) {
-                if(response.code == 200)
-                {
+                if (response.code == 200) {
                     getLayanan()
-                }else {
+                } else {
                     sw_alert("Error", String(response.message), "error");
                 }
                 // var grandTotal = 0;
@@ -873,59 +872,56 @@ $('.btn.btn-primary').click(function() {
             }
         });
     }
-    
-    function addCart() {   
+
+    function addCart() {
         var id_obat = $("#id_obat").find(':selected').val()
         var qty = $("#qty").val()
         $.ajax({
             type: "post",
             url: "<?= base_url("C_Medical_Record/addCart") ?>",
-            data: { 
-                id_obat : id_obat,
-                qty : qty,
+            data: {
+                id_obat: id_obat,
+                qty: qty,
             },
             dataType: "json",
             success: function(response) {
                 console.log(response);
-           
-                if(response.code == 200)
-                {
+
+                if (response.code == 200) {
                     getCart()
-                }else {
+                } else {
                     sw_alert("Error", String(response.message), "error");
                 }
-               
+
             }
         });
 
     }
 
-    function addLayanan() {  
+    function addLayanan() {
         var id_layanan = $("#id_layanan").find(':selected').val()
         var qty = $("#qty_layanan").val()
         $.ajax({
             type: "post",
             url: "<?= base_url("C_Medical_Record/addLayanan") ?>",
-            data: { 
-                id_layanan : id_layanan,
-                qty_layanan : qty,
+            data: {
+                id_layanan: id_layanan,
+                qty_layanan: qty,
             },
             dataType: "json",
             success: function(response) {
                 console.log(response);
-           
-                if(response.code == 200)
-                {
+
+                if (response.code == 200) {
                     getLayanan()
-                }else {
+                } else {
                     sw_alert("Error", String(response.message), "error");
                 }
-               
+
             }
         });
 
     }
-
 </script>
 
 <?php $this->load->view("_partials/script") ?>

@@ -1,14 +1,17 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class BackupController extends CI_Controller {
-    public function __construct() {
+class BackupController extends CI_Controller
+{
+    public function __construct()
+    {
         parent::__construct();
         $this->load->dbutil();
         $this->load->helper('file');
     }
 
-    public function backupDatabase() {
+    public function backupDatabase()
+    {
         // Konfigurasi backup
         $prefs = array(
             'format'      => 'zip',             // Format backup, bisa 'gzip', 'zip', atau 'txt'
@@ -22,7 +25,7 @@ class BackupController extends CI_Controller {
         $backup = $this->dbutil->backup($prefs);
 
         // Menyimpan backup ke dalam file
-        write_file('C:\xampp\htdocs\medical_record/db'.date('dmy').'.zip', $backup);
+        write_file('./backupdb/db' . date('dmy') . '.zip', $backup);
 
         // Menampilkan pesan berhasil
         echo "Backup database berhasil.";

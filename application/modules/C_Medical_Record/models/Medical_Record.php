@@ -8,7 +8,7 @@ class Medical_Record extends CI_Model
     private $tblContAccept = "ship_tbl_trn_cont_acceptance_dtl";
 
 
- 
+
     // Save Data
     function store($param)
     {
@@ -16,50 +16,50 @@ class Medical_Record extends CI_Model
         // pasien
         // $cekNik = $this->db->get_where('tb_pasien', ['nik' => $param['nik']])->row();
         // if ($cekNik === null) {
-            $pasien = [
-                'id' => $param['id'],
-                'nik' => $param['nik'],
-                'nama_depan' => $param['nama_depan'],
-                'create_date' => date('Y-m-d H:i:s', strtotime($param['create_date'])),
-                'nama_belakang' => $param['nama_belakang'],
-                'gender' => $param['gender'],
-                'umur' => $param['umur'],
-                'alamat' => $param['alamat'],
-                'catatan' => $param['catatan'],
-                'golongan_darah' => $param['golongan_darah'],
-                'status_pulang' => $param['status_pulang'],
-                'tgl_selesai' => $param['tgl_selesai'],
-                'kamar' => $param['kamar'],
-                
-            ];
-            $this->db->insert('tb_pasien', $pasien);
+        $pasien = [
+            'id' => $param['id'],
+            'nik' => $param['nik'],
+            'nama_depan' => $param['nama_depan'],
+            'create_date' => date('Y-m-d H:i:s', strtotime($param['create_date'])),
+            'nama_belakang' => $param['nama_belakang'],
+            'gender' => $param['gender'],
+            'umur' => $param['umur'],
+            'alamat' => $param['alamat'],
+            'catatan' => $param['catatan'],
+            'golongan_darah' => $param['golongan_darah'],
+            'status_pulang' => $param['status_pulang'],
+            'tgl_selesai' => $param['tgl_selesai'],
+            'kamar' => $param['kamar'],
 
-            $hdrId = $this->db->insert_id();
+        ];
+        $this->db->insert('tb_pasien', $pasien);
+
+        $hdrId = $this->db->insert_id();
         // }
-        
+
         // end simpan detail receive
 
 
         // anamnesa
-        $cekAnamnesa = $this->db->get_where('tb_anamnesa', ['id_pasien' => $param['nik'], 'keluhan' => $param['keluhan'] ])->row();
+        $cekAnamnesa = $this->db->get_where('tb_anamnesa', ['id_pasien' => $param['nik'], 'keluhan' => $param['keluhan']])->row();
 
-        if($cekAnamnesa === null){
-            if(strlen($param['keluhan']) > 0){
-            $anamnesa = [
-                'id_pasien' => $hdrId,
-                'keluhan' => $param['keluhan'],
-                'tinggi_badan' => $param['tinggi_badan'],
-                'berat_badan' => $param['berat_badan'],
-                'tekanan_darah' => $param['tekanan_darah'],
-                'pernapasan' => $param['pernapasan'],
-                'detak_jantung' => $param['detak_jantung'],
-                'suhu_tubuh' => $param['suhu_tubuh'],
-                'spo2' => $param['spo2'],
-                'dm' => $param['dm'],
-                'kolestrol' => $param['kolestrol'],
-                'asam_urat' => $param['asam_urat'],
-            ];
-            $this->db->insert('tb_anamnesa', $anamnesa);
+        if ($cekAnamnesa === null) {
+            if (strlen($param['keluhan']) > 0) {
+                $anamnesa = [
+                    'id_pasien' => $hdrId,
+                    'keluhan' => $param['keluhan'],
+                    'tinggi_badan' => $param['tinggi_badan'],
+                    'berat_badan' => $param['berat_badan'],
+                    'tekanan_darah' => $param['tekanan_darah'],
+                    'pernapasan' => $param['pernapasan'],
+                    'detak_jantung' => $param['detak_jantung'],
+                    'suhu_tubuh' => $param['suhu_tubuh'],
+                    'spo2' => $param['spo2'],
+                    'dm' => $param['dm'],
+                    'kolestrol' => $param['kolestrol'],
+                    'asam_urat' => $param['asam_urat'],
+                ];
+                $this->db->insert('tb_anamnesa', $anamnesa);
             }
         }
 
@@ -70,7 +70,7 @@ class Medical_Record extends CI_Model
         //  ])->row();
 
         // if($cekDiagnosa === null){
-            if(strlen($param['objektif']) > 0 || strlen($param['subjektif']) > 0 ){
+        if (strlen($param['objektif']) > 0 || strlen($param['subjektif']) > 0) {
             $anamnesa = [
                 'nik' => $hdrId,
                 'objektif' => $param['objektif'],
@@ -79,57 +79,55 @@ class Medical_Record extends CI_Model
                 // 'planning' => $param['planning'],
             ];
             $this->db->insert('tb_diagnosa', $anamnesa);
-            }
+        }
         // }
         // end anamnesa
 
         // if (!empty($param['diperiksa_oleh'])) {
-            $dataresep = $this->db->get('tb_temp_cart')->result();
-        
-            if (count($dataresep)>0) {
-                $resepData = [];
-                foreach ($dataresep as $item) {
-                    $resepData[] = [
-                        'nik' => $hdrId,
-                        'id_obat' => $item->id_obat,
-                        'qty' => $item->qty,
-                        'catatan' => $param['catatan'],
-                        'diperiksa_oleh' => $param['diperiksa_oleh']
-                    ];
-                }
-        
-                $exec = $this->db->insert_batch('tb_resep', $resepData);
-                if($exec)
-                {
-                    $this->db->query('delete from tb_temp_cart');
-                }
-            }
-        
-            $dataLayanan = $this->db->get('tb_temp_layanan')->result();
-        
-            if (count($dataLayanan) > 0 ) {
-                $layananData = [];
-                foreach ($dataLayanan as $lyn) {
-                    $layananData[] = [
-                        'layanan_id' => $lyn->id_layanan,
-                        'nik' => $hdrId,
-                        'qty' => $lyn->qty,
-                    ];
-                }
-        
-                $exec2 = $this->db->insert_batch('tb_trans_layanan', $layananData);
-                if($exec2)
-                {
-                    $this->db->query('delete from tb_temp_layanan');
+        $dataresep = $this->db->get('tb_temp_cart')->result();
 
-                    // $this->db->delete('tb_temp_layanan');
-                }
+        if (count($dataresep) > 0) {
+            $resepData = [];
+            foreach ($dataresep as $item) {
+                $resepData[] = [
+                    'nik' => $hdrId,
+                    'id_obat' => $item->id_obat,
+                    'qty' => $item->qty,
+                    'catatan' => $param['catatan'],
+                    'diperiksa_oleh' => $param['diperiksa_oleh']
+                ];
             }
+
+            $exec = $this->db->insert_batch('tb_resep', $resepData);
+            if ($exec) {
+                $this->db->query('delete from tb_temp_cart');
+            }
+        }
+
+        $dataLayanan = $this->db->get('tb_temp_layanan')->result();
+
+        if (count($dataLayanan) > 0) {
+            $layananData = [];
+            foreach ($dataLayanan as $lyn) {
+                $layananData[] = [
+                    'layanan_id' => $lyn->id_layanan,
+                    'nik' => $hdrId,
+                    'qty' => $lyn->qty,
+                ];
+            }
+
+            $exec2 = $this->db->insert_batch('tb_trans_layanan', $layananData);
+            if ($exec2) {
+                $this->db->query('delete from tb_temp_layanan');
+
+                // $this->db->delete('tb_temp_layanan');
+            }
+        }
         // }
-        
+
 
         // $tmp_layanan = $this->db->get('tb_temp_layanan')->result();
-        
+
         // if(count($tmp_layanan) > 0)
         // {
 
@@ -141,14 +139,14 @@ class Medical_Record extends CI_Model
         //             'qty' => $lyn->qty,
         //         );
         //     }
-        
+
         //     if (!empty($dataLayanan)) {
         //         $this->db->insert_batch("tb_trans_layanan", $dataLayanan);
         //         $this->db->delete('tb_temp_layanan');
         //     }
 
         // }
-        
+
 
 
         if ($this->db->trans_status() === FALSE) {
@@ -159,17 +157,16 @@ class Medical_Record extends CI_Model
             return true;
         }
     }
-    
+
     // End Save Data
 
     function deleteCart($id)
     {
         $this->db->where('id_obat', $id);
         $sql = $this->db->delete('tb_temp_cart');
-        if($sql) return true;
+        if ($sql) return true;
 
         return false;
-
     }
 
 
@@ -177,19 +174,18 @@ class Medical_Record extends CI_Model
     {
         $this->db->where('id_layanan', $id);
         $sql = $this->db->delete('tb_temp_layanan');
-        if($sql) return true;
+        if ($sql) return true;
 
         return false;
-
     }
 
 
     function addCart($param)
     {
-        
+
         $sql = $this->db->insert('tb_temp_cart', $param);
 
-        if($sql) return true;
+        if ($sql) return true;
 
         return false;
     }
@@ -198,7 +194,7 @@ class Medical_Record extends CI_Model
     {
         $sql = $this->db->insert('tb_temp_layanan', $param);
 
-        if($sql) return true;
+        if ($sql) return true;
 
         return false;
     }
@@ -226,14 +222,14 @@ class Medical_Record extends CI_Model
         $sql = $this->db->get("tb_pasien a")->row();
 
         $det_obat = $this->db->select("a.*, qty, diperiksa_oleh")
-                        ->join('tb_obat a', 'a.id = b.id_obat')
-                        ->where(['nik' => $sql->idx])
-                        ->get('tb_resep b')->result();
+            ->join('tb_obat a', 'a.id = b.id_obat')
+            ->where(['nik' => $sql->idx])
+            ->get('tb_resep b')->result();
 
         $det_layanan = $this->db->select("a.*, qty")
-        ->join('tb_layanan a', 'a.id = b.layanan_id')
-        ->where(['nik' => $sql->idx])
-        ->get('tb_trans_layanan b')->result();
+            ->join('tb_layanan a', 'a.id = b.layanan_id')
+            ->where(['nik' => $sql->idx])
+            ->get('tb_trans_layanan b')->result();
 
 
         $data = [

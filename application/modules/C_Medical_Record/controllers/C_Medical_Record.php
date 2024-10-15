@@ -30,7 +30,6 @@ class C_Medical_Record extends BaseController
 		parent::__construct();
 		$this->load->model("Medical_Record", "MedicalRecord");
 		$this->load->model("Obat", "Obat");
-
 	}
 
 	/**
@@ -43,12 +42,11 @@ class C_Medical_Record extends BaseController
 	public function index($id = null)
 	{
 
-		if($id != null)
-		{
+		if ($id != null) {
 			$data['row'] = $this->MedicalRecord->getKunjunganById($id);
 			$data['edit'] = true;
 			$data['id'] = $id;
-}
+		}
 
 		$data['titlePage'] = "Medical Record";
 		$data['listObat'] = $this->Obat->getAll();
@@ -71,7 +69,7 @@ class C_Medical_Record extends BaseController
 			// 	echo $this->httpResponseCode("400", "nik tidak boleh kosong");
 			// 	return;
 			// }
-			if(strlen($param['nama_depan']) ==0){
+			if (strlen($param['nama_depan']) == 0) {
 				echo $this->httpResponseCode("400", "nama depan tidak boleh kosong");
 				return;
 			}
@@ -104,13 +102,13 @@ class C_Medical_Record extends BaseController
 
 	function getChart()
 	{
-		$row = $this->db->join('tb_obat a','a.id = b.id_obat')->get('tb_temp_cart b')->result();
+		$row = $this->db->join('tb_obat a', 'a.id = b.id_obat')->get('tb_temp_cart b')->result();
 		echo json_encode($row);
 	}
 
 	function getLayanan()
 	{
-		$row = $this->db->join('tb_layanan a','a.id = b.id_layanan')->get('tb_temp_layanan b')->result();
+		$row = $this->db->join('tb_layanan a', 'a.id = b.id_layanan')->get('tb_temp_layanan b')->result();
 		echo json_encode($row);
 	}
 
@@ -120,7 +118,7 @@ class C_Medical_Record extends BaseController
 
 		$exec = $this->MedicalRecord->deleteCart($id);
 
-		if($exec){
+		if ($exec) {
 			echo $this->httpResponseCode(200, "Delete Cart Success");
 			return;
 		}
@@ -134,7 +132,7 @@ class C_Medical_Record extends BaseController
 
 		$exec = $this->MedicalRecord->deleteLayanan($id);
 
-		if($exec){
+		if ($exec) {
 			echo $this->httpResponseCode(200, "Delete Layanan Success");
 			return;
 		}
@@ -150,15 +148,14 @@ class C_Medical_Record extends BaseController
 		$param = array_merge($param, ['created_by' => $this->userId]);
 
 		$row = $this->db->get_where("tb_obat", ['id' => $param['id_obat']])->row();
-        if($row->stok - $param['qty'] < 0)
-        {
-            echo $this->httpResponseCode(400, "Stok Obat Tidak Cukup");
+		if ($row->stok - $param['qty'] < 0) {
+			echo $this->httpResponseCode(400, "Stok Obat Tidak Cukup");
 			return;
-        }
+		}
 
 		$exec = $this->MedicalRecord->addCart($param);
 
-		if($exec){
+		if ($exec) {
 			echo $this->httpResponseCode(200, "Delete Cart Success");
 			return;
 		}
@@ -177,7 +174,7 @@ class C_Medical_Record extends BaseController
 
 		$exec = $this->MedicalRecord->addLayanan($data);
 
-		if($exec){
+		if ($exec) {
 			echo $this->httpResponseCode(200, "Add Layanan Success");
 			return;
 		}

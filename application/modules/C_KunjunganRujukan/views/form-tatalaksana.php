@@ -48,15 +48,29 @@
                     <th>Dosis</th>
                     <th>Cara Pembelian</th>
                     <th>TTD Dokter</th>
-                    <th>Waktu Pembelian</th>
+                    <!-- <th>Waktu Pembelian</th> -->
                     <th>TTD Perawat</th>
                 </tr>
             </thead>
             <tbody id="table-body">
                 <?php foreach ($getTatalaksanaDet as $val) { ?>
                     <tr>
-                        <td><input type="date" class="form-control" name="waktu[]" value="<?= $val->waktu ?>"></td>
-                        <td><input type="text" class="form-control" name="obat_cairan[]" value="<?= $val->obat_cairan ?>"></td>
+                        <td>
+                            <input type="date" class="form-control" name="waktu[]" value="<?= empty($val->waktu) || (date('Y', strtotime($val->waktu)) == "-0001") ? date('Y-m-d') : date('Y-m-d', strtotime($val->waktu)) ?>">
+
+
+                        </td>
+                        <td style="width: 300px;">
+                            <!-- <input type="text" class="form-control" name="obat_cairan[]" value="<?= $val->obat_cairan ?>"> -->
+                            <select class="form-control select2me2" name="obat_cairan[]" style="width: 100%">
+                                <option value="">Select Obat...</option>
+                                <?php foreach ($listObat as $item): ?>
+                                    <option value="<?= $item->nama_obat ?>" <?= $item->nama_obat == "$val->obat_cairan" ? 'selected' : '' ?>>
+                                        <?= $item->nama_obat ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
                         <td><input type="text" class="form-control" name="dosis[]" value="<?= $val->dosis ?>"></td>
                         <td><input type="text" class="form-control" name="cara_pembelian[]" value="<?= $val->cara_pembelian ?>"></td>
                         <td>
@@ -69,8 +83,18 @@
                                 <?php endforeach; ?>
                             </select>
                         </td>
-                        <td><input type="date" class="form-control" name="waktu_pembelian[]" value="<?= $val->waktu_pembelian ?>"></td>
-                        <td><input type="text" class="form-control" name="ttd_perawat[]" value="<?= $val->ttd_perawat ?>"></td>
+                        <!-- <td><input type="date" class="form-control" name="waktu_pembelian[]" value="<?= $val->waktu_pembelian ?>"></td> -->
+                        <td>
+                            <!-- <input type="text" class="form-control" name="ttd_perawat[]" value="<?= $val->ttd_perawat ?>"> -->
+                            <select class="form-control" name="ttd_perawat[]">
+                                <option value="">...</option>
+                                <?php foreach ($listPerawat as $item): ?>
+                                    <option <?= $item->nama == $val->ttd_perawat ? 'selected' : '' ?>>
+                                        <?= $item->nama ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
                     </tr>
                 <?php } ?>
 
@@ -113,7 +137,15 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Petugas</label>
-                    <input class="form-control" name="petugas" value="<?= $getTatalaksana->petugas ?>">
+                    <select class="form-control select2me2" name="petugas" style="width: 100%">
+                        <option value="">Select Petugas...</option>
+                        <?php foreach ($listPerawat as $item): ?>
+                            <option value="<?= $item->nama ?>" <?= $item->nama == "$getTatalaksana->petugas" ? 'selected' : '' ?>>
+                                <?= $item->nama ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <!-- <input class="form-control" name="petugas" value="<?= $getTatalaksana->petugas ?>"> -->
                 </div>
             </div>
         </div>

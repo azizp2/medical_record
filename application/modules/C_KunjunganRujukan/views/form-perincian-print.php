@@ -32,6 +32,16 @@
                         <td> <span id="badge-fullname"><?= $getPasien->nama_depan . " " . $getPasien->nama_belakang  ?></span></td>
                     </tr>
                     <tr>
+                        <td>Alamat</td>
+                        <td>:</td>
+                        <td> <span id="badge-norkm"><?= $getPasien->alamat ?></span></td>
+                    </tr>
+                    <tr>
+                        <td>Jenis Kelamin</td>
+                        <td>:</td>
+                        <td> <span id="badge-norkm"><?= $getPasien->gender ?></span></td>
+                    </tr>
+                    <tr>
                         <td>Tgl Lahir</td>
                         <td>:</td>
                         <td> <span id="badge-tgl-lahir"><?= date('d/m/Y', strtotime($getPasien->tgl_lahir)) ?></span></td>
@@ -60,10 +70,10 @@
         </thead>
         <tbody id="table-body-cppt">
             <?php
-            $grandTotal = 0; // Inisialisasi grand total
+            $grandTotal1 = 0; // Inisialisasi grand total
             foreach ($listPemakaianObat as $item) {
                 $subtotal = $item->total_qty * $item->harga; // Hitung subtotal
-                $grandTotal += $subtotal; // Tambahkan subtotal ke grand total
+                $grandTotal1 += $subtotal; // Tambahkan subtotal ke grand total
             ?>
                 <tr>
                     <td><?= htmlspecialchars($item->nama_obat) ?></td>
@@ -74,7 +84,7 @@
             <?php } ?>
             <tr>
                 <td colspan="3" class="text-center bg-success text-white"><strong>Grand Total</strong></td>
-                <td>Rp. <?= number_format($grandTotal, 0, ',', '.') ?>,-</td>
+                <td>Rp. <?= number_format($grandTotal1, 0, ',', '.') ?>,-</td>
             </tr>
         </tbody>
     </table>
@@ -92,10 +102,10 @@
         </thead>
         <tbody id="table-body-cppt">
             <?php
-            $grandTotal = 0; // Inisialisasi grand total
-            foreach ($listPemakaianObat as $item) {
+            $grandTotal2 = 0; // Inisialisasi grand total
+            foreach ($listObatPulang as $item) {
                 $subtotal = $item->total_qty * $item->harga; // Hitung subtotal
-                $grandTotal += $subtotal; // Tambahkan subtotal ke grand total
+                $grandTotal2 += $subtotal; // Tambahkan subtotal ke grand total
             ?>
                 <tr>
                     <td><?= htmlspecialchars($item->nama_obat) ?></td>
@@ -106,7 +116,7 @@
             <?php } ?>
             <tr>
                 <td colspan="3" class="text-center bg-success text-white"><strong>Grand Total</strong></td>
-                <td>Rp. <?= number_format($grandTotal, 0, ',', '.') ?>,-</td>
+                <td>Rp. <?= number_format($grandTotal2, 0, ',', '.') ?>,-</td>
             </tr>
         </tbody>
     </table>
@@ -125,10 +135,10 @@
         </thead>
         <tbody id="table-body-cppt">
             <?php
-            $grandTotal = 0; // Inisialisasi grand total
+            $grandTotal3 = 0; // Inisialisasi grand total
             foreach ($listBiayaLayanan as $item) {
                 $subtotal = $item->qty * $item->harga; // Hitung subtotal
-                $grandTotal += $subtotal; // Tambahkan subtotal ke grand total
+                $grandTotal3 += $subtotal; // Tambahkan subtotal ke grand total
             ?>
                 <tr>
                     <td><?= htmlspecialchars($item->nama_layanan) ?></td>
@@ -139,10 +149,13 @@
             <?php } ?>
             <tr>
                 <td colspan="3" class="text-center bg-success text-white"><strong>Grand Total</strong></td>
-                <td>Rp. <?= number_format($grandTotal, 0, ',', '.') ?>,-</td>
+                <td>Rp. <?= number_format($grandTotal3, 0, ',', '.') ?>,-</td>
             </tr>
         </tbody>
     </table>
+
+    <p class="bg-primary text-white p-3" style="font-size: 18px;">Total Tagihan Keseluruhan : Rp. <?= number_format($grandTotal1 + $grandTotal2 + $grandTotal3) ?></p>
+
 
 
 </form>
